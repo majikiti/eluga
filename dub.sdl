@@ -1,0 +1,5 @@
+name "eluga"
+dependency "bindbc-sdl" version="~>1.4.3"
+targetPath "build"
+subConfiguration "bindbc-sdl" "static"
+libs "SDL2"
