@@ -1,0 +1,11 @@
+{
+  "dscanner.ignoredKeys": [
+    "dscanner.style.phobos_naming_convention"
+  ],
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "[d]": {
+    "editor.formatOnSave": false
+  }
+}

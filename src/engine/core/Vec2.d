@@ -14,4 +14,14 @@ struct Vec2 {
 
   auto opBinary(string op, T)(T rhs) const =>
     Vec2(mixin(`pos[]` ~ op ~ `rhs`));
+
+  auto opOpAssign(string op, T: Vec2)(T rhs) {
+    mixin(`pos[]` ~ op ~ `=rhs.pos[];`);
+    return this;
+  }
+
+  auto opOpAssign(string op, T)(T rhs) {
+    mixin(`pos[]` ~ op ~ `=rhs;`);
+    return this;
+  }
 }

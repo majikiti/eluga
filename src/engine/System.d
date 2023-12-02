@@ -21,14 +21,21 @@ class System {
   }
 
   auto run() {
+    import std;
+    writeln("hello syste!");
+    stdout.flush;
+    root.realSetup;
+
     while(true) {
-      // game.walk;
       SDL_Event e;
       SDL_PollEvent(&e);
+
       switch(e.type) {
         case SDL_QUIT: return;
         default: break;
       }
+
+      root.realLoop;
     }
   }
 }

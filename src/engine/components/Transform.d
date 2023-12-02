@@ -7,5 +7,5 @@ class Transform: Component {
   real rot;
   Vec2 scale;
 
-  auto translate(Vec2 add) => pos += add;
+  auto translate(Vec2 d) => pos += d;
 }
