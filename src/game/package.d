@@ -1,4 +1,4 @@
-public import game.Game;
+module game;
 
 public import game.entities;
 public import game.stages;

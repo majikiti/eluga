@@ -21,9 +21,6 @@ class System {
   }
 
   auto run() {
-    import std;
-    writeln("hello syste!");
-    stdout.flush;
     root.realSetup;
 
     while(true) {

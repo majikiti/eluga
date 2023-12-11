@@ -8,19 +8,12 @@ class Hero: GameObject {
   int type;
 
   this() {
-    import std;
-    writeln("Hero constructor");
-    stdout.flush;
-    register(new Transform, new Transform);
+    register(new Transform);
   }
 
   override void setup() {
-    import std;
-    writeln("Hero setup()");
   }
 
   override void loop() {
-    import std;
-    // writeln(".");
   }
 }

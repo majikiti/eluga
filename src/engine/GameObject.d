@@ -1,30 +1,34 @@
 module engine.GameObject;
 
+import std.typecons;
 import engine;
 
-class GameObject {
+class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
 
+  // override this
   void setup() {}
   void loop() {}
 
-  C component(C: Component)() {
-    foreach(e; components)
-      if(is(e == C)) return cast(C)e;
-    return null;
+  private Tuple!(ulong, "i", C, "e") findComponent(C: Component)() {
+    foreach(i, e; components) {
+      auto res = cast(C)e;
+      if(res) return typeof(return)(i, res);
+    }
+    return typeof(return)(0, null);
   }
 
-  auto register() => null;
+  C component(C: Component)() => findComponent!C[1];
 
-  auto register(T...)(T t) {
-    static foreach(e; t) e.register;
-    static if(T.length) return null;
-    else return t[0];
+  auto register(A...)(A a) {
+    static foreach(e; a) register(e);
+    static if(!A.length) return null;
+    else return a[0];
   }
 
   T register(T)(T[] t) {
-    foreach(e; t) e.register;
+    foreach(e; t) register(e);
     return t.length ? t.front : null;
   }
 
@@ -34,12 +38,14 @@ class GameObject {
   }
 
   C register(C: Component)(C c) {
-    if(component!C) {
-      writeln("dups!");
-      return c;
-    }
     c.go = this;
-    components ~= c;
+    auto old = findComponent!C;
+    if(old.e) {
+      warn("registering ", C.stringof, " to ", this, " is duplicate; dropping old");
+      components[old.i] = c;
+    } else {
+      components ~= c;
+    }
     return c;
   }
 
