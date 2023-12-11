@@ -5,15 +5,12 @@ import engine;
 
 class System {
   GameObject root;
-  SDL_Window* w;
+  Context ctx;
 
   this(GameObject root) {
     SDL_Init(SDL_INIT_VIDEO);
     this.root = root;
-    this.w = SDL_CreateWindow("game",
-                              SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                              100, 100,
-                              SDL_WINDOW_SHOWN);
+    ctx.createWin;
   }
 
   ~this() {
@@ -21,7 +18,7 @@ class System {
   }
 
   auto run() {
-    root.realSetup;
+    root.realSetup(&ctx);
 
     while(true) {
       SDL_Event e;

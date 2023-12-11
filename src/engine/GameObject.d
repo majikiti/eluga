@@ -6,6 +6,7 @@ import engine;
 class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
+  package Context* ctx;
 
   // override this
   void setup() {}
@@ -49,9 +50,10 @@ class GameObject: Loggable {
     return c;
   }
 
-  package void realSetup() {
+  package void realSetup(Context* ctx) {
+    this.ctx = ctx;
     setup;
-    foreach(e; children) e.realSetup;
+    foreach(e; children) e.realSetup(ctx);
   }
 
   package void realLoop() {
