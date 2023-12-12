@@ -3,13 +3,23 @@ module engine.GameObject;
 import std.typecons;
 import engine;
 
-// todo: destroy
-// todo: every
-
 class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
+  private GameObject parent;
+
+  // context
+
   package Context* ctx;
+
+  auto dur() const => real(ctx.elapsed.total!"usecs");
+  auto im() const => ctx.im;
+
+  void everyone(alias f)() => ctx.root.walk!f;
+  package void walk(alias f)() {
+    f(this);
+    foreach(e; children) e.walk!f;
+  }
 
   // core functions
 
@@ -41,6 +51,8 @@ class GameObject: Loggable {
 
   C component(C: Component)() => findComponent!C.e;
 
+  // GO-tree
+
   auto register(A...)(A a) {
     static foreach(e; a) register(e);
     static if(!A.length) return null;
@@ -53,6 +65,7 @@ class GameObject: Loggable {
   }
 
   GO register(GO: GameObject)(GO go) {
+    (cast(GameObject)go).parent = this;
     children ~= go;
     return go;
   }
@@ -67,5 +80,13 @@ class GameObject: Loggable {
       components ~= c;
     }
     return c;
+  }
+
+  void destroy() {
+    foreach(i, e; parent.children) if(e == this) {
+      import std.algorithm.mutation;
+      parent.children = parent.children.remove(i);
+      return;
+    }
   }
 }

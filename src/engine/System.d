@@ -6,7 +6,6 @@ import engine;
 import utils;
 
 class System {
-  GameObject root;
   Context ctx;
 
   this(GameObject root) {
@@ -22,7 +21,7 @@ class System {
   }
 
   void run() {
-    root.realSetup(&ctx);
+    ctx.root.realSetup(&ctx);
     ctx.updated = MonoTime.currTime;
 
     loop; // 初回レンダリング
@@ -62,7 +61,7 @@ class System {
       default:
     }
 
-    root.realLoop;
+    ctx.root.realLoop;
     SDL_RenderPresent(ctx.r);
   }
 }

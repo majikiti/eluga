@@ -17,8 +17,8 @@ class Missile: GameObject {
     this.type = t;
     final switch(t) {
       case Type.Normal:
-        if(direction.x >= 0) d = Vec2([3, 0]);
-        else d = Vec2([-3, 0]);
+        if(direction.x >= 0) d = Vec2(3, 0);
+        else d = Vec2(-3, 0);
         break;
     }
 

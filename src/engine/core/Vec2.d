@@ -5,20 +5,36 @@ import core.math;
 struct Vec2 {
   real[2] pos;
 
+  this(real[2] pos) {
+    this.pos = pos;
+  }
+
+  this(real x, real y) {
+    this([x, y]);
+  }
+
   auto ref x() => pos[0];
   auto ref y() => pos[1];
+  auto _x() const => pos[0];
+  auto _y() const => pos[1];
 
-  auto size() const => sqrt(pos[] ** 2);
-  auto unit() const => Vec2(pos[] / size);
+  real size() const => sqrt(_x ^^ 2 + _y ^^ 2);
+  Vec2 unit() const => Vec2(pos) / size;
+
+  // op
 
   auto opUnary(string op)() const =>
     Vec2(mixin(op ~ ` pos[]`));
 
-  auto opBinary(string op, T: Vec2)(T rhs) const =>
-    Vec2(mixin(`pos[] ` ~ op ~ ` rhs.pos[]`));
+  auto opBinary(string op, T: Vec2)(T rhs) const {
+    typeof(pos) v = mixin(`pos[] ` ~ op ~ ` rhs.pos[]`);
+    return Vec2(v);
+  }
 
-  auto opBinary(string op, T)(T rhs) const =>
-    Vec2(mixin(`pos[] ` ~ op ~ ` rhs`));
+  auto opBinary(string op, T)(T rhs) const {
+    typeof(pos) v = mixin(`pos[] ` ~ op ~ ` rhs`);
+    return Vec2(v);
+  }
 
   auto opOpAssign(string op, T: Vec2)(T rhs) {
     mixin(`pos[] ` ~ op ~ `= rhs.pos[];`);
