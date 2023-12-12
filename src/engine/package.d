@@ -8,5 +8,6 @@ public import engine.Asset;
 public import engine.Component;
 public import engine.Context;
 public import engine.GameObject;
+public import engine.InputManager;
 public import engine.Loggable;
 public import engine.System;
