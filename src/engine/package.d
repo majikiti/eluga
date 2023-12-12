@@ -1,5 +1,6 @@
 module engine;
 
+public import engine.assets;
 public import engine.components;
 public import engine.core;
 

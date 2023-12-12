@@ -8,9 +8,22 @@ class GameObject: Loggable {
   private Component[] components;
   package Context* ctx;
 
-  // override this
+  // override this!
   void setup() {}
   void loop() {}
+
+  package void realSetup(Context* ctx) {
+    this.ctx = ctx;
+    foreach(c; components) c.setup;
+    setup;
+    foreach(e; children) e.realSetup(ctx);
+  }
+
+  package void realLoop() {
+    foreach(c; components) c.loop;
+    loop;
+    foreach(e; children) e.realLoop;
+  }
 
   private Tuple!(ulong, "i", C, "e") findComponent(C: Component)() {
     foreach(i, e; components) {
@@ -20,7 +33,7 @@ class GameObject: Loggable {
     return typeof(return)(0, null);
   }
 
-  C component(C: Component)() => findComponent!C[1];
+  C component(C: Component)() => findComponent!C.e;
 
   auto register(A...)(A a) {
     static foreach(e; a) register(e);
@@ -48,16 +61,5 @@ class GameObject: Loggable {
       components ~= c;
     }
     return c;
-  }
-
-  package void realSetup(Context* ctx) {
-    this.ctx = ctx;
-    setup;
-    foreach(e; children) e.realSetup(ctx);
-  }
-
-  package void realLoop() {
-    loop;
-    foreach(e; children) e.realLoop;
   }
 }

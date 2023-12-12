@@ -9,6 +9,9 @@ class Hero: GameObject {
 
   this() {
     register(new Transform);
+
+    auto hero0 = new ImageAsset("assets/hero0.png");
+    register(new SpriteRenderer(hero0));
   }
 
   override void setup() {
