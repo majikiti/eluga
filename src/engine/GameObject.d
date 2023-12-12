@@ -3,12 +3,16 @@ module engine.GameObject;
 import std.typecons;
 import engine;
 
+// todo: destroy
+// todo: every
+
 class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
   package Context* ctx;
 
-  // override this!
+  // core functions
+
   void setup() {}
   void loop() {}
 
@@ -24,6 +28,8 @@ class GameObject: Loggable {
     loop;
     foreach(e; children) e.realLoop;
   }
+
+  // components
 
   private Tuple!(ulong, "i", C, "e") findComponent(C: Component)() {
     foreach(i, e; components) {

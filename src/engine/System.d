@@ -7,13 +7,12 @@ import utils;
 
 class System {
   GameObject root;
-  InputManager input;
   Context ctx;
 
   this(GameObject root) {
     SDL_Init(SDL_INIT_VIDEO);
-    this.root = root;
-    this.input = new InputManager;
+    ctx.root = root;
+    ctx.im = new InputManager;
     ctx.createWin;
     ctx.createRdr;
   }
@@ -44,16 +43,16 @@ class System {
     switch(e.type) {
       case SDL_KEYDOWN:
       case SDL_KEYUP:
-        e.key;
+        auto key = e.key;
         break;
 
       case SDL_MOUSEMOTION:
-        e.motion;
+        auto motion = e.motion;
         break;
 
       case SDL_MOUSEBUTTONDOWN:
       case SDL_MOUSEBUTTONUP:
-        e.button;
+        auto btn = e.button;
         break;
 
       case SDL_QUIT:

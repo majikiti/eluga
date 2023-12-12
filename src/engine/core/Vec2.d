@@ -1,27 +1,32 @@
 module engine.core.Vec2;
 
+import core.math;
+
 struct Vec2 {
   real[2] pos;
 
   auto ref x() => pos[0];
   auto ref y() => pos[1];
 
+  auto size() const => sqrt(pos[] ** 2);
+  auto unit() const => Vec2(pos[] / size);
+
   auto opUnary(string op)() const =>
-    Vec2(mixin(op ~ `pos[]`));
+    Vec2(mixin(op ~ ` pos[]`));
 
   auto opBinary(string op, T: Vec2)(T rhs) const =>
-    Vec2(mixin(`pos[]` ~ op ~ `rhs.pos[]`));
+    Vec2(mixin(`pos[] ` ~ op ~ ` rhs.pos[]`));
 
   auto opBinary(string op, T)(T rhs) const =>
-    Vec2(mixin(`pos[]` ~ op ~ `rhs`));
+    Vec2(mixin(`pos[] ` ~ op ~ ` rhs`));
 
   auto opOpAssign(string op, T: Vec2)(T rhs) {
-    mixin(`pos[]` ~ op ~ `=rhs.pos[];`);
+    mixin(`pos[] ` ~ op ~ `= rhs.pos[];`);
     return this;
   }
 
   auto opOpAssign(string op, T)(T rhs) {
-    mixin(`pos[]` ~ op ~ `=rhs;`);
+    mixin(`pos[] ` ~ op ~ `= rhs;`);
     return this;
   }
 }

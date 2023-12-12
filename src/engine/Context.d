@@ -3,11 +3,15 @@ module engine.Context;
 import core.time;
 import std.string;
 import sdl;
+import engine;
 
 struct Context {
   bool running = true;
   MonoTime updated;
   Duration elapsed;
+
+  GameObject root;
+  InputManager im;
 
   SDL_Window* w;
   SDL_Renderer* r;
