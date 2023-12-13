@@ -18,6 +18,7 @@ class SpriteRenderer: Component {
     auto tform = go.component!Transform;
     auto pos = tform.pos;
     auto texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
+    scope(exit) SDL_DestroyTexture(texture);
 
     rect.x = cast(int)pos.x;
     rect.y = cast(int)pos.y;

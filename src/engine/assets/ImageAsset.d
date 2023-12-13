@@ -11,4 +11,8 @@ class ImageAsset: Asset {
   this(string path) {
     surface = IMG_Load(path.toStringz);
   }
+
+  ~this() {
+    SDL_FreeSurface(surface);
+  }
 }
