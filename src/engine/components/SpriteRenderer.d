@@ -15,7 +15,13 @@ class SpriteRenderer: Component {
   }
 
   override void loop() {
+    auto tform = go.component!Transform;
+    auto pos = tform.pos;
     auto texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
+
+    rect.x = cast(int)pos.x;
+    rect.y = cast(int)pos.y;
+
     SDL_RenderCopy(go.ctx.r, texture, null, &rect);
   }
 }

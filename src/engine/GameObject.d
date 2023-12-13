@@ -12,7 +12,7 @@ class GameObject: Loggable {
 
   package Context* ctx;
 
-  auto dur() const => real(ctx.elapsed.total!"usecs");
+  auto dur() const => real(ctx.elapsed.total!"usecs") / 4096;
   auto im() const => ctx.im;
 
   void everyone(alias f)() => ctx.root.walk!f;

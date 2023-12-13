@@ -61,6 +61,10 @@ class System {
       default:
     }
 
+    //BackGround
+    SDL_SetRenderDrawColor(ctx.r,0,0,0,255);
+    SDL_RenderClear(ctx.r);
+
     ctx.root.realLoop;
     SDL_RenderPresent(ctx.r);
   }

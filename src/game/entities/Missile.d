@@ -13,7 +13,8 @@ class Missile: GameObject {
 
   this(Type t, Vec2 direction) {
     register(new Transform);
-
+    auto missile = new ImageAsset("assets/hero0.png");
+    register(new SpriteRenderer(missile));
     this.type = t;
     final switch(t) {
       case Type.Normal:
