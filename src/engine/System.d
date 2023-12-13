@@ -39,9 +39,20 @@ class System: Loggable {
     SDL_Event e;
     SDL_PollEvent(&e);
 
+    auto keyUpdate = false;
     switch(e.type) {
       case SDL_KEYDOWN:
-        ctx.im.state[cast(char)e.key.keysym.sym] = true;
+        auto key = cast(char)e.key.keysym.sym;
+        auto state = ctx.im.state;
+        auto once = ctx.im.once;
+
+        if(ctx.im.oldKey == key) break;
+
+        if(!state[key]) once[key] = true;
+        else once[key] = false;
+
+        state[key] = true;
+        keyUpdate = true;
         break;
 
       case SDL_KEYUP:
@@ -63,7 +74,10 @@ class System: Loggable {
 
       default:
     }
-
+    if(!keyUpdate){
+      ctx.im.oldKey = 0;
+      ctx.im.once ^= ctx.im.once;
+    }
     //BackGround
     SDL_SetRenderDrawColor(ctx.r,0,0,0,255);
     SDL_RenderClear(ctx.r);
