@@ -20,17 +20,17 @@ class Hero: GameObject {
 
   override void setup() {
     register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
-    auto rb = component!RigidBody;
-    rb.v = v;
   }
 
   override void loop() {
     auto tform = component!Transform;
     auto rb = component!RigidBody;
-    if(tform.pos.x < 0) rb.v.x = 1;
-    if(tform.pos.x > 100) rb.v.x = -1;
-    if(tform.pos.y < 0) rb.v.y = 1;
-    if(tform.pos.y > 100) rb.v.y = -1;
+    if(im.key('d')) tform.pos.x += v.x * dur;
+    if(im.key('a')) tform.pos.x += v.x * dur * -1;
+    if(im.key('w')) tform.pos.y += v.y * dur * -1;
+    if(im.key('s')) tform.pos.y += v.y * dur;
+    log(rb.v);
+    // missile
     time += dur;
     if(time > 100){
       time = 0;

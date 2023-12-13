@@ -19,7 +19,7 @@ struct Vec2 {
   auto _y() const => pos[1];
 
   real size() const => sqrt(_x ^^ 2 + _y ^^ 2);
-  Vec2 unit() const => Vec2(pos) / size;
+  Vec2 unit() const => this / size;
 
   // op
 

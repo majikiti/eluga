@@ -5,7 +5,7 @@ import sdl;
 import engine;
 import utils;
 
-class System {
+class System: Loggable {
   Context ctx;
 
   this(GameObject root) {
@@ -41,8 +41,11 @@ class System {
 
     switch(e.type) {
       case SDL_KEYDOWN:
+        ctx.im.state[cast(char)e.key.keysym.sym] = true;
+        break;
+
       case SDL_KEYUP:
-        auto key = e.key;
+        ctx.im.state[cast(char)e.key.keysym.sym] = false;
         break;
 
       case SDL_MOUSEMOTION:
