@@ -25,6 +25,6 @@ class Transform: Component {
     auto parent = go.parent;
     auto pPos = parent.component!Transform;
     worldPos = pos;
-    if(org && pPos !is null) worldPos += pPos.worldPos;
+    if(org == Org.Local && pPos !is null) worldPos += pPos.worldPos;
   }
 }
