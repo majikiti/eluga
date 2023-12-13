@@ -3,7 +3,7 @@ module engine.core.Vec2;
 import core.math;
 
 struct Vec2 {
-  real[2] pos;
+  real[2] pos = [0, 0];
 
   this(real[2] pos) {
     this.pos = pos;

@@ -12,6 +12,7 @@ class Hero: GameObject {
 
   this() {
     register(new Transform);
+    register(new RigidBody);
 
     auto hero0 = new ImageAsset("assets/hero0.png");
     register(new SpriteRenderer(hero0));
@@ -19,18 +20,19 @@ class Hero: GameObject {
 
   override void setup() {
     register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
+    auto rb = component!RigidBody;
+    rb.v = v;
   }
 
   override void loop() {
     auto tform = component!Transform;
-    tform.pos += v*dur;
-    if(tform.pos.x < 0) v.x = 1;
-    if(tform.pos.x > 100) v.x = -1;
-    if(tform.pos.y < 0) v.y = 1;
-    if(tform.pos.y > 100) v.y = -1;
+    auto rb = component!RigidBody;
+    if(tform.pos.x < 0) rb.v.x = 1;
+    if(tform.pos.x > 100) rb.v.x = -1;
+    if(tform.pos.y < 0) rb.v.y = 1;
+    if(tform.pos.y > 100) rb.v.y = -1;
     time += dur;
-    log(time);
-    if(time > 1000){
+    if(time > 100){
       time = 0;
       register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
     }
