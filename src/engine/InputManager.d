@@ -4,7 +4,6 @@ import std.bitmanip;
 
 class InputManager {
   package BitArray state,once;
-  package char oldKey = 0;
 
   this() {
     enum stateSize = ubyte.max;

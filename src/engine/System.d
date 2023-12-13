@@ -46,8 +46,6 @@ class System: Loggable {
         auto state = ctx.im.state;
         auto once = ctx.im.once;
 
-        if(ctx.im.oldKey == key) break;
-
         if(!state[key]) once[key] = true;
         else once[key] = false;
 
@@ -74,10 +72,9 @@ class System: Loggable {
 
       default:
     }
-    if(!keyUpdate){
-      ctx.im.oldKey = 0;
-      ctx.im.once ^= ctx.im.once;
-    }
+
+    if(!keyUpdate)ctx.im.once ^= ctx.im.once;
+
     //BackGround
     SDL_SetRenderDrawColor(ctx.r,0,0,0,255);
     SDL_RenderClear(ctx.r);
