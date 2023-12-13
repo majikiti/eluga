@@ -40,7 +40,7 @@ class Missile: GameObject {
 
   override void loop() {
     auto tform = component!Transform;
-    if(tform.pos.x > 1000)destroy;
+    if(tform.pos.x > 1000 || tform.pos.y > 50)destroy;
     final switch(this.type){
       case Type.Normal: break;
     }

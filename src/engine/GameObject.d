@@ -6,7 +6,7 @@ import engine;
 class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
-  private GameObject parent;
+  GameObject parent;
 
   // context
 

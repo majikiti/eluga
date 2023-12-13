@@ -16,7 +16,7 @@ class SpriteRenderer: Component {
 
   override void loop() {
     auto tform = go.component!Transform;
-    auto pos = tform.pos;
+    auto pos = tform.worldPos;
     auto texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
     scope(exit) SDL_DestroyTexture(texture);
 

@@ -12,7 +12,7 @@ class Hero: GameObject {
 
   this() {
     register(new Transform);
-    register(new RigidBody);
+    register(new RigidBody).a = Vec2(0,0);
 
     auto hero0 = new ImageAsset("assets/hero0.png");
     register(new SpriteRenderer(hero0));
@@ -29,10 +29,9 @@ class Hero: GameObject {
     if(im.key('a')) tform.pos.x += v.x * dur * -1;
     if(im.key('w')) tform.pos.y += v.y * dur * -1;
     if(im.key('s')) tform.pos.y += v.y * dur;
-    log(rb.v);
     // missile
-    time += dur;
-    if(time > 100){
+    if(im.key(' ')){
+      log(type++);
       time = 0;
       register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
     }
