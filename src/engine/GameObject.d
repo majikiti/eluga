@@ -64,10 +64,12 @@ class GameObject: Loggable {
     return t.length ? t.front : null;
   }
 
-  GO register(GO: GameObject)(GO go) {
-    (cast(GameObject)go).parent = this;
-    children ~= go;
-    return go;
+  GO register(GO: GameObject)(GO e) {
+    auto go = cast(GameObject)e;
+    go.parent = this;
+    children ~= e;
+    go.realSetup(ctx);
+    return e;
   }
 
   C register(C: Component)(C c) {
