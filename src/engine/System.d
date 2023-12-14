@@ -4,7 +4,6 @@ import core.time;
 import sdl;
 import sdl_mixer;
 import engine;
-import utils;
 
 class System: Loggable {
   Context ctx;
