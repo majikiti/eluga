@@ -106,4 +106,7 @@ class GameObject: Loggable {
       return;
     }
   }
+
+  void onCollisionEnter(GameObject dstin){
+  }
 }

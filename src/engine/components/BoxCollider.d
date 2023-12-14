@@ -5,7 +5,9 @@ import engine;
 class BoxCollider: Component {
   Vec2 size;
 
-  override void loop() {
-    
+  this(Vec2 size) {
+    this.size = size;
+
+    register(new Transform);
   }
 }
