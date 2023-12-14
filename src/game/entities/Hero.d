@@ -8,7 +8,7 @@ import sdl_mixer;
 class Hero: GameObject {
   int life;
   int type;
-  real time = 0;
+  real time = 0,jumpSpeed = 1;
 
   Vec2 v = Vec2(1, 1);
 
@@ -21,7 +21,7 @@ class Hero: GameObject {
   }
 
   override void setup() {
-    //register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
+    
   }
 
   override void loop() {
@@ -29,8 +29,10 @@ class Hero: GameObject {
     auto rb = component!RigidBody;
     if(im.key('d')) tform.pos.x += v.x * dur;
     if(im.key('a')) tform.pos.x += v.x * dur * -1;
-    if(im.key('w')) tform.pos.y += v.y * dur * -1;
-    if(im.key('s')) tform.pos.y += v.y * dur;
+
+    //jump
+    
+
     // missile
     if(im.keyOnce('\r')){
       register(new Missile(Missile.Type.Normal, Vec2(1, 0),tform.pos));

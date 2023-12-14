@@ -24,27 +24,23 @@ class AudioSource: Component {
     return channel == -1 ? -1 : 0;
   }
 
-  void rewind(){
-    Mix_RewindMusic();
-  }
-
   int volume(int vol){
-    return Mix_VolumeMusic(vol);
+    return Mix_Volume(channel, vol);
   }
 
   void pause(){
-    Mix_PauseMusic();
+    channel.Mix_Pause;
   }
 
   void resume(){
-    Mix_ResumeMusic();
+    Mix_Resume(channel);
   }
 
   bool isPlaying(){
-    return Mix_PlayingMusic() > 0;
+    return channel.Mix_Playing > 0;
   }
 
   bool paused(){
-    return cast(bool)Mix_PausedMusic();
+    return cast(bool)channel.Mix_Paused;
   }
 }
