@@ -8,3 +8,5 @@ public import engine.components.Transform;
 public import engine.components.Window;
 public import engine.components.RigidBody;
 public import engine.components.AudioSource;
+public import engine.components.Text;
+

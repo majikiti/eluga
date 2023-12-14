@@ -4,6 +4,7 @@ import core.time;
 import std;
 import sdl;
 import sdl_mixer;
+import sdl_ttf;
 import engine;
 
 class System: Loggable {
@@ -15,6 +16,8 @@ class System: Loggable {
     ctx.im = new InputManager;
     ctx.createWin;
     ctx.createRdr;
+
+    TTF_Init();
     auto ares = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
   }
 

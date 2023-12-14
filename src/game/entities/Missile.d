@@ -46,7 +46,6 @@ class Missile: GameObject {
   override void loop() {
     auto tform = component!Transform;
     tform.rot++;
-    tform.scale = Vec2(2,2);
     if(tform.pos.x > 1000 || tform.pos.y > 1000)destroy;
     final switch(this.type){
       case Type.Normal: break;

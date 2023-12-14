@@ -22,8 +22,8 @@ class SpriteRenderer: Component {
 
     rect.x = cast(int)pos.x;
     rect.y = cast(int)pos.y;
-    rect.w = surface.w * cast(int)tform.scale.x;
-    rect.h = surface.h * cast(int)tform.scale.y;
+    rect.w = cast(int)(surface.w * tform.scale.x);
+    rect.h = cast(int)(surface.h * tform.scale.y);
 
     SDL_RenderCopyEx(go.ctx.r, texture, null, &rect, cast(double)tform.rot, null, SDL_FLIP_NONE);
   }

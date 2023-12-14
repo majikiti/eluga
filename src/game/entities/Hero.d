@@ -32,8 +32,8 @@ class Hero: GameObject {
     if(im.key('d')) tform.pos.x += v.x * dur;
     if(im.key('a')) tform.pos.x += v.x * dur * -1;
 
-    if(tform.pos.y >= 350){
-      tform.pos.y = 350;
+    if(tform.pos.y >= 340){
+      tform.pos.y = 340;
       rb.a = Vec2(0, 0);
       rb.v = Vec2(0, 0);
     }else{
@@ -41,7 +41,7 @@ class Hero: GameObject {
     }
 
     //jump
-    if(tform.pos.y >= 350 && im.keyOnce(' ')){
+    if(tform.pos.y >= 340 && im.keyOnce(' ')){
       auto audio = component!AudioSource;
       rb.v -= Vec2(0, jumpSpeed);
       audio.play();

@@ -8,10 +8,14 @@ class Home: Stage {
   ImageAsset bg;
   AudioAsset BGM;
   AudioSource audio;
+  Transform tform;
 
   this() {
     hero = register(new Hero);
-    bg = new ImageAsset("assets/background.png");
+    tform = register(new Transform(Transform.Org.World));
+    tform.scale.x = 1.5;
+    bg = new ImageAsset("assets/_.jpeg");
+    register(new SpriteRenderer(bg));
     //auto missile = register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
   }
 
