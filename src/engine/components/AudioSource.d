@@ -19,8 +19,8 @@ class AudioSource: Component {
     sound = asset.sound;
   }
 
-  int play(bool loops = false){
-    channel = Mix_PlayChannel(channel, sound,cast(int)loops);
+  int play(int loops = 0){
+    channel = Mix_PlayChannel(channel, sound, loops);
     return channel == -1 ? -1 : 0;
   }
 

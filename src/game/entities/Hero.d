@@ -8,7 +8,7 @@ import sdl_mixer;
 class Hero: GameObject {
   int life;
   int type;
-  real time = 0,jumpSpeed = 1;
+  real time = 0,jumpSpeed = 3;
 
   Vec2 v = Vec2(1, 1);
 
@@ -21,7 +21,9 @@ class Hero: GameObject {
   }
 
   override void setup() {
-    
+    auto jumpSE = new AudioAsset("assets/se_jump1.mp3");
+    auto audio = register(new AudioSource(jumpSE));
+    audio.volume(15);
   }
 
   override void loop() {
@@ -30,8 +32,20 @@ class Hero: GameObject {
     if(im.key('d')) tform.pos.x += v.x * dur;
     if(im.key('a')) tform.pos.x += v.x * dur * -1;
 
+    if(tform.pos.y >= 350){
+      tform.pos.y = 350;
+      rb.a = Vec2(0, 0);
+      rb.v = Vec2(0, 0);
+    }else{
+      rb.a = Vec2(0, 9.81);
+    }
+
     //jump
-    
+    if(tform.pos.y >= 350 && im.keyOnce(' ')){
+      auto audio = component!AudioSource;
+      rb.v -= Vec2(0, jumpSpeed);
+      audio.play();
+    }
 
     // missile
     if(im.keyOnce('\r')){

@@ -36,10 +36,17 @@ class Missile: GameObject {
     final switch(this.type){
       case Type.Normal: break;
     }
+
+    auto clip = new AudioAsset("assets/se_rifle01.mp3");
+    auto audio = register(new AudioSource(clip));
+    audio.volume(20);
+    audio.play();
   }
 
   override void loop() {
     auto tform = component!Transform;
+    tform.rot++;
+    tform.scale = Vec2(2,2);
     if(tform.pos.x > 1000 || tform.pos.y > 1000)destroy;
     final switch(this.type){
       case Type.Normal: break;

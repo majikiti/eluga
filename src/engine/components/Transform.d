@@ -12,8 +12,8 @@ class Transform: Component {
   private Org org;
   Vec2 pos = Vec2(0,0);
   Vec2 worldPos = Vec2(0,0);
-  real rot;
-  Vec2 scale;
+  real rot = 0;
+  Vec2 scale = Vec2(1,1);
 
   this(Org worldType = Org.Local){
     org = worldType;

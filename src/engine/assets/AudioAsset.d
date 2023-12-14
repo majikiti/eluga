@@ -10,9 +10,6 @@ class AudioAsset: Asset {
   
   this(string path){
     sound = Mix_LoadWAV(path.toStringz);
-    import std;
-    writeln(SDL_GetError.to!string);
-    writeln(sound == null);
   }
 
   ~this(){

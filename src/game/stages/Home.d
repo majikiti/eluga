@@ -18,7 +18,7 @@ class Home: Stage {
   override void setup(){
     BGM = new AudioAsset("assets/maou_bgm_8bit29.ogg");
     audio = register(new AudioSource(BGM));
-    audio.volume(1);
-    log(audio.play(true));
+    audio.play(-1);
+    audio.volume(15);
   }
 }
