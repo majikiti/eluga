@@ -4,7 +4,6 @@ import core.time;
 import sdl;
 import sdl_mixer;
 import engine;
-import utils;
 
 class System: Loggable {
   Context ctx;
@@ -78,9 +77,11 @@ class System: Loggable {
 
     if(!keyUpdate)ctx.im.once ^= ctx.im.once;
 
+    // Collider
     GameObject[] gos;
     ctx.root.everyone!((e) {
-      if(e.components!BoxCollider) gos ~= e;
+      if(e.has!BoxCollider && e.has!Transform) gos ~= e;
+      // Please PutOn component.Transform
     });
     foreach(i, jewish; gos){
       foreach(j, palestine; gos[i+1..$]){
@@ -90,7 +91,6 @@ class System: Loggable {
         }
       }
     }
-
 
     //BackGround
     SDL_SetRenderDrawColor(ctx.r,0,0,0,255);
@@ -102,17 +102,17 @@ class System: Loggable {
 
   bool isObjectsConflict(GameObject obj1, GameObject obj2){
     Vec2[4] globalVertex1, globalVertex2; // Upper Left: idx0, Upper Right: idx1, Lower Left: idx2, Lower Right: idx3
-    Vec2 signVect = new Vec2(1.0L, 0);
+    Vec2 signVect = Vec2(1.0L, 0);
 
-    globalVertex1[0] = obj1.components!Transform.pos - obj1.components!BoxCollider.size/2.0L;
-    globalVertex1[3] = obj1.components!Transform.pos + obj1.components!BoxCollider.size/2.0L;
-    globalVertex1[1] = absRegion1[0] + obj1.components!BoxCollider.size * signVect;
-    globalVertex1[2] = absRegion1[3] - obj1.components!BoxCollider.size * signVect;
+    globalVertex1[0] = obj1.component!Transform.pos - obj1.component!BoxCollider.size/2.0L;
+    globalVertex1[3] = obj1.component!Transform.pos + obj1.component!BoxCollider.size/2.0L;
+    globalVertex1[1] = globalVertex1[0] + obj1.component!BoxCollider.size * signVect;
+    globalVertex1[2] = globalVertex1[3] - obj1.component!BoxCollider.size * signVect;
 
-    globalVertex2[0] = obj2.components!Transform.pos - obj2.components!BoxCollider.size/2.0L;
-    globalVertex2[3] = obj2.components!Transform.pos + obj2.components!BoxCollider.size/2.0L;
-    globalVertex2[1] = absRegion2[0] + obj2.components!BoxCollider.size * signVect;
-    globalVertex2[2] = absRegion2[3] - obj2.components!BoxCollider.size * signVect;
+    globalVertex2[0] = obj2.component!Transform.pos - obj2.component!BoxCollider.size/2.0L;
+    globalVertex2[3] = obj2.component!Transform.pos + obj2.component!BoxCollider.size/2.0L;
+    globalVertex2[1] = globalVertex2[0] + obj2.component!BoxCollider.size * signVect;
+    globalVertex2[2] = globalVertex2[3] - obj2.component!BoxCollider.size * signVect;
 
     bool retval = false;
     foreach(i, ivtx; globalVertex1){

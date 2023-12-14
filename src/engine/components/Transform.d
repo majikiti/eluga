@@ -22,9 +22,10 @@ class Transform: Component {
   auto translate(Vec2 d) => pos += d;
 
   override void loop(){
-    auto parent = go.parent;
-    auto pPos = parent.component!Transform;
     worldPos = pos;
+    auto parent = go.parent;
+    if(!parent.has!Transform) return;
+    auto pPos = parent.component!Transform;
     if(org == Org.Local && pPos !is null) worldPos += pPos.worldPos;
   }
 }

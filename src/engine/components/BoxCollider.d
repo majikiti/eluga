@@ -7,7 +7,5 @@ class BoxCollider: Component {
 
   this(Vec2 size) {
     this.size = size;
-
-    register(new Transform);
   }
 }
