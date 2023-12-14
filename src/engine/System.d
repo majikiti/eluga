@@ -2,6 +2,7 @@ module engine.System;
 
 import core.time;
 import sdl;
+import sdl_mixer;
 import engine;
 import utils;
 
@@ -14,9 +15,11 @@ class System: Loggable {
     ctx.im = new InputManager;
     ctx.createWin;
     ctx.createRdr;
+    auto ares = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
   }
 
   ~this() {
+    Mix_CloseAudio();
     SDL_Quit;
   }
 

@@ -11,9 +11,9 @@ class Missile: GameObject {
   Type type;
   Vec2 d;
 
-  this(Type t, Vec2 direction) {
-    register(new Transform(Transform.Org.World));
-    register(new RigidBody);
+  this(Type t, Vec2 direction, Vec2 pos) {
+    register(new Transform(Transform.Org.World)).pos = pos;
+    register(new RigidBody).a = Vec2(0,0);
     auto missile = new ImageAsset("assets/hero0.png");
     register(new SpriteRenderer(missile));
     this.type = t;
@@ -40,7 +40,7 @@ class Missile: GameObject {
 
   override void loop() {
     auto tform = component!Transform;
-    if(tform.pos.x > 1000 || tform.pos.y > 50)destroy;
+    if(tform.pos.x > 1000 || tform.pos.y > 1000)destroy;
     final switch(this.type){
       case Type.Normal: break;
     }

@@ -2,6 +2,8 @@ module game.entities.Hero;
 
 import engine;
 import game;
+import sdl_mixer;
+
 
 class Hero: GameObject {
   int life;
@@ -19,7 +21,7 @@ class Hero: GameObject {
   }
 
   override void setup() {
-    register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
+    //register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
   }
 
   override void loop() {
@@ -30,10 +32,8 @@ class Hero: GameObject {
     if(im.key('w')) tform.pos.y += v.y * dur * -1;
     if(im.key('s')) tform.pos.y += v.y * dur;
     // missile
-    if(im.key(' ')){
-      log(type++);
-      time = 0;
-      register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
+    if(im.keyOnce('\r')){
+      register(new Missile(Missile.Type.Normal, Vec2(1, 0),tform.pos));
     }
   }
 }
