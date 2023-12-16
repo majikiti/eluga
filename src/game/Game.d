@@ -4,9 +4,14 @@ import engine;
 import game;
 
 class Game: GameObject {
-  Stage stage;
+  // Router router;
 
   this() {
-    stage = register(new Home);
+    //stage = register(new Home);
+    register(new TitleScene);
+    // router = new Router!(
+    //   "home",   ctx => new Home(ctx),
+    //   "title",  ctx => new Title(ctx),
+    // );
   }
 }

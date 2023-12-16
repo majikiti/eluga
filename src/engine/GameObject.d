@@ -38,7 +38,7 @@ class GameObject: Loggable {
 
   package void realLoop() {
     foreach(c; components) {
-      try c.loop;
+      try c.realLoop;
       catch(Exception e) err("Component exception in loop\n", e);
     }
     try loop;

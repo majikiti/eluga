@@ -11,7 +11,6 @@ class Text: Component{
   private string text;
   private SDL_Surface* surface;
   private SDL_Texture* texture;
-  private bool active;
   SDL_Color c;
 
   this(TextAsset asset){
@@ -24,16 +23,11 @@ class Text: Component{
   }
 
   void createTexture(){
-    import std;
     if(go.ctx == null || font is null)return;
-    if(texture != null){
-      writeln("destroy texture");
-      SDL_DestroyTexture(texture);
-    }
-    if(surface != null){
-      writeln("destroy surface");
-      SDL_FreeSurface(surface);
-    }
+
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
+    
     surface = TTF_RenderUTF8_Blended(font.font, text.toStringz, c);
     texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
   }
@@ -53,10 +47,7 @@ class Text: Component{
     createTexture();
   }
 
-
-
   override void loop(){
-    if(!active)return;
     if(!go.has!Transform || text == null || go.ctx == null || surface == null || texture == null){
       return;
     }
@@ -75,7 +66,5 @@ class Text: Component{
     pasteRect.w = iw;
 
     SDL_RenderCopy(go.ctx.r, texture, &txtRect, &pasteRect);
-    import std;
-    writeln(SDL_GetError.to!string);
   }
 }

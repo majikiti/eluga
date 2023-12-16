@@ -3,6 +3,7 @@ module engine;
 public import engine.assets;
 public import engine.components;
 public import engine.core;
+public import engine.extra;
 
 public import engine.Asset;
 public import engine.Component;

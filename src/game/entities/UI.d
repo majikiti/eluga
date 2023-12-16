@@ -6,7 +6,7 @@ import std;
 
 class UI: GameObject {
   Text text;
-  int time;
+  size_t time;
   this(){
     register(new Transform);
   }
@@ -20,5 +20,6 @@ class UI: GameObject {
   override void loop(){
     time++;
     text.setText(time.to!string);
+    dbg(time.to!string);
   }
 }
