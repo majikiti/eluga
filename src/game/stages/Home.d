@@ -16,13 +16,14 @@ class Home: Stage {
     tform.scale.x = 1.5;
     bg = new ImageAsset("assets/_.jpeg");
     register(new SpriteRenderer(bg));
+    register(new UI);
     //auto missile = register(new Missile(Missile.Type.Normal, Vec2(1, 0)));
   }
 
   override void setup(){
     BGM = new AudioAsset("assets/maou_bgm_8bit29.ogg");
-    audio = register(new AudioSource(BGM));
-    audio.play(-1);
-    audio.volume(15);
+    // audio = register(new AudioSource(BGM));
+    // audio.play(-1);
+    // audio.volume(15);
   }
 }

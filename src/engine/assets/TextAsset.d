@@ -11,6 +11,7 @@ class TextAsset: Asset {
   private int size;
 
   this(string path, int ptSize){
+    TTF_Init();
     size = ptSize;
     font = TTF_OpenFont(path.toStringz,size);
   }

@@ -16,8 +16,6 @@ class System: Loggable {
     ctx.im = new InputManager;
     ctx.createWin;
     ctx.createRdr;
-
-    TTF_Init();
     auto ares = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
   }
 

@@ -6,6 +6,7 @@ import engine;
 
 class SpriteRenderer: Component {
   private SDL_Surface* surface;
+  SDL_Texture* texture;
   SDL_Rect rect;
 
   this(ImageAsset asset) {
@@ -17,7 +18,7 @@ class SpriteRenderer: Component {
   override void loop() {
     auto tform = go.component!Transform;
     auto pos = tform.worldPos;
-    auto texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
+    texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
     scope(exit) SDL_DestroyTexture(texture);
 
     rect.x = cast(int)pos.x;

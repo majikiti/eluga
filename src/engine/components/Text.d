@@ -11,17 +11,55 @@ class Text: Component{
   private string text;
   private SDL_Surface* surface;
   private SDL_Texture* texture;
-
+  private bool active;
   SDL_Color c;
 
-  private void cleateTexture(){
-    if(!go.has!Transform || text == null){
-      return;
+  this(TextAsset asset){
+    font = asset;
+    c.a = 255;
+  }
+  
+  void setActive(bool flag){
+    active = flag;
+  }
+
+  void createTexture(){
+    import std;
+    if(go.ctx == null || font is null)return;
+    if(texture != null){
+      writeln("destroy texture");
+      SDL_DestroyTexture(texture);
     }
-    
+    if(surface != null){
+      writeln("destroy surface");
+      SDL_FreeSurface(surface);
+    }
     surface = TTF_RenderUTF8_Blended(font.font, text.toStringz, c);
     texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
+  }
 
+  void setFont(TextAsset font){
+    this.font = font;
+    createTexture();
+  }
+
+  void setText(string text){
+    this.text = text;
+    createTexture();
+  }
+
+  void setColor(ubyte r, ubyte g, ubyte b, ubyte a = 255){
+    c.r = r, c.g = g, c.b = b, c.a = a;
+    createTexture();
+  }
+
+
+
+  override void loop(){
+    if(!active)return;
+    if(!go.has!Transform || text == null || go.ctx == null || surface == null || texture == null){
+      return;
+    }
     int iw,ih;
     SDL_QueryTexture(texture, null, null, &iw, &ih);
 
@@ -37,25 +75,7 @@ class Text: Component{
     pasteRect.w = iw;
 
     SDL_RenderCopy(go.ctx.r, texture, &txtRect, &pasteRect);
-  }
-
-  this(TextAsset asset){
-    font = asset;
-    c.a = 255;
-  }
-
-  void setFont(TextAsset font){
-    this.font = font;
-    cleateTexture;
-  }
-
-  void setText(string text){
-    this.text = text;
-    cleateTexture;
-  }
-
-  void setColor(ubyte r, ubyte g, ubyte b, ubyte a = 255){
-    c.r = r, c.g = g, c.b = b, c.a = a;
-    cleateTexture;
+    import std;
+    writeln(SDL_GetError.to!string);
   }
 }

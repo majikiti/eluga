@@ -38,9 +38,9 @@ class Missile: GameObject {
     }
 
     auto clip = new AudioAsset("assets/se_rifle01.mp3");
-    auto audio = register(new AudioSource(clip));
-    audio.volume(20);
-    audio.play();
+    // auto audio = register(new AudioSource(clip));
+    // audio.volume(20);
+    // audio.play();
   }
 
   override void loop() {

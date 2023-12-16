@@ -21,9 +21,7 @@ class Hero: GameObject {
   }
 
   override void setup() {
-    auto jumpSE = new AudioAsset("assets/se_jump1.mp3");
-    auto audio = register(new AudioSource(jumpSE));
-    audio.volume(15);
+    
   }
 
   override void loop() {
@@ -42,9 +40,9 @@ class Hero: GameObject {
 
     //jump
     if(tform.pos.y >= 340 && im.keyOnce(' ')){
-      auto audio = component!AudioSource;
+      //auto audio = component!AudioSource;
       rb.v -= Vec2(0, jumpSpeed);
-      audio.play();
+      //audio.play();
     }
 
     // missile
