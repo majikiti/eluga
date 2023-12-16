@@ -78,7 +78,8 @@ class GameObject: Loggable {
     return t.length ? t.front : null;
   }
 
-  GO register(GO: GameObject)(GO e) {
+  GO register(GO: GameObject)(GO e, string file = __FILE__, size_t line = __LINE__) {
+    if(ctx is null) throw new Nullpo("registering in constructor is not supported.", file, line);
     auto go = cast(GameObject)e;
     go.parent = this;
     children ~= e;

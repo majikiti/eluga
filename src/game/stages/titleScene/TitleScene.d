@@ -9,14 +9,11 @@ class TitleScene: Stage {
   AudioSource audio;
   Transform tform;
 
-  this() {
+  override void setup(){
     tform = register(new Transform(Transform.Org.World));
     tform.scale.x = 1.5;
     bg = new ImageAsset("assets/_.jpeg");
     register(new SpriteRenderer(bg));
-  }
-
-  override void setup(){
     BGM = new AudioAsset("assets/maou_bgm_8bit29.ogg");
     audio = register(new AudioSource(BGM));
     audio.play(-1);
