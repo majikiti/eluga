@@ -1,6 +1,6 @@
 module engine.GameObject;
 
-import std.typecons;
+import std;
 import engine;
 
 class GameObject: Loggable {
@@ -14,17 +14,16 @@ class GameObject: Loggable {
 
   auto dur() const => real(ctx.elapsed.total!"usecs") / 4096;
   auto im() const => ctx.im;
+  auto everyone() => ctx.root.descendant;
 
-  void everyone(alias f)() => ctx.root.walk!f;
-  package void walk(alias f)() {
-    f(this);
-    foreach(e; children) e.walk!f;
-  }
+  // todo: いい感じのRangeにするかもしれないし，しないかもしれない
+  GameObject[] descendant() => children ~ children.map!(e => e.descendant).join;
 
   // core functions
 
   void setup() {}
   void loop() {}
+  void collide(GameObject go) {}
 
   package void realSetup(Context* ctx) {
     this.ctx = ctx;
@@ -105,8 +104,5 @@ class GameObject: Loggable {
       parent.children = parent.children.remove(i);
       return;
     }
-  }
-
-  void onCollisionEnter(GameObject dstin){
   }
 }

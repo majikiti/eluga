@@ -1,6 +1,7 @@
 module engine.System;
 
 import core.time;
+import std;
 import sdl;
 import sdl_mixer;
 import engine;
@@ -78,16 +79,12 @@ class System: Loggable {
     if(!keyUpdate)ctx.im.once ^= ctx.im.once;
 
     // Collider
-    GameObject[] gos;
-    ctx.root.everyone!((e) {
-      if(e.has!BoxCollider && e.has!Transform) gos ~= e;
-      // Please PutOn component.Transform
-    });
+    auto gos = ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
     foreach(i, jewish; gos){
       foreach(j, palestine; gos[i+1..$]){
         if(isObjectsConflict(jewish, palestine)){
-          jewish.onCollisionEnter(palestine);
-          palestine.onCollisionEnter(jewish);
+          jewish.collide(palestine);
+          palestine.collide(jewish);
         }
       }
     }
