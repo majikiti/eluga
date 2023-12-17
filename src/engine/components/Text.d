@@ -17,10 +17,6 @@ class Text: Component{
     font = asset;
     c.a = 255;
   }
-  
-  void setActive(bool flag){
-    active = flag;
-  }
 
   void createTexture(){
     if(go.ctx == null || font is null)return;
@@ -54,7 +50,9 @@ class Text: Component{
     int iw,ih;
     SDL_QueryTexture(texture, null, null, &iw, &ih);
 
-    auto pos = go.component!Transform.pos;
+    auto tform = go.component!Transform;
+    auto pos = tform.worldPos;
+    auto scale = tform.scale;
     SDL_Rect txtRect;
     txtRect.h = ih;
     txtRect.w = iw;
@@ -62,9 +60,9 @@ class Text: Component{
     SDL_Rect pasteRect;
     pasteRect.x = cast(int)pos.x;
     pasteRect.y = cast(int)pos.y;
-    pasteRect.h = ih;
-    pasteRect.w = iw;
+    pasteRect.h = cast(int)(ih * scale.x);
+    pasteRect.w = cast(int)(iw*scale.y);
 
-    SDL_RenderCopy(go.ctx.r, texture, &txtRect, &pasteRect);
+    SDL_RenderCopyEx(go.ctx.r, texture, &txtRect, &pasteRect, cast(double)tform.rot, null, SDL_FLIP_NONE);
   }
 }

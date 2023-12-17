@@ -18,6 +18,6 @@ class TitleScene: Stage {
     audio = register(new AudioSource(BGM));
     audio.play(-1);
     audio.volume(15);
-    auto title = register(new TitleText);
+    auto title = register(new TextBox("Hello"));
   }
 }

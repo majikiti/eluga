@@ -8,7 +8,7 @@ class Enemy: GameObject {
   int type;
   immutable string imgdir = "assets/enemy.png";
 
-  this() {
+  override void setup(){
     register(new Transform);
 
     auto enemy = new ImageAsset(imgdir);

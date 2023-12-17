@@ -33,7 +33,6 @@ class GameObject: Loggable {
     }
     try setup;
     catch(Exception e) err("GameObject exception in setup\n", e);
-    foreach(e; children) e.realSetup(ctx);
   }
 
   package void realLoop() {
