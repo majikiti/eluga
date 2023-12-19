@@ -1,6 +1,7 @@
 module engine.assets.TextAsset;
 
 import std;
+import sdl;
 import sdl_ttf;
 import engine;
 
@@ -13,7 +14,7 @@ class TextAsset: Asset {
     this.pt = pt;
   }
 
-  void render(string text, SDL_Color c) {
+  Surface render(string text, SDL_Color c) {
     auto surface = TTF_RenderUTF8_Blended(font.data, text.toStringz, c);
     return new Surface(surface);
   }

@@ -15,25 +15,26 @@ shared static ~this() {
 shared FontData[int][string] fonts;
 
 class Font {
-  private const FontData font;
+  private FontData font;
 
   this(string path, int pt) {
     auto var = path in fonts;
     if(var) {
       auto cache = pt in *var;
       if(cache) {
-        font = *cache;
+        font = cast(FontData)*cache;
         return;
       }
     }
-    font = fonts[path][pt] = new FontData(path, pt);
+    font = new FontData(path, pt);
+    fonts[path][pt] = cast(shared FontData)font;
   }
 
-  auto data() const => font.data;
+  auto data() => font.data;
 }
 
 class FontData {
-  private const TTF_Font* data;
+  private TTF_Font* data;
 
   this(string path, int pt) {
     data = TTF_OpenFont(path.toStringz, pt);

@@ -13,7 +13,7 @@ class Missile: GameObject {
 
   this(Type t, Vec2 direction, Vec2 pos) {
     register(new Transform(Transform.Org.World)).pos = pos;
-    register(new RigidBody).a = Vec2(0, 0);
+    register(new RigidBody(1)).a = Vec2(0, 0);
     auto missile = new ImageAsset("assets/hero0.png");
     register(new SpriteRenderer(missile));
     this.type = t;
@@ -27,7 +27,7 @@ class Missile: GameObject {
   override void setup() {
     auto rb = component!RigidBody;
     Vec2 f;
-    final switch(t) {
+    final switch(type) {
       case Type.Normal:
         if(this.d.x >= 0) f = Vec2(3, 0);
         else f = Vec2(-3, 0);

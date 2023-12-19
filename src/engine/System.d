@@ -6,22 +6,26 @@ import sdl;
 import sdl_mixer;
 import sdl_ttf;
 import engine;
+import utils;
+
+shared static this() {
+  SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO);
+  Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
+}
+
+shared static ~this() {
+  Mix_CloseAudio;
+  SDL_Quit;
+}
 
 class System: Loggable {
   Context ctx;
 
   this(GameObject root) {
-    SDL_Init(SDL_INIT_VIDEO);
     ctx.root = root;
     ctx.im = new InputManager;
     ctx.createWin;
     ctx.createRdr;
-    auto ares = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
-  }
-
-  ~this() {
-    Mix_CloseAudio();
-    SDL_Quit;
   }
 
   void run() {
@@ -81,11 +85,12 @@ class System: Loggable {
 
     // Collider
     auto gos = ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
-    foreach(i, jewish; gos){
-      foreach(j, palestine; gos[i+1..$]){
-        if(isObjectsConflict(jewish, palestine)){
-          jewish.collide(palestine);
-          palestine.collide(jewish);
+    foreach(i, p; gos) {
+      foreach(j, q; gos[i+1..$]) {
+        auto c = objectsConflict(p, q);
+        if(c.a && c.b) {
+          p.collide(q);
+          q.collide(p);
         }
       }
     }
@@ -97,35 +102,30 @@ class System: Loggable {
     ctx.root.realLoop;
     SDL_RenderPresent(ctx.r);
   }
+}
 
-  Vec2 isObjectsConflict(GameObject obj1, GameObject obj2){
-    Vec2 pos1, pos2, size1, size2, v1, v2, new1, new2;
-    //Vec2[4] vertex1, vertex2; // Upper Left: idx0, Upper Right: idx1, Lower Left: idx2, Lower Right: idx3
-    Vec2 signVect = Vec2(1.0L, 0);
-    Vec2 cosVect = Vec2(0, 1.0L);
+Pair!bool objectsConflict(GameObject obj1, GameObject obj2) {
+  // generate Vertex
+  auto pos1 = obj1.component!Transform.pos;
+  auto v1 = obj1.component!RigidBody.v;
+  auto size1 = obj1.component!BoxCollider.size / 2;
 
-    // generate Vertex
-    pos1 = obj1.component!Transform.pos;
-    v1 = obj1.component!RigidBody.v;
-    size1 = obj1.component!BoxCollider.size/2.0L;
+  auto pos2 = obj2.component!Transform.pos;
+  auto v2 = obj2.component!RigidBody.v;
+  auto size2 = obj2.component!BoxCollider.size / 2;
 
-    pos2 = obj2.component!Transform.pos;
-    v2 = obj2.component!RigidBody.v;
-    size2 = obj2.component!BoxCollider.size/2.0L;
+  // checking Vertex Confliction
+  auto touched(Vec2 pos1, Vec2 pos2) =>
+    (abs(pos1.x - pos2.x) < size1.x + size2.x) &&
+    (abs(pos1.y - pos2.y) < size1.y + size2.y);
 
-    // checking Vertex Confliction
-    Vec2 retval = Vec2(0, 0);
-    foreach(x; [0, 1]){
-      foreach(y; [0, 1]){
-        if(x == 0 && y == 0) continue;
-        new1 = pos1 + v1 * (x * signVect + y * cosVect);
-        new2 = pos2 + v2 * (x * signVect + y * cosVect);
-        if((abs(new1.x-new2.x) < size1.x+size2.x) || (abs(new1.y-new2.y) < size1.y+size2.y)){
-          retval.x |= x;
-          retval.y |= y;
-        }
-      }
-    }
-    return retval;
+  auto res1 = touched(pos1 + v1 * Vec2(0, 1), pos2 + v2 * Vec2(0, 1));
+  auto res2 = touched(pos1 + v1 * Vec2(1, 0), pos2 + v2 * Vec2(1, 0));
+
+  auto res = Pair!bool(res1, res2);
+  if(!res1 && !res2) {
+    if(touched(pos1 + v1, pos2 + v2)) res = Pair!bool(true, true);
   }
+
+  return res;
 }

@@ -14,7 +14,7 @@ class Hero: GameObject {
   
   override void setup() {
     register(new Transform);
-    register(new RigidBody).a = Vec2(0,0);
+    register(new RigidBody(1)).a = Vec2(0, 0);
 
     auto hero0 = new ImageAsset("assets/hero0.png");
     register(new SpriteRenderer(hero0));

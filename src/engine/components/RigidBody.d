@@ -6,21 +6,17 @@ Vec2 g = Vec2(0, 9.81);
 
 // Need components: Transform
 class RigidBody: Component {
-  Vec2 v;
-  Vec2 a;
-  real m;
-  // 反発係数
-  real e;
-  // 摩擦係数
-  real mu;
+  Vec2 v, a, F, gF;
+  real m; // 質量
+  real e; // 反発係数
+  real mu; // 摩擦係数
 
-  private Vec2 F;
-  private Vec2 gF; // 重力のベクトル
-
-  this(real m, real e = 1.0L, real mu = 1.0L, Vec2 v0 = Vec2(0, 0)) {
-    this.m = m;
-    gF = new Vec2(0, m * g);
+  this(real m, real e = 1, real mu = 1, Vec2 v0 = Vec2(0, 0)) {
     this.v = v0;
+    this.gF = m * g;
+    this.m = m;
+    this.e = e;
+    this.mu = mu;
   }
 
   void addForce(Vec2 F) {
@@ -28,13 +24,10 @@ class RigidBody: Component {
   }
 
   // 反発(引数は入射ベクトルと壁の衝突かの判定)
-  void repulsion(Vec2 inForce, bool iswall = false) {
-    Vec2 opeVect;
-    if(iswall){
-      opeVect = new Vec2([-1.0L * e, 1.0L / mu]);
-    }else{
-      opeVect = new Vec2([1.0L / mu, -1.0L * e]);
-    }
+  void repulsion(Vec2 inForce, bool isWall = false) {
+    auto opeVect = isWall
+      ? Vec2(-1.0L * e, 1.0L / mu)
+      : Vec2(1.0L / mu, -1.0L * e);
     addForce(inForce * opeVect);
   }
 

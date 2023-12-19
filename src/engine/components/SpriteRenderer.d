@@ -1,7 +1,6 @@
 module engine.components.SpriteRenderer;
 
 import sdl;
-import sdl_image;
 import engine;
 
 class SpriteRenderer: Component {
@@ -20,10 +19,10 @@ class SpriteRenderer: Component {
 
     rect.x = cast(int)pos.x;
     rect.y = cast(int)pos.y;
-    rect.w = cast(int)(surface.w * tform.scale.x);
-    rect.h = cast(int)(surface.h * tform.scale.y);
+    rect.w = cast(int)(image.surface.w * tform.scale.x);
+    rect.h = cast(int)(image.surface.h * tform.scale.y);
 
-    auto texture = new Texture(go.ctx.r, surface);
+    auto texture = new Texture(go.ctx.r, image.surface);
     SDL_RenderCopyEx(go.ctx.r, texture.data, null, &rect, cast(double)tform.rot, null, SDL_FLIP_NONE);
   }
 }

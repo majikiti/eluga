@@ -9,7 +9,7 @@ class Enemy: GameObject {
   immutable string imgdir = "assets/enemy.png";
   private const Vec2 initPos;
 
-  this(const Vec2 initPos) {
+  this(const Vec2 initPos = Vec2(0, 0)) {
     this.initPos = initPos;
   }
 

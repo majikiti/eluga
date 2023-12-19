@@ -1,10 +1,11 @@
 module engine.core.media.Image;
 
+import std;
 import sdl;
 import sdl_image;
 
 class Image {
-  package const SDL_Surface* data;
+  SDL_Surface* data;
 
   this(string path) {
     data = IMG_Load(path.toStringz);

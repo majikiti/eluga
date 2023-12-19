@@ -36,6 +36,8 @@ struct Vec2 {
     return Vec2(v);
   }
 
+  auto opBinaryRight(string op, T)(T lhs) => opBinary!(op)(lhs);
+
   auto opOpAssign(string op, T: Vec2)(T rhs) {
     mixin(`pos[] ` ~ op ~ `= rhs.pos[];`);
     return this;

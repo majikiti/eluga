@@ -3,11 +3,11 @@ module engine.assets.ImageAsset;
 import engine;
 
 class ImageAsset: Asset {
-  Image image;
+  private Image image;
 
   this(string path) {
-    surface = new Image(path);
+    image = new Image(path);
   }
 
-  auto surface() const => image.surface;
+  auto surface() => image.data;
 }

@@ -39,7 +39,7 @@ class Text: Component {
 
   override void loop(){
     int iw,ih;
-    SDL_QueryTexture(texture, null, null, &iw, &ih);
+    SDL_QueryTexture(texture.data, null, null, &iw, &ih);
 
     auto tform = go.component!Transform;
     auto pos = tform.worldPos;
@@ -54,6 +54,6 @@ class Text: Component {
     pasteRect.h = cast(int)(ih * scale.x);
     pasteRect.w = cast(int)(iw*scale.y);
 
-    SDL_RenderCopyEx(go.ctx.r, texture, &txtRect, &pasteRect, cast(double)tform.rot, null, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(go.ctx.r, texture.data, &txtRect, &pasteRect, cast(double)tform.rot, null, SDL_FLIP_NONE);
   }
 }
