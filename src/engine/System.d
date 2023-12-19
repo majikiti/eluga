@@ -98,26 +98,33 @@ class System: Loggable {
     SDL_RenderPresent(ctx.r);
   }
 
-  bool isObjectsConflict(GameObject obj1, GameObject obj2){
-    Vec2[4] globalVertex1, globalVertex2; // Upper Left: idx0, Upper Right: idx1, Lower Left: idx2, Lower Right: idx3
+  Vec2 isObjectsConflict(GameObject obj1, GameObject obj2){
+    Vec2 pos1, pos2, size1, size2, v1, v2, new1, new2;
+    //Vec2[4] vertex1, vertex2; // Upper Left: idx0, Upper Right: idx1, Lower Left: idx2, Lower Right: idx3
     Vec2 signVect = Vec2(1.0L, 0);
+    Vec2 cosVect = Vec2(0, 1.0L);
 
-    globalVertex1[0] = obj1.component!Transform.pos - obj1.component!BoxCollider.size/2.0L;
-    globalVertex1[3] = obj1.component!Transform.pos + obj1.component!BoxCollider.size/2.0L;
-    globalVertex1[1] = globalVertex1[0] + obj1.component!BoxCollider.size * signVect;
-    globalVertex1[2] = globalVertex1[3] - obj1.component!BoxCollider.size * signVect;
+    // generate Vertex
+    pos1 = obj1.component!Transform.pos;
+    v1 = obj1.component!RigidBody.v;
+    size1 = obj1.component!BoxCollider.size/2.0L;
 
-    globalVertex2[0] = obj2.component!Transform.pos - obj2.component!BoxCollider.size/2.0L;
-    globalVertex2[3] = obj2.component!Transform.pos + obj2.component!BoxCollider.size/2.0L;
-    globalVertex2[1] = globalVertex2[0] + obj2.component!BoxCollider.size * signVect;
-    globalVertex2[2] = globalVertex2[3] - obj2.component!BoxCollider.size * signVect;
+    pos2 = obj2.component!Transform.pos;
+    v2 = obj2.component!RigidBody.v;
+    size2 = obj2.component!BoxCollider.size/2.0L;
 
-    bool retval = false;
-    foreach(i, ivtx; globalVertex1){
-      retval &= (ivtx.x>= globalVertex2[0].x && ivtx.x<=globalVertex2[3].x) && (ivtx.y>=globalVertex2[0].y && ivtx.y<=globalVertex2[3].y);
-    }
-    foreach(i, ivtx; globalVertex2){
-      retval &= (ivtx.x>= globalVertex1[0].x && ivtx.x<=globalVertex1[3].x) && (ivtx.y>=globalVertex1[0].y && ivtx.y<=globalVertex1[3].y);
+    // checking Vertex Confliction
+    Vec2 retval = Vec2(0, 0);
+    foreach(x; [0, 1]){
+      foreach(y; [0, 1]){
+        if(x == 0 && y == 0) continue;
+        new1 = pos1 + v1 * (x * signVect + y * cosVect);
+        new2 = pos2 + v2 * (x * signVect + y * cosVect);
+        if((abs(new1.x-new2.x) < size1.x+size2.x) || (abs(new1.y-new2.y) < size1.y+size2.y)){
+          retval.x |= x;
+          retval.y |= y;
+        }
+      }
     }
     return retval;
   }

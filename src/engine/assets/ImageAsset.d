@@ -1,18 +1,13 @@
 module engine.assets.ImageAsset;
 
-import std.string;
-import sdl;
-import sdl_image;
 import engine;
 
 class ImageAsset: Asset {
-  SDL_Surface* surface;
+  Image image;
 
   this(string path) {
-    surface = IMG_Load(path.toStringz);
+    surface = new Image(path);
   }
 
-  ~this() {
-    SDL_FreeSurface(surface);
-  }
+  auto surface() const => image.surface;
 }

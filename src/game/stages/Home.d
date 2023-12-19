@@ -18,7 +18,7 @@ class Home: Stage {
 
     bg = new ImageAsset("assets/_.jpeg");
     register(new SpriteRenderer(bg));
-    register(new UI);
+    // register(new UI);
 
     BGM = new AudioAsset("assets/maou_bgm_8bit29.ogg");
     audio = register(new AudioSource(BGM));

@@ -1,46 +1,21 @@
 module engine.components.AudioSource;
 
-import sdl;
-import sdl_mixer;
+import std;
 import engine;
-import std.algorithm.comparison;
-
 
 class AudioSource: Component {
+  private Player player;
 
-  private int channel = -1;
-  Mix_Chunk* sound;
-
-  this(AudioAsset asset){
-    sound = asset.sound;
+  this(AudioAsset asset) {
+    this.player = new Player(asset.sound);
   }
 
-  void set(AudioAsset asset){
-    sound = asset.sound;
+  void set(AudioAsset asset) {
+    this(asset);
   }
 
-  int play(int loops = 0){
-    channel = Mix_PlayChannel(channel, sound, loops);
-    return channel == -1 ? -1 : 0;
-  }
-
-  int volume(int vol){
-    return Mix_Volume(channel, vol);
-  }
-
-  void pause(){
-    channel.Mix_Pause;
-  }
-
-  void resume(){
-    Mix_Resume(channel);
-  }
-
-  bool isPlaying(){
-    return channel.Mix_Playing > 0;
-  }
-
-  bool paused(){
-    return cast(bool)channel.Mix_Paused;
-  }
+  void play(int loop = 0) => player.play(loop);
+  void volume(int vol) => player.volume(vol);
+  void pause() => player.pause;
+  void resume() => player.resume;
 }

@@ -1,22 +1,20 @@
 module engine.assets.TextAsset;
 
-import std.string;
-import sdl;
-import sdl_image;
+import std;
 import sdl_ttf;
 import engine;
 
 class TextAsset: Asset {
-  TTF_Font* font;
-  private int size;
+  package Font font;
+  package int pt;
 
-  this(string path, int ptSize){
-    TTF_Init();
-    size = ptSize;
-    font = TTF_OpenFont(path.toStringz,size);
+  this(string path, int pt) {
+    this.font = new Font(path, pt);
+    this.pt = pt;
   }
-  
-  ~this(){
-    TTF_CloseFont(font);
+
+  void render(string text, SDL_Color c) {
+    auto surface = TTF_RenderUTF8_Blended(font.data, text.toStringz, c);
+    return new Surface(surface);
   }
 }

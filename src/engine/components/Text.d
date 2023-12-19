@@ -6,26 +6,20 @@ import sdl_image;
 import sdl_ttf;
 import engine;
 
-class Text: Component{
+class Text: Component {
   private TextAsset font;
+  private Texture texture;
   private string text;
-  private SDL_Surface* surface;
-  private SDL_Texture* texture;
   SDL_Color c;
 
-  this(TextAsset asset){
+  this(TextAsset asset) {
     font = asset;
     c.a = 255;
   }
 
   void createTexture(){
-    if(go.ctx == null || font is null)return;
-
-    SDL_DestroyTexture(texture);
-    SDL_FreeSurface(surface);
-    
-    surface = TTF_RenderUTF8_Blended(font.font, text.toStringz, c);
-    texture = SDL_CreateTextureFromSurface(go.ctx.r, surface);
+    auto surface = font.render(text, c);
+    texture = new Texture(go.ctx.r, surface.data);
   }
 
   void setFont(TextAsset font){
@@ -44,9 +38,6 @@ class Text: Component{
   }
 
   override void loop(){
-    if(!go.has!Transform || text == null || go.ctx == null || surface == null || texture == null){
-      return;
-    }
     int iw,ih;
     SDL_QueryTexture(texture, null, null, &iw, &ih);
 

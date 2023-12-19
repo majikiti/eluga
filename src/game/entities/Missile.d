@@ -13,17 +13,11 @@ class Missile: GameObject {
 
   this(Type t, Vec2 direction, Vec2 pos) {
     register(new Transform(Transform.Org.World)).pos = pos;
-    register(new RigidBody).a = Vec2(0,0);
+    register(new RigidBody).a = Vec2(0, 0);
     auto missile = new ImageAsset("assets/hero0.png");
     register(new SpriteRenderer(missile));
     this.type = t;
-    final switch(t) {
-      case Type.Normal:
-        if(direction.x >= 0) d = Vec2(3, 0);
-        else d = Vec2(-3, 0);
-        break;
-    }
-
+    this.d = direction;
     /*
     auto missile = new ImageAsset("");
     register(new SpriteRenderer(missile));
@@ -32,10 +26,14 @@ class Missile: GameObject {
 
   override void setup() {
     auto rb = component!RigidBody;
-    rb.v = d;
-    final switch(this.type){
-      case Type.Normal: break;
+    Vec2 f;
+    final switch(t) {
+      case Type.Normal:
+        if(this.d.x >= 0) f = Vec2(3, 0);
+        else f = Vec2(-3, 0);
+        break;
     }
+    rb.addForce(f);
 
     auto clip = new AudioAsset("assets/se_rifle01.mp3");
     // auto audio = register(new AudioSource(clip));
@@ -46,7 +44,7 @@ class Missile: GameObject {
   override void loop() {
     auto tform = component!Transform;
     tform.rot++;
-    if(tform.pos.x > 1000 || tform.pos.y > 1000)destroy;
+    if(tform.pos.x > 1000 || tform.pos.y > 1000) destroy;
     final switch(this.type){
       case Type.Normal: break;
     }

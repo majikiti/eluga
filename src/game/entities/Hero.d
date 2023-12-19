@@ -37,13 +37,14 @@ class Hero: GameObject {
     //jump
     if(tform.pos.y >= 340 && im.keyOnce(' ')){
       //auto audio = component!AudioSource;
-      rb.v -= Vec2(0, jumpSpeed);
+      rb.addForce(Vec2(0, -jumpSpeed));
+      //rb.v -= Vec2(0, jumpSpeed);
       //audio.play();
     }
 
     // missile
     if(im.keyOnce('\r')){
-      register(new Missile(Missile.Type.Normal, Vec2(1, 0),tform.pos));
+      register(new Missile(Missile.Type.Normal, Vec2(1, 0), tform.pos));
     }
   }
 }
