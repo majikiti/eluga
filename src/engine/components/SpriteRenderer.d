@@ -25,4 +25,14 @@ class SpriteRenderer: Component {
     auto texture = new Texture(go.ctx.r, image.surface);
     SDL_RenderCopyEx(go.ctx.r, texture.data, null, &rect, cast(double)tform.rot, null, SDL_FLIP_NONE);
   }
+
+ debug:
+
+  override void debugLoop() {
+    color(0, 255, 0);
+    line(Vec2(rect.x, rect.y), Vec2(rect.x, rect.y + rect.h));
+    line(Vec2(rect.x, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y + rect.h));
+    line(Vec2(rect.x + rect.w, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y));
+    line(Vec2(rect.x + rect.w, rect.y), Vec2(rect.x, rect.y));
+  }
 }
