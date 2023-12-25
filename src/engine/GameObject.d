@@ -7,7 +7,13 @@ import engine;
 class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
-  GameObject parent;
+  private GameObject _parent;
+  package bool alreadySetup = false;
+
+  GameObject parent() {
+    if(!_parent.alreadySetup) warn("parent (", _parent, ") is not set up yet!");
+    return _parent;
+  }
 
   // context
 
@@ -41,6 +47,8 @@ class GameObject: Loggable {
       catch(Exception e) err("Component exception in setup\n", e);
       debug c.debugSetup;
     }
+    foreach(e; children) e.realSetup(ctx);
+    alreadySetup = true;
     debug debugSetupPre;
     try setup;
     catch(Exception e) err("GameObject exception in setup\n", e);
@@ -103,12 +111,11 @@ class GameObject: Loggable {
     return t.length ? t.front : null;
   }
 
-  GO register(GO: GameObject)(GO e, string file = __FILE__, size_t line = __LINE__) {
-    if(ctx is null) throw new Nullpo("registering in constructor is not supported.", file, line);
+  GO register(GO: GameObject)(GO e) {
     auto go = cast(GameObject)e;
-    go.parent = this;
-    children ~= e;
-    go.realSetup(ctx);
+    go._parent = this;
+    children ~= go;
+    if(alreadySetup) go.realSetup(ctx);
     return e;
   }
 
@@ -121,6 +128,7 @@ class GameObject: Loggable {
     } else {
       components ~= c;
     }
+    if(alreadySetup) c.setup;
     return c;
   }
 

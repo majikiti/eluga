@@ -12,7 +12,7 @@ hero:
       link: /download
     - theme: alt
       text: Manual
-      link: /manual
+      link: /manual/
 
 features:
   - title: Feature A
