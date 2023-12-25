@@ -21,6 +21,9 @@ struct Vec2 {
   real size() const => sqrt(_x ^^ 2 + _y ^^ 2);
   Vec2 unit() const => this / size;
 
+  auto v() const => Vec2(0, _y);
+  auto h() const => Vec2(_x, 0);
+
   // op
 
   auto opUnary(string op)() const =>

@@ -72,6 +72,7 @@ class GameObject: Loggable {
   // utils
 
   protected void line(Vec2 a, Vec2 b) {
+    color(255, 0, 0);
     SDL_RenderDrawLine(ctx.r, cast(int)a.x, cast(int)a.y, cast(int)b.x, cast(int)b.y);
   }
 
@@ -121,20 +122,27 @@ class GameObject: Loggable {
 
   C register(C: Component)(C c) {
     c.go = this;
-    auto old = findComponent!C;
-    if(old.e) {
-      warn("registering ", C.stringof, " to ", this, " is duplicate; dropping old");
-      components[old.i] = c;
-    } else {
-      components ~= c;
+    if(has!C) {
+      warn("registering ", C.stringof, " to ", this, " is duplicate; dropping this");
+      warn("hint: you can update component with upsert(component)");
+      return component!C;
     }
+    components ~= c;
+    if(alreadySetup) c.setup;
+    return c;
+  }
+
+  C upsert(C: Component)(C c) {
+    c.go = this;
+    auto old = findComponent!C;
+    if(old.e) components[old.i] = c;
+    else components ~= c;
     if(alreadySetup) c.setup;
     return c;
   }
 
   void destroy() {
     foreach(i, e; parent.children) if(e == this) {
-      import std.algorithm.mutation;
       parent.children = parent.children.remove(i);
       return;
     }

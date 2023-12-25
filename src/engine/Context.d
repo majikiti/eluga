@@ -20,7 +20,7 @@ struct Context {
     this.w = SDL_CreateWindow(title.toStringz,
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                               w, h,
-                              SDL_WINDOW_VULKAN);
+                              SDL_WINDOW_OPENGL);
 
   SDL_Renderer* createRdr() =>
     this.r = SDL_CreateRenderer(this.w,

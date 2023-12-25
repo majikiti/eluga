@@ -25,6 +25,7 @@ class Component: Loggable {
   // utils
 
   protected void line(Vec2 a, Vec2 b) {
+    color(0, 255, 0);
     SDL_RenderDrawLine(go.ctx.r, cast(int)a.x, cast(int)a.y, cast(int)b.x, cast(int)b.y);
   }
 

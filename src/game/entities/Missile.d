@@ -7,17 +7,17 @@ class Missile: GameObject {
     Normal,
   }
 
-  int id;
   Type type;
-  Vec2 d;
+  Vec2 dir;
 
-  this(Type t, Vec2 direction, Vec2 pos) {
+  this(Type type, Vec2 dir, Vec2 pos) {
+    this.type = type;
+    this.dir = dir;
+
     register(new Transform(Transform.Org.World)).pos = pos;
     register(new RigidBody(1)).a = Vec2(0, 0);
     auto missile = new ImageAsset("assets/hero0.png");
     register(new SpriteRenderer(missile));
-    this.type = t;
-    this.d = direction;
     /*
     auto missile = new ImageAsset("");
     register(new SpriteRenderer(missile));
@@ -29,7 +29,7 @@ class Missile: GameObject {
     Vec2 f;
     final switch(type) {
       case Type.Normal:
-        if(this.d.x >= 0) f = Vec2(3, 0);
+        if(dir.x >= 0) f = Vec2(3, 0);
         else f = Vec2(-3, 0);
         break;
     }
@@ -45,7 +45,7 @@ class Missile: GameObject {
     auto tform = component!Transform;
     tform.rot++;
     if(tform.pos.x > 1000 || tform.pos.y > 1000) destroy;
-    final switch(this.type){
+    final switch(type) {
       case Type.Normal: break;
     }
   }

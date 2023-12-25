@@ -119,8 +119,8 @@ Pair!bool objectsConflict(GameObject obj1, GameObject obj2) {
     (abs(pos1.x - pos2.x) < size1.x + size2.x) &&
     (abs(pos1.y - pos2.y) < size1.y + size2.y);
 
-  auto res1 = touched(pos1 + v1 * Vec2(0, 1), pos2 + v2 * Vec2(0, 1));
-  auto res2 = touched(pos1 + v1 * Vec2(1, 0), pos2 + v2 * Vec2(1, 0));
+  auto res1 = touched(pos1 + v1.v, pos2 + v2.v);
+  auto res2 = touched(pos1 + v1.h, pos2 + v2.h);
 
   auto res = Pair!bool(res1, res2);
   if(!res1 && !res2) {
