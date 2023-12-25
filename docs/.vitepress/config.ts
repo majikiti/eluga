@@ -4,6 +4,7 @@ import { defineConfig } from "vitepress"
 export default defineConfig({
   title: "Eluga Docs",
   description: "The Eluga Docs",
+  base: "/eluga/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
