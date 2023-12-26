@@ -31,6 +31,7 @@ class System: Loggable {
   void run() {
     ctx.updated = SDL_GetTicks64;
     ctx.root.realSetup(&ctx);
+    debug ctx.root.register(new DebugView);
 
     loop; // 初回レンダリング
     while(ctx.running) {
@@ -93,8 +94,7 @@ class System: Loggable {
     auto gos = ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
     foreach(i, p; gos) {
       foreach(j, q; gos[i+1..$]) {
-        auto c = objectsConflict(p, q);
-        if(c.a && c.b) {
+        if(objectsConflict(p, q)) {
           p.collide(q);
           q.collide(p);
         }
@@ -110,28 +110,11 @@ class System: Loggable {
   }
 }
 
-Pair!bool objectsConflict(GameObject obj1, GameObject obj2) {
-  // generate Vertex
+bool objectsConflict(GameObject obj1, GameObject obj2) {
   auto pos1 = obj1.component!Transform.pos;
-  auto v1 = obj1.component!RigidBody.v;
-  auto size1 = obj1.component!BoxCollider.size / 2;
-
   auto pos2 = obj2.component!Transform.pos;
-  auto v2 = obj2.component!RigidBody.v;
-  auto size2 = obj2.component!BoxCollider.size / 2;
-
-  // checking Vertex Confliction
-  auto touched(Vec2 pos1, Vec2 pos2) =>
-    (abs(pos1.x - pos2.x) < size1.x + size2.x) &&
-    (abs(pos1.y - pos2.y) < size1.y + size2.y);
-
-  auto res1 = touched(pos1 + v1.v, pos2 + v2.v);
-  auto res2 = touched(pos1 + v1.h, pos2 + v2.h);
-
-  auto res = Pair!bool(res1, res2);
-  if(!res1 && !res2) {
-    if(touched(pos1 + v1, pos2 + v2)) res = Pair!bool(true, true);
-  }
-
-  return res;
+  auto size1 = obj1.component!BoxCollider.size;
+  auto size2 = obj2.component!BoxCollider.size;
+  return (abs(pos1.x - pos2.x) < size1.x + size2.x) &&
+         (abs(pos1.y - pos2.y) < size1.y + size2.y);
 }

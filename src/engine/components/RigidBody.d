@@ -1,8 +1,9 @@
 module engine.components.RigidBody;
 
 import engine;
+import utils;
 
-Vec2 g = Vec2(0, 9.81);
+Vec2 g0 = Vec2(0, 9.81);
 
 // Need components: Transform
 class RigidBody: Component {
@@ -11,24 +12,28 @@ class RigidBody: Component {
   real e; // 反発係数
   real mu; // 摩擦係数
 
+  Vec2 g(Vec2 _g) {
+    gF = m * _g;
+    return _g;
+  }
+
   this(real m, real e = 1, real mu = 1, Vec2 v0 = Vec2(0, 0)) {
-    this.v = v0;
-    this.gF = m * g;
     this.m = m;
+    this.g = g0;
     this.e = e;
     this.mu = mu;
+    this.v = v0;
   }
 
   void addForce(Vec2 F) {
     this.F = F;
   }
 
-  // 反発(引数は入射ベクトルと壁の衝突かの判定)
-  void repulsion(Vec2 inForce, bool isWall = false) {
-    auto opeVect = isWall
-      ? Vec2(-1.0L * e, 1.0L / mu)
-      : Vec2(1.0L / mu, -1.0L * e);
-    addForce(inForce * opeVect);
+  // 反発(引数はx,y方向反転のbool値と壁の衝突かの判定)
+  void repulsion(Pair!bool touchDir, bool isWall = false) {
+    auto touchVec = Vec2(touchDir.a ? -1 : 0, touchDir.b ? -1 : 0);
+    auto repVec = touchVec * this.v * m * e;
+    addForce(repVec);
   }
 
   override void loop() {

@@ -37,8 +37,8 @@ class Hero: GameObject {
     //jump
     if(tform.pos.y >= 340 && im.keyOnce(' ')){
       //auto audio = component!AudioSource;
-      rb.addForce(Vec2(0, -jumpSpeed));
-      //rb.v -= Vec2(0, jumpSpeed);
+      // rb.addForce(Vec2(0, -jumpSpeed));
+      rb.v -= Vec2(0, jumpSpeed);
       //audio.play();
     }
 

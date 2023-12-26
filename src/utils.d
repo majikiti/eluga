@@ -2,4 +2,4 @@ module utils;
 
 import std;
 
-alias Pair(T) = Tuple!(T, "a", T, "b");
+alias Pair(T, U = T) = Tuple!(T, "a", U, "b");
