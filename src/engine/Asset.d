@@ -1,4 +1,6 @@
 module engine.Asset;
 
-class Asset {
+import engine;
+
+class Asset: Loggable {
 }

@@ -38,6 +38,8 @@ class Text: Component {
   }
 
   override void loop(){
+    if(texture is null) return;
+
     int iw,ih;
     SDL_QueryTexture(texture.data, null, null, &iw, &ih);
 
