@@ -20,6 +20,7 @@ class GameObject: Loggable {
   package Context* ctx;
 
   real dur() const => ctx.elapsed / 10.;
+  ulong uptime() const => ctx.updated;
   auto im() const => ctx.im;
   auto everyone() => ctx.root.descendant;
 

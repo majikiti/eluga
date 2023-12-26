@@ -1,23 +1,30 @@
 module game.entities.UI;
 
-import engine;
-import game;
 import std;
+import engine;
 
 class UI: GameObject {
-  Text text;
-  size_t time;
+  enum T_LIMIT = 10_000;
 
-  override void setup(){
+  Text timStr;
+  real life = 3;
+  ulong t_start; // started
+  ulong t_remain() => T_LIMIT - min(T_LIMIT, uptime - t_start); // flooring 0 (unti overflow)
+
+  override void setup() {
+    // timers
     register(new Transform);
-    component!Transform.pos = Vec2(200,200);
-    auto font = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf",40);
-    text = register(new Text(font));
+    component!Transform.pos = Vec2(400,0);
+    auto timerfont = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf",40);
+    timStr = register(new Text(timerfont));
+    t_start = uptime;
+    timStr.setText(t_remain.to!string);
+
+    // and more...
   }
 
-  override void loop(){
-    time++;
-    text.setText(time.to!string);
-    dbg(time.to!string);
+  override void loop() {
+    if(!t_remain) component!Transform.pos = Vec2(10,0);
+    timStr.setText(t_remain ? (t_remain/1000).to!string : "アルメニア滅亡");
   }
 }

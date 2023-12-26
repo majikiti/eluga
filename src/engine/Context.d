@@ -10,12 +10,11 @@ enum initFps = 60.;
 struct Context {
   bool running = true;
 
-  package {
-    // [ms]
-    ulong dur = cast(ulong)(1000 / initFps);
-    ulong updated;
-    ulong elapsed;
-  }
+  // [ms]
+  ulong dur = cast(ulong)(1000 / initFps);
+  ulong updated;
+  ulong elapsed;
+
   real fps() => 1000. / dur;
   real fps(real v) {
     dur = cast(ulong)(1000 / v);
