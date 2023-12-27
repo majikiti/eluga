@@ -13,7 +13,7 @@ class TextBox: GameObject {
   }
 
   override void setup() {
-    auto font = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf", 40);
+    auto font = new TextAsset("PixelMplus-20130602/PixelMplus12-Regular.ttf", 40);
     auto text = register(new Text(font));
     text.text = s;
 

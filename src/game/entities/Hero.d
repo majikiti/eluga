@@ -16,7 +16,7 @@ class Hero: GameObject {
     register(new Transform);
     register(new RigidBody(1)).a = Vec2(0, 0);
 
-    auto hero0 = new ImageAsset("assets/hero0.png");
+    auto hero0 = new ImageAsset("hero0.png");
     register(new SpriteRenderer(hero0));
   }
 

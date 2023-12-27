@@ -15,7 +15,7 @@ class Missile: GameObject {
     register(new Transform(Transform.Org.World)).pos = pos;
     auto rb = register(new RigidBody(1));
     rb.a = Vec2(0, 0);
-    auto missile = new ImageAsset("assets/hero0.png");
+    auto missile = new ImageAsset("hero0.png");
     register(new SpriteRenderer(missile));
 
     final switch(type) {
@@ -26,7 +26,7 @@ class Missile: GameObject {
         break;
     }
 
-    auto clip = new AudioAsset("assets/se_rifle01.mp3");
+    auto clip = new AudioAsset("se_rifle01.mp3");
     // auto audio = register(new AudioSource(clip));
     // audio.volume(20);
     // audio.play();

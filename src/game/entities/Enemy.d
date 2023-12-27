@@ -6,7 +6,7 @@ import game;
 class Enemy: GameObject {
   int life;
   int type;
-  immutable string imgdir = "assets/enemy.png";
+  immutable string imgdir = "enemy.png";
   private const Vec2 initPos;
 
   this(const Vec2 initPos = Vec2(0, 0)) {

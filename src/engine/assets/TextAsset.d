@@ -10,7 +10,7 @@ class TextAsset: Asset {
   int pt;
 
   this(string path, int pt) {
-    this.font = new Font(path, pt);
+    this.font = new Font(locateAsset(path), pt);
     this.pt = pt;
   }
 

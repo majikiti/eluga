@@ -12,7 +12,7 @@ class DebugView: GameObject {
     auto tform = register(new Transform); // for Text
     tform.pos = Vec2(8, 8);
 
-    auto font = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf", 16);
+    auto font = new TextAsset("PixelMplus-20130602/PixelMplus12-Regular.ttf", 16);
     lt = register(new Text(font));
   }
 

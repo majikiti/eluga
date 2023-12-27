@@ -7,6 +7,6 @@ class AudioAsset: Asset {
   Player player;
 
   this(string path) {
-    sound = new Sound(path);
+    sound = new Sound(locateAsset(path));
   }
 }

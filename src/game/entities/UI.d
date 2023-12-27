@@ -15,7 +15,7 @@ class UI: GameObject {
     // timers
     register(new Transform);
     component!Transform.pos = Vec2(400,0);
-    auto timerfont = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf",40);
+    auto timerfont = new TextAsset("PixelMplus-20130602/PixelMplus12-Regular.ttf",40);
     timStr = register(new Text(timerfont));
     t_start = uptime;
     timStr.text = t_remain.to!string;
