@@ -18,18 +18,29 @@ class Component: Loggable {
     void debugLoop() {}
   }
 
-  final package void realLoop() {
-    if(active) loop;
+  package void realSetup() {
+    debug debugSetupPre;
+    try setup;
+    catch(Exception e) err("Component exception in setup()\n", e);
+    debug debugSetup;
+  }
+
+  package void realLoop() {
+    if(!active) return;
+    debug debugLoopPre;
+    try loop;
+    catch(Exception e) err("Component exception in loop()\n", e);
+    debug debugLoop;
   }
 
   // utils
 
-  protected void line(Vec2 a, Vec2 b) {
-    color(0, 255, 0);
-    SDL_RenderDrawLine(go.ctx.r, cast(int)a.x, cast(int)a.y, cast(int)b.x, cast(int)b.y);
-  }
+  auto render(A...)(A args) => go.render(args);
+  auto renderEx(A...)(A args) => go.renderEx(args);
 
-  protected void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) {
-    SDL_SetRenderDrawColor(go.ctx.r, r, g, b, a);
+  void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) => go.color(r, g, b, a);
+  auto line(A...)(A args) {
+    color(0, 255, 0); // Green
+    return go._line(args);
   }
 }

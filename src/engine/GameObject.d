@@ -7,21 +7,25 @@ import engine;
 class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
-  private GameObject _parent;
-  package bool alreadySetup = false;
+  private bool alreadySetup = false;
 
-  GameObject parent() {
-    if(!_parent.alreadySetup) warn("parent (", _parent, ") is not set up yet!");
+  private GameObject _parent;
+  package auto ref parent() {
+    debug if(!_parent.alreadySetup) warn("parent (", _parent, ") is not set up yet!");
     return _parent;
   }
 
   // context
 
-  package Context* ctx;
+  private Context* _ctx;
+  package auto ref ctx(string file = __FILE__, size_t line = __LINE__) {
+    debug if(!_ctx) throw new Nullpo("ctx is null!", file, line);
+    return _ctx;
+  }
 
-  real dur() const => ctx.elapsed / 10.;
-  ulong uptime() const => ctx.updated;
-  auto im() const => ctx.im;
+  real dur() const => _ctx.elapsed / 10.;
+  ulong uptime() const => _ctx.updated;
+  auto im() const => _ctx.im;
   auto everyone() => ctx.root.descendant;
 
   // todo: いい感じのRangeにするかもしれないし，しないかもしれない
@@ -41,28 +45,16 @@ class GameObject: Loggable {
   }
 
   package void realSetup(Context* ctx) {
-    this.ctx = ctx;
-    foreach(c; components) {
-      debug c.debugSetupPre;
-      try c.setup;
-      catch(Exception e) err("Component exception in setup\n", e);
-      debug c.debugSetup;
-    }
-    foreach(e; children) e.realSetup(ctx);
-    alreadySetup = true;
+    this._ctx = ctx;
     debug debugSetupPre;
     try setup;
     catch(Exception e) err("GameObject exception in setup\n", e);
     debug debugSetup;
+    alreadySetup = true;
   }
 
   package void realLoop() {
-    foreach(c; components) {
-      debug c.debugLoopPre;
-      try c.realLoop;
-      catch(Exception e) err("Component exception in loop\n", e);
-      debug c.debugLoop;
-    }
+    foreach(c; components) c.realLoop;
     debug debugLoopPre;
     try loop;
     catch(Exception e) err("GameObject exception in loop\n", e);
@@ -72,13 +64,46 @@ class GameObject: Loggable {
 
   // utils
 
-  protected void line(Vec2 a, Vec2 b) {
-    color(255, 0, 0);
+  void render(Texture texture, const SDL_Rect* src, const SDL_Rect* dest) {
+    SDL_RenderCopy(ctx.r, texture.data, src, dest);
+  }
+
+  auto render(Texture texture, const SDL_Rect* dest) {
+    return render(texture, null, dest);
+  }
+
+  void renderEx(
+    Texture texture,
+    const SDL_Rect* src,
+    const SDL_Rect* dest,
+    real rot,
+    const SDL_Point* center = null,
+    const SDL_RendererFlip flip = SDL_FLIP_NONE,
+  ) {
+    SDL_RenderCopyEx(ctx.r, texture.data, src, dest, cast(double)rot, center, flip);
+  }
+
+  auto renderEx(
+    Texture texture,
+    const SDL_Rect* dest,
+    real rot,
+    const SDL_Point* center = null,
+    const SDL_RendererFlip flip = SDL_FLIP_NONE,
+  ) {
+    return renderEx(texture, null, dest, rot, center, flip);
+  }
+
+  void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) {
+    SDL_SetRenderDrawColor(ctx.r, r, g, b, a);
+  }
+
+  void _line(Vec2 a, Vec2 b) {
     SDL_RenderDrawLine(ctx.r, cast(int)a.x, cast(int)a.y, cast(int)b.x, cast(int)b.y);
   }
 
-  protected void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) {
-    SDL_SetRenderDrawColor(ctx.r, r, g, b, a);
+  auto line(Vec2 a, Vec2 b) {
+    color(255, 0, 0); // Red
+    return _line(a, b);
   }
 
   // components
@@ -117,7 +142,7 @@ class GameObject: Loggable {
     auto go = cast(GameObject)e;
     go._parent = this;
     children ~= go;
-    if(alreadySetup) go.realSetup(ctx);
+    go.realSetup(ctx);
     return e;
   }
 
@@ -129,7 +154,7 @@ class GameObject: Loggable {
       return component!C;
     }
     components ~= c;
-    if(alreadySetup) c.setup;
+    c.realSetup;
     return c;
   }
 
@@ -138,7 +163,7 @@ class GameObject: Loggable {
     auto old = findComponent!C;
     if(old.e) components[old.i] = c;
     else components ~= c;
-    if(alreadySetup) c.setup;
+    c.realSetup;
     return c;
   }
 

@@ -18,13 +18,13 @@ class UI: GameObject {
     auto timerfont = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf",40);
     timStr = register(new Text(timerfont));
     t_start = uptime;
-    timStr.setText(t_remain.to!string);
+    timStr.text = t_remain.to!string;
 
     // and more...
   }
 
   override void loop() {
     if(!t_remain) component!Transform.pos = Vec2(10,0);
-    timStr.setText(t_remain ? (t_remain/1000).to!string : "アルメニア滅亡");
+    timStr.text = t_remain ? (t_remain/1000).to!string : "アルメニア滅亡";
   }
 }

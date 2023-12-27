@@ -5,31 +5,53 @@ import sdl;
 import sdl_image;
 import sdl_ttf;
 import engine;
+import utils;
 
 class Text: Component {
-  private TextAsset font;
-  private Texture texture;
-  private string text;
+  private Texture[] textures;
+  private TextAsset _font;
+  private string _text;
   SDL_Color c;
 
   this(TextAsset asset) {
-    font = asset;
+    _font = asset;
     c.a = 255;
   }
 
-  void createTexture(){
-    auto surface = font.render(text, c);
-    texture = new Texture(go.ctx.r, surface.data);
+  private void createTexture() {
+    textures = [];
+    foreach(row; _text.split('\n')) {
+      if(!row.length) {
+        textures ~= null;
+        continue;
+      }
+      auto surface = _font.render(row, c);
+      textures ~= new Texture(go.ctx.r, surface);
+    }
   }
 
+  auto font() const => _font;
+  auto font(TextAsset font) {
+    _font = font;
+    createTexture();
+    return font;
+  }
+
+  auto text() const => _text;
+  auto text(string text) {
+    _text = text;
+    createTexture();
+    return text;
+  }
+
+  deprecated
   void setFont(TextAsset font){
     this.font = font;
-    createTexture();
   }
 
+  deprecated
   void setText(string text){
     this.text = text;
-    createTexture();
   }
 
   void setColor(ubyte r, ubyte g, ubyte b, ubyte a = 255){
@@ -37,25 +59,28 @@ class Text: Component {
     createTexture();
   }
 
-  override void loop(){
-    if(texture is null) return;
+  override void loop() {
+    int voffset = 0;
+    foreach(texture; textures) {
+      if(texture is null) {
+        voffset += _font.pt;
+        continue;
+      }
 
-    int iw,ih;
-    SDL_QueryTexture(texture.data, null, null, &iw, &ih);
+      auto tform = go.component!Transform;
+      auto pos = tform.worldPos;
+      auto scale = tform.scale;
 
-    auto tform = go.component!Transform;
-    auto pos = tform.worldPos;
-    auto scale = tform.scale;
-    SDL_Rect txtRect;
-    txtRect.h = ih;
-    txtRect.w = iw;
+      auto size = texture.size;
+      auto dest = rect(
+        pos.x,
+        pos.y + voffset,
+        size.x * scale.x,
+        size.y * scale.y,
+      );
 
-    SDL_Rect pasteRect;
-    pasteRect.x = cast(int)pos.x;
-    pasteRect.y = cast(int)pos.y;
-    pasteRect.h = cast(int)(ih * scale.x);
-    pasteRect.w = cast(int)(iw*scale.y);
-
-    SDL_RenderCopyEx(go.ctx.r, texture.data, &txtRect, &pasteRect, cast(double)tform.rot, null, SDL_FLIP_NONE);
+      renderEx(texture, &dest, tform.rot);
+      voffset += size.y;
+    }
   }
 }

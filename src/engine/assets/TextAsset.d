@@ -7,7 +7,7 @@ import engine;
 
 class TextAsset: Asset {
   package Font font;
-  package int pt;
+  int pt;
 
   this(string path, int pt) {
     this.font = new Font(path, pt);

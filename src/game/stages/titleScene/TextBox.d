@@ -5,28 +5,27 @@ import game;
 import core.math;
 
 class TextBox: GameObject {
-  Transform transform;
-  TextAsset font;
-  Text text;
-  private string t;
+  private string s;
   private real flame = 0;
 
-  this(string text){
-    t = text;
+  this(string s) {
+    this.s = s;
   }
 
-  override void setup(){
-    transform = register(new Transform);
-    font = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf",40);
-    text = register(new Text(font));
-    text.setText(t);
+  override void setup() {
+    auto font = new TextAsset("assets/PixelMplus-20130602/PixelMplus12-Regular.ttf", 40);
+    auto text = register(new Text(font));
+    text.text = s;
+
+    auto tform = register(new Transform);
     auto window = register(new Window);
-    component!Transform.pos = window.size()/2;
+    tform.pos = window.size / 2;
   }
 
-  override void loop(){
-    transform.rot+=0.1;
-    transform.scale = Vec2(1, 1) * (2 + sin(flame / 2048));
+  override void loop() {
+    auto tform = component!Transform;
+    tform.rot += 0.1;
+    tform.scale = Vec2(1, 1) * (2 + sin(flame / 2048));
     flame++;
   }
 }
