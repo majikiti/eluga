@@ -5,6 +5,8 @@ import std.string;
 import sdl;
 import engine;
 
+package:
+
 enum initFps = 60.;
 
 struct Context {
@@ -23,6 +25,7 @@ struct Context {
 
   GameObject root;
   InputManager im;
+  void delegate()[][short] layers;
 
   SDL_Window* w;
   SDL_Renderer* r;

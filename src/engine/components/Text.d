@@ -79,7 +79,7 @@ class Text: Component {
         size.y * scale.y,
       );
 
-      renderEx(texture, &dest, tform.rot);
+      go.renderEx(texture, dest, tform.rot);
       voffset += size.y;
     }
   }

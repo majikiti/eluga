@@ -19,24 +19,37 @@ class Component: Loggable {
   }
 
   package void realSetup() {
-    debug debugSetupPre;
+    debug {
+      go.layer++;
+      debugSetupPre;
+      go.layer--;
+    }
     try setup;
     catch(Exception e) err("Component exception in setup()\n", e);
-    debug debugSetup;
+    debug {
+      go.layer++;
+      debugSetup;
+      go.layer--;
+    }
   }
 
   package void realLoop() {
     if(!active) return;
-    debug debugLoopPre;
+    debug {
+      go.layer++;
+      debugLoopPre;
+      go.layer--;
+    }
     try loop;
     catch(Exception e) err("Component exception in loop()\n", e);
-    debug debugLoop;
+    debug {
+      go.layer++;
+      debugLoop;
+      go.layer--;
+    }
   }
 
   // utils
-
-  auto render(A...)(A args) => go.render(args);
-  auto renderEx(A...)(A args) => go.renderEx(args);
 
   void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) => go.color(r, g, b, a);
   auto line(A...)(A args) {

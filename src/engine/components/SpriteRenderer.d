@@ -23,12 +23,14 @@ class SpriteRenderer: Component {
     rect.h = cast(int)(image.surface.h * tform.scale.y);
 
     auto texture = new Texture(go.ctx.r, image.surface);
-    SDL_RenderCopyEx(go.ctx.r, texture.data, null, &rect, cast(double)tform.rot, null, SDL_FLIP_NONE);
+    go.renderEx(texture, &rect, tform.rot);
   }
 
  debug:
+  bool debugFrame = true;
 
   override void debugLoop() {
+    if(!debugFrame) return;
     color(0, 255, 0);
     line(Vec2(rect.x, rect.y), Vec2(rect.x, rect.y + rect.h));
     line(Vec2(rect.x, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y + rect.h));

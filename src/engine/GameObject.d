@@ -8,6 +8,7 @@ class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
   private bool alreadySetup = false;
+  short layer = 0;
 
   private GameObject _parent;
   package auto ref parent() {
@@ -46,26 +47,44 @@ class GameObject: Loggable {
 
   package void realSetup(Context* ctx) {
     this._ctx = ctx;
-    debug debugSetupPre;
+    debug {
+      layer++;
+      debugSetupPre;
+      layer--;
+    }
     try setup;
     catch(Exception e) err("GameObject exception in setup\n", e);
-    debug debugSetup;
+    debug {
+      layer++;
+      debugSetup;
+      layer--;
+    }
     alreadySetup = true;
   }
 
   package void realLoop() {
     foreach(c; components) c.realLoop;
-    debug debugLoopPre;
+    debug {
+      layer++;
+      debugLoopPre;
+      layer--;
+    }
     try loop;
     catch(Exception e) err("GameObject exception in loop\n", e);
-    debug debugLoop;
+    debug {
+      layer++;
+      debugLoop;
+      layer--;
+    }
     foreach(e; children) e.realLoop;
   }
 
   // utils
 
   void render(Texture texture, const SDL_Rect* src, const SDL_Rect* dest) {
-    SDL_RenderCopy(ctx.r, texture.data, src, dest);
+    ctx.layers[layer] ~= {
+      SDL_RenderCopy(ctx.r, texture.data, src, dest);
+    };
   }
 
   auto render(Texture texture, const SDL_Rect* dest) {
@@ -80,7 +99,9 @@ class GameObject: Loggable {
     const SDL_Point* center = null,
     const SDL_RendererFlip flip = SDL_FLIP_NONE,
   ) {
-    SDL_RenderCopyEx(ctx.r, texture.data, src, dest, cast(double)rot, center, flip);
+    ctx.layers[layer] ~= {
+      SDL_RenderCopyEx(ctx.r, texture.data, src, dest, cast(double)rot, center, flip);
+    };
   }
 
   auto renderEx(
@@ -94,11 +115,15 @@ class GameObject: Loggable {
   }
 
   void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) {
-    SDL_SetRenderDrawColor(ctx.r, r, g, b, a);
+    ctx.layers[layer] ~= {
+      SDL_SetRenderDrawColor(ctx.r, r, g, b, a);
+    };
   }
 
   void _line(Vec2 a, Vec2 b) {
-    SDL_RenderDrawLine(ctx.r, cast(int)a.x, cast(int)a.y, cast(int)b.x, cast(int)b.y);
+    ctx.layers[layer] ~= {
+      SDL_RenderDrawLine(ctx.r, cast(int)a.x, cast(int)a.y, cast(int)b.x, cast(int)b.y);
+    };
   }
 
   auto line(Vec2 a, Vec2 b) {

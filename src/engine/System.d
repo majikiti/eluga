@@ -38,7 +38,7 @@ class System: Loggable {
       auto cur = SDL_GetTicks64;
       auto elapsed = cur - ctx.updated;
       if(elapsed < ctx.dur) {
-        import core.thread.osthread;
+        import core.thread;
         Thread.sleep(800.usecs);
         continue;
       }
@@ -101,11 +101,15 @@ class System: Loggable {
       }
     }
 
-    //BackGround
-    SDL_SetRenderDrawColor(ctx.r,0,0,0,255);
+    // background
+    SDL_SetRenderDrawColor(ctx.r, 0, 0, 0, 255);
     SDL_RenderClear(ctx.r);
 
     ctx.root.realLoop;
+    foreach(layer; ctx.layers.keys.sort)
+      foreach(f; ctx.layers[layer]) f();
+    ctx.layers = null;
+
     SDL_RenderPresent(ctx.r);
   }
 }
