@@ -1,4 +1,4 @@
-module game.stages.titleScene.TextBox;
+module game.stages.title.TextBox;
 
 import engine;
 import game;

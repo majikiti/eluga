@@ -1,4 +1,4 @@
 module game.stages;
 
-public import game.stages.Home;
-public import game.stages.titleScene;
+public import game.stages.home;
+public import game.stages.title;

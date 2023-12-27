@@ -15,6 +15,6 @@ class Game: GameObject {
   }
 
   override void setup(){
-    register(new Home);
+    register(new HomeScene);
   }
 }
