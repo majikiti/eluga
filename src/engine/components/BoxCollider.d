@@ -11,14 +11,14 @@ class BoxCollider: Component, Collider {
   }
 
   override void setup() {
-    if(!parent.has!Transform) return;
-    auto trf = parent.component!Transform;
+    if(!go.parent.has!Transform) return;
+    auto trf = go.parent.component!Transform;
     this.size = trf.scale;
   }
 
   override void loop() {
-    if(!parent.has!Transform || constable) return;
-    auto trf = parent.component!Transform;
+    if(!go.parent.has!Transform || constable) return;
+    auto trf = go.parent.component!Transform;
     this.size = trf.scale;
   }
 

@@ -10,9 +10,9 @@ class Block: GameObject {
 
   Vec2 size = Vec2(1, 1);
   Vec2 v = Vec2(0, 0);
-  
+
   override void setup() {
-    register(new Transform(Org.World));
+    register(new Transform(Transform.Org.World));
     register(new RigidBody(1)).a = Vec2(0, 0);
     register(new BoxCollider);
 
@@ -48,5 +48,5 @@ class Block: GameObject {
   //   }
   // }
 
-  override 
+  // override 
 }
