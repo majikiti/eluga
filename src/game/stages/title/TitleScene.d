@@ -14,7 +14,7 @@ class TitleScene: GameObject {
     tform.scale.x = 1.5;
     bg = new ImageAsset("_.jpeg");
     register(new SpriteRenderer(bg));
-    BGM = new AudioAsset("maou_bgm_8bit29.ogg");
+    BGM = new AudioAsset("8_bit_Poplar.mp3");
     audio = register(new AudioSource(BGM));
     audio.play(-1);
     audio.volume(15);
