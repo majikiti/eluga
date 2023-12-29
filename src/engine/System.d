@@ -55,8 +55,16 @@ class System: Loggable {
     SDL_Event e;
     while(SDL_PollEvent(&e)) {
       switch(e.type) {
+        case SDL_MOUSEBUTTONDOWN:
         case SDL_KEYDOWN:
-          auto key = cast(char)e.key.keysym.sym;
+          char key;
+          if(e.type == SDL_MOUSEBUTTONDOWN){
+            auto btn = e.button;
+            if(btn.button == SDL_BUTTON_LEFT) key = 253;
+            else if(btn.button == SDL_BUTTON_MIDDLE) key = 254;
+            else if(btn.button == SDL_BUTTON_RIGHT) key = 255;
+          }
+          else key = cast(char)e.key.keysym.sym;
           auto state = ctx.im.state;
           auto once = ctx.im.once;
 
@@ -67,17 +75,21 @@ class System: Loggable {
           keyUpdated = true;
           break;
 
+        case SDL_MOUSEBUTTONUP:
         case SDL_KEYUP:
-          ctx.im.state[cast(char)e.key.keysym.sym] = false;
+          char key;
+          if(e.type == SDL_MOUSEBUTTONUP){
+            auto btn = e.button;
+            if(btn.button == SDL_BUTTON_LEFT) key = 253;
+            else if(btn.button == SDL_BUTTON_MIDDLE) key = 254;
+            else if(btn.button == SDL_BUTTON_RIGHT) key = 255;
+          }
+          else key = cast(char)e.key.keysym.sym;
+          ctx.im.state[key] = false;
           break;
 
         case SDL_MOUSEMOTION:
           auto motion = e.motion;
-          break;
-
-        case SDL_MOUSEBUTTONDOWN:
-        case SDL_MOUSEBUTTONUP:
-          auto btn = e.button;
           break;
 
         case SDL_QUIT:

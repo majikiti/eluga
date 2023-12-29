@@ -1,6 +1,8 @@
 module engine.InputManager;
 
 import std.bitmanip;
+import sdl;
+import engine;
 
 class InputManager {
   package BitArray state,once;
@@ -17,5 +19,26 @@ class InputManager {
   // keyが押されたかを1回だけ返す
   bool keyOnce(int key) const {
     return once[key];
+  }
+
+  // mouseボタンが押されているかを取得
+  // 0:LEFT, 1:MIDDLE, 2:RIGHT
+  bool mouse(int btn) const {
+    if( btn < 0 || btn > 2) return false;
+    return state[btn + 253];
+  }
+
+  // mouseボタンが押されたかを1回だけ返す
+  // 0:LEFT, 1:MIDDLE, 2:RIGHT
+  bool mouseOnce(int btn) const {
+    if( btn < 0 || btn > 2) return false;
+    return once[btn + 253];
+  }
+
+  // マウスカーソルの座標を返す
+  Vec2 cusorPos() const {
+    int x,y;
+    SDL_GetMouseState(&x,&y);
+    return Vec2(x,y);
   }
 }
