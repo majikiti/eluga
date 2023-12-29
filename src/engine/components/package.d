@@ -8,3 +8,4 @@ public import engine.components.SpriteRenderer;
 public import engine.components.Text;
 public import engine.components.Transform;
 public import engine.components.Window;
+public import engine.components.Camera;

@@ -11,13 +11,17 @@ class HomeScene: GameObject {
   AudioSource audio;
   Transform tform;
 
+  // 仮工事
+  real theta = 0;
+
   override void setup() {
     // vv hero vv
-    hero = register(new Hero);
+    register(new Hero);
 
     // vv worldTrf vv
     tform = register(new Transform(Transform.Org.World));
     tform.scale.x = 1.5;
+    tform.pos = Vec2(280,200);
 
     // vv background vv
     bg = new ImageAsset("_.jpeg");
@@ -33,4 +37,11 @@ class HomeScene: GameObject {
     audio.play(-1);
     audio.volume(15);
   }
+
+  //override void loop() {
+  //  // 仮工事2.0
+  //  auto wave = 100 * (2 + sin(theta));
+  //  theta += 0.04;
+  //  tform.pos = Vec2(wave, 0);
+  //}
 }

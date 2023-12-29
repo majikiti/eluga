@@ -32,6 +32,7 @@ class System: Loggable {
     ctx.updated = SDL_GetTicks64;
     ctx.root.realSetup(&ctx);
     debug ctx.root.register(new DebugView);
+    ctx.root.register(new Camera);
 
     loop; // 初回レンダリング
     while(ctx.running) {

@@ -12,7 +12,7 @@ class Missile: GameObject {
   this(Type type, Vec2 dir, Vec2 pos) {
     this.type = type;
 
-    register(new Transform(Transform.Org.World)).pos = pos;
+    register(new Transform()).pos = pos;
     auto rb = register(new RigidBody(1));
     rb.a = Vec2(0, 0);
     auto missile = new ImageAsset("hero0.png");
