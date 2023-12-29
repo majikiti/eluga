@@ -38,11 +38,13 @@ class Transform: Component {
     auto gobj = go;
     while(!gobj.has!Camera) gobj = gobj.parent; // Camera持ちまで登る
     // 以降やりましょう
-    return pos;
+    // やりますわ
+    auto posi = this.pos  - gobj.component!Camera.pos ;
+    return posi;
   }
 
   Vec2 camscale(){
-    // やりましょう
+    // やりたくありません
     return scale;
   }
 }

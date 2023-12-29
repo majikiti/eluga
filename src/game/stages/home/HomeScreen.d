@@ -21,7 +21,6 @@ class HomeScene: GameObject {
     // vv worldTrf vv
     tform = register(new Transform(Transform.Org.World));
     tform.scale.x = 1.5;
-    tform.pos = Vec2(280,200);
 
     // vv background vv
     bg = new ImageAsset("_.jpeg");

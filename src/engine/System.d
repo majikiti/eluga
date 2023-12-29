@@ -32,6 +32,8 @@ class System: Loggable {
     ctx.updated = SDL_GetTicks64;
     ctx.root.realSetup(&ctx);
     debug ctx.root.register(new DebugView);
+
+    // カメラ(なにもわからん……)
     ctx.root.register(new Camera);
 
     loop; // 初回レンダリング
@@ -113,6 +115,16 @@ class System: Loggable {
         }
       }
     }
+
+    // Camera & Focus
+    gos = ctx.root.everyone.filter!(e => e.has!Focus).array;
+    ushort prio = ushort.max;
+    GameObject gobj = null;
+    foreach(i, f; gos){
+      if(f.component!Focus.priority == prio) warn("Duplicate Focus priority");
+      if(f.component!Focus.priority < prio && f.component!Focus.enable) gobj = f;
+    }
+    if(gobj!is null) ctx.root.component!Camera.focus(gobj);
 
     // background
     SDL_SetRenderDrawColor(ctx.r, 0, 0, 0, 255);

@@ -10,17 +10,18 @@ class Hero: GameObject {
   int type;
   real time = 0,jumpSpeed = 3;
 
-  // 仮工事
-  real theta = 0;
+  //// 仮工事
+  //real theta = 0;
 
   Vec2 v = Vec2(1, 1);
   
   override void setup() {
-    register(new Transform(Transform.Org.World));
+    register(new Transform(Transform.Org.World)).pos = Vec2(300, 100);
     register(new RigidBody(1)).a = Vec2(0, 0);
 
     auto hero0 = new ImageAsset("hero0.png");
     register(new SpriteRenderer(hero0));
+    register(new Focus(0));
   }
 
   override void loop() {
@@ -29,10 +30,10 @@ class Hero: GameObject {
     if(im.key('d')) tform.pos.x += v.x * dur;
     if(im.key('a')) tform.pos.x += v.x * dur * -1;
 
-    // 仮工事2.0
-    auto wave = (2 + sin(theta));
-    theta += 0.04;
-    tform.scale = Vec2(wave, wave);
+    //// 仮工事2.0
+    //auto wave = (2 + sin(theta));
+    //theta += 0.04;
+    //tform.scale = Vec2(wave, wave);
 
     if(tform.pos.y >= 340){
       tform.pos.y = 340;

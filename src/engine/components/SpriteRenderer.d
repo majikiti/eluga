@@ -15,7 +15,7 @@ class SpriteRenderer: Component {
 
   override void loop() {
     auto tform = go.component!Transform;
-    auto pos = tform.worldPos;
+    auto pos = tform.campos;
 
     rect.x = cast(int)pos.x;
     rect.y = cast(int)pos.y;
