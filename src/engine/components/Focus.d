@@ -3,11 +3,13 @@ module engine.components.Focus;
 import engine;
 
 class Focus: Component {
-  ushort priority;
+  private ushort _priority;
   bool enable;
 
+  ushort priority() => this._priority;
+
   this(ushort priority, bool enable = true){
-    this.priority = priority;
+    this._priority = priority;
     this.enable = enable;
   }
 }

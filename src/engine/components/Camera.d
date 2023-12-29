@@ -10,6 +10,8 @@ class Camera: Component {
   GameObject fgo;
   real theta = 0;
 
+  Vec2 centre; // 画面サイズ分のバイアス
+
   this(Vec2 pos = Vec2(0, 0), real scale = 1.0, Vec2 focusPoint = Vec2(0, 0)) {
     this.pos = pos;
     this.scale = scale;
@@ -27,7 +29,7 @@ class Camera: Component {
 
   override void loop() {
     if(fgo!is null){
-      this.pos = fgo.component!Transform.pos;
+      this.pos = fgo.component!Transform.pos - centre;
     }
     //// 仮工事田所小路
     ////pos = Vec2(100*cos(theta), 100*sin(theta));

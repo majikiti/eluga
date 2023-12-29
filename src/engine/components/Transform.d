@@ -37,10 +37,8 @@ class Transform: Component {
   Vec2 campos() {
     auto gobj = go;
     while(!gobj.has!Camera) gobj = gobj.parent; // Camera持ちまで登る
-    // 以降やりましょう
-    // やりますわ
-    auto posi = this.pos  - gobj.component!Camera.pos ;
-    return posi;
+    auto retpos = this.pos  - gobj.component!Camera.pos ;
+    return retpos;
   }
 
   Vec2 camscale(){

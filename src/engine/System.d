@@ -33,8 +33,8 @@ class System: Loggable {
     ctx.root.realSetup(&ctx);
     debug ctx.root.register(new DebugView);
 
-    // カメラ(なにもわからん……)
-    ctx.root.register(new Camera);
+    // カメラ(なにもわからん……、とりあえずコンポーネントとしてルートに付ける雑実装)
+    ctx.root.register(new Camera).centre = Vec2(320, 240);
 
     loop; // 初回レンダリング
     while(ctx.running) {
