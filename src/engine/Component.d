@@ -5,7 +5,7 @@ import engine;
 
 class Component: Loggable {
   package GameObject go;
-  protected bool active = true;
+  bool active = true;
 
   // override this!
   void setup() {}

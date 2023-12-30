@@ -26,6 +26,8 @@ class SpriteRenderer: Component {
     go.renderEx(texture, &rect, tform.rot);
   }
 
+  Vec2 size() const => Vec2(rect.w,rect.h);
+
  debug:
   bool debugFrame = true;
 
