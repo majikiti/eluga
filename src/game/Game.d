@@ -14,8 +14,7 @@ class Game: GameObject {
     // );
   }
 
-  override void setup(){
-    
-    dbg("CWGB: ", register(new HomeScene));
+  override void setup() {
+    register(new HomeScene);
   }
 }

@@ -121,8 +121,11 @@ class System: Loggable {
     ushort prio = ushort.max;
     GameObject gobj = null;
     foreach(i, f; gos){
-      if(f.component!Focus.priority == prio) warn("Duplicate Focus priority");
-      if(f.component!Focus.priority < prio && f.component!Focus.enable) gobj = f;
+      if(f.component!Focus.priority == prio) warn("Duplicate Focus priority: ", gobj, ", ", f);
+      if(f.component!Focus.priority < prio && f.component!Focus.enable){
+        gobj = f;
+        prio = f.component!Focus.priority;
+      }
     }
     if(gobj!is null) ctx.root.component!Camera.focus(gobj);
 

@@ -21,7 +21,7 @@ class Hero: GameObject {
 
     auto hero0 = new ImageAsset("hero0.png");
     register(new SpriteRenderer(hero0));
-    register(new Focus(0));
+    register(new Focus(3)); // 主格のフォーカス
   }
 
   override void loop() {

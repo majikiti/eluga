@@ -15,7 +15,7 @@ class Camera: Component {
   }
   Limit lim;
 
-  // この汚さどうにかしてください
+  // この汚さどうにかしてくださいおねがいしますなんでもしますから
   this(Vec2 centre = Vec2(0, 0),
     Vec2 limax = Vec2(real.infinity, real.infinity),
     Vec2 limin = Vec2(-real.infinity, -real.infinity),
@@ -38,6 +38,7 @@ class Camera: Component {
     if(fgo!is null){
       this.pos = fgo.component!Transform.pos - centre;
     }
+    // 範囲外 カメラ もうやめて
     pos.x = max(min(pos.x, lim.max.x), lim.min.x);
     pos.y = max(min(pos.y, lim.max.y), lim.min.y);
   }
