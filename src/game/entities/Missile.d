@@ -5,6 +5,7 @@ import engine;
 class Missile: GameObject {
   enum Type {
     Normal,
+    Divergence,
   }
 
   Type type;
@@ -29,6 +30,9 @@ class Missile: GameObject {
         else rb.addForce(Vec2(-500, 0));
         rb.g = Vec2(0, 0);
         break;
+      case Type.Divergence:
+        rb.addForce(dir * 3);
+        rb.g = Vec2(0, 0);
     }
 
     auto clip = new AudioAsset("se_rifle01.mp3");
@@ -42,11 +46,13 @@ class Missile: GameObject {
     auto rb = component!RigidBody;
     tform.rot++;
     if(tform.pos.x > 3000 || tform.pos.y > 1000) destroy;
+    //if(tform.pos.x > 1000 || tform.pos.y > 1000 || tform.pos.x < -1000 || tform.pos.y < -1000) destroy;
     final switch(type) {
       case Type.Normal: break;
+      case Type.Divergence: break;
     }
   }
-  
+
   override void collide(GameObject go){
     if(go.getTag("Enemy"))go.component!Status.life -= 1;
     if(go.getTag("Ground") || go.getTag("Enemy")) destroy;

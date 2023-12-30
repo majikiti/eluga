@@ -1,9 +1,9 @@
 module game.entities.Hero;
 
+import std;
+import sdl_mixer;
 import engine;
 import game;
-import sdl_mixer;
-import std;
 
 class Hero: GameObject {
   int life;
@@ -15,7 +15,7 @@ class Hero: GameObject {
   //real theta = 0;
 
   Vec2 v = Vec2(2, 2);
-  
+
   override void setup() {
     register(new Transform(Transform.Org.World)).pos = Vec2(0, 100);
     register(new RigidBody(1)).a = Vec2(0, 0);
@@ -47,6 +47,7 @@ class Hero: GameObject {
     // missile
     if(im.keyOnce('\r')){
       register(new Missile(Missile.Type.Normal, Vec2(0, 0), tform.pos + Vec2(0,20)));
+      //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
     }
   }
 

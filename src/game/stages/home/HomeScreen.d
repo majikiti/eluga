@@ -28,7 +28,7 @@ class HomeScene: GameObject {
 
     // vv background vv
     bg = new ImageAsset("_.jpeg");
-    auto sprite = register(new SpriteRenderer(bg));
+    auto sprite = register(new SpriteRenderer(bg, true));
     debug sprite.debugFrame = false;
 
     // vv userInterface vv

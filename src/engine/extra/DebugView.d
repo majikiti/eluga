@@ -22,10 +22,16 @@ class DebugView: GameObject {
     if(ctx.fps < 30) lt.setColor(255, 64, 64);
     else             lt.setColor(64, 255, 64);
 
-    lt.text = [
+    string lstr;
+    lstr ~= [
       "DEBUG MODE\n",
       ctx.fps.to!string ~ " fps",
       everyone.length.to!string ~ " objects",
     ].join('\n');
+    lstr ~= '\n';
+    foreach(i, ly; ctx.layers){
+      lstr ~= "Layer" ~ i.to!string ~ ": " ~ ly.length.to!string ~ " drawing\n";
+    }
+    lt.text = lstr;
   }
 }

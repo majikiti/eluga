@@ -15,6 +15,11 @@ class Transform: Component {
   Vec2 worldPos = Vec2(0,0);
   real rot = 0;
   Vec2 scale = Vec2(1,1);
+  GameObject cgo;
+  Camera cc;
+
+  // Obj範囲内にWinのどっちかの端があるかという考え方
+  bool isin(Vec2 sz) => cc is null ? false : !(((pos.x > cc.pos.x + cc.size.x) || (pos.x + sz.x < cc.pos.x)) && ((pos.y + sz.y < cc.pos.y) || (pos.y > cc.pos.y + cc.size.y)));
 
   this(Org worldType = Org.Local){
     org = worldType;
@@ -23,6 +28,7 @@ class Transform: Component {
   auto translate(Vec2 d) => pos += d;
 
   override void loop(){
+    campos;
     worldPos = pos;
     
     auto parent = go.parent;
@@ -31,17 +37,18 @@ class Transform: Component {
     // 親位置
     auto pPos = parent.component!Transform;
     if(org == Org.Local) worldPos += pPos.worldPos;
+    cc = cgo is null ? null : cgo.component!Camera; // Cameraを参照します
   }
 
   // カメラ座標系
   Vec2 campos() {
-    auto gobj = go;
-    while(!gobj.has!Camera) gobj = gobj.parent; // Camera持ちまで登る
-    auto retpos = this.pos  - gobj.component!Camera.pos ;
+    cgo = go;
+    while(!cgo.has!Camera) cgo = cgo.parent; // Camera持ちまで登る
+    auto retpos = this.pos  - cgo.component!Camera.pos ;
     return retpos;
   }
 
-  Vec2 camscale(){
+  Vec2 camscale() {
     // やりたくありません
     return scale;
   }

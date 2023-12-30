@@ -6,6 +6,7 @@ import engine;
 // HikakinTVでカメラとか扱ったことあんまないけど
 class Camera: Component {
   Vec2 pos; // カメラ絶対位置
+  Vec2 size;
   Vec2 centre; // 画面サイズ分のバイアス
   GameObject fgo; // FocusGameObject
 

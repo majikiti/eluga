@@ -35,6 +35,7 @@ class System: Loggable {
 
     // カメラ(なにもわからん……、とりあえずコンポーネントとしてルートに付ける雑実装)
     ctx.root.register(new Camera(Vec2(320, 240), Vec2(500, 0), Vec2(0, -20)));
+    ctx.root.component!Camera.size = Vec2(640, 480);
 
     loop; // 初回レンダリング
     while(ctx.running) {
