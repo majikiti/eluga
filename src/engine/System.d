@@ -34,7 +34,7 @@ class System: Loggable {
     debug ctx.root.register(new DebugView);
 
     // カメラ(なにもわからん……、とりあえずコンポーネントとしてルートに付ける雑実装)
-    ctx.root.register(new Camera).centre = Vec2(320, 240);
+    ctx.root.register(new Camera(Vec2(320, 240), Vec2(500, 0), Vec2(0, -20)));
 
     loop; // 初回レンダリング
     while(ctx.running) {

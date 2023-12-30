@@ -8,7 +8,7 @@ import std;
 class Hero: GameObject {
   int life;
   int type;
-  real time = 0,jumpSpeed = 3;
+  real time = 0,jumpSpeed = 6;
 
   //// 仮工事
   //real theta = 0;

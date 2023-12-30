@@ -1,21 +1,28 @@
 module engine.components.Camera;
 
+import std;
 import engine;
 
 // HikakinTVでカメラとか扱ったことあんまないけど
 class Camera: Component {
   Vec2 pos; // カメラ絶対位置
-  real scale; // 1.0Lで座標系と1:1対応、値を大きくすると広角に
-  Vec2 focusPoint; // カメラ内部のフォーカス指定(デフォルト(0, 0)で中央)
-  GameObject fgo;
-  real theta = 0;
-
   Vec2 centre; // 画面サイズ分のバイアス
+  GameObject fgo; // FocusGameObject
 
-  this(Vec2 pos = Vec2(0, 0), real scale = 1.0, Vec2 focusPoint = Vec2(0, 0)) {
-    this.pos = pos;
-    this.scale = scale;
-    this.focusPoint = focusPoint;
+  struct Limit {
+    Vec2 max;
+    Vec2 min;
+  }
+  Limit lim;
+
+  // この汚さどうにかしてください
+  this(Vec2 centre = Vec2(0, 0),
+    Vec2 limax = Vec2(real.infinity, real.infinity),
+    Vec2 limin = Vec2(-real.infinity, -real.infinity),
+  ) {
+    this.centre = centre;
+    lim.max = limax;
+    lim.min = limin;
   }
 
   void focus(GameObject fgo) {
@@ -31,11 +38,7 @@ class Camera: Component {
     if(fgo!is null){
       this.pos = fgo.component!Transform.pos - centre;
     }
-    //// 仮工事田所小路
-    ////pos = Vec2(100*cos(theta), 100*sin(theta));
-    ////theta += 0.01;
-    //dbg(pos = Vec2(theta, 0));
-    //theta += 0.01;
-    //// 田所劫辞
+    pos.x = max(min(pos.x, lim.max.x), lim.min.x);
+    pos.y = max(min(pos.y, lim.max.y), lim.min.y);
   }
 }
