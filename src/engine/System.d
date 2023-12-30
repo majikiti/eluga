@@ -5,6 +5,7 @@ import std;
 import sdl;
 import sdl_mixer;
 import sdl_ttf;
+import bindbc.imgui;
 import engine;
 import utils;
 
@@ -26,6 +27,14 @@ class System: Loggable {
     ctx.im = new InputManager;
     ctx.createWin;
     ctx.createRdr;
+
+    igCreateContext;
+    ImGui_ImplSDL2_InitForSDLRenderer(ctx.w, ctx.r);
+  }
+
+  ~this() {
+    ImGui_ImplSDL2_Shutdown;
+    igDestroyContext;
   }
 
   void run() {
