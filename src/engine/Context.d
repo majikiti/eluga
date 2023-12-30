@@ -17,7 +17,7 @@ struct Context {
   ulong updated;
   ulong elapsed;
 
-  real fps() => 1000. / dur;
+  real fps() => 1000. / elapsed;
   real fps(real v) {
     dur = cast(ulong)(1000 / v);
     return fps;

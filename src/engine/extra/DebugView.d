@@ -3,8 +3,6 @@ module engine.extra.DebugView;
 import std;
 import engine;
 
-debug:
-
 class DebugView: GameObject {
   Text lt;
 
@@ -18,10 +16,12 @@ class DebugView: GameObject {
 
     auto font = new TextAsset("PixelMplus-20130602/PixelMplus12-Regular.ttf", 16);
     lt = register(new Text(font));
-    lt.setColor(128, 255, 128);
   }
 
   override void loop() {
+    if(ctx.fps < 30) lt.setColor(255, 64, 64);
+    else             lt.setColor(64, 255, 64);
+
     lt.text = [
       "DEBUG MODE\n",
       ctx.fps.to!string ~ " fps",
