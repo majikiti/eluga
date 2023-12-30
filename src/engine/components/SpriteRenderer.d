@@ -6,13 +6,13 @@ import engine;
 class SpriteRenderer: Component {
   private ImageAsset image;
   private SDL_Rect rect;
-  bool invisdrawing;
+  bool invisdraw;
 
-  this(ImageAsset image, bool invisdrawing = false) {
+  this(ImageAsset image, bool invisdraw = false) {
     this.image = image;
     rect.w = image.surface.w;
     rect.h = image.surface.h;
-    this.invisdrawing = invisdrawing;
+    this.invisdraw = invisdraw;
   }
 
   override void loop() {
@@ -24,7 +24,7 @@ class SpriteRenderer: Component {
     rect.w = cast(int)(image.surface.w * tform.scale.x);
     rect.h = cast(int)(image.surface.h * tform.scale.y);
 
-    if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdrawing) return; // 範囲外 Render もうやめて
+    if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
 
     auto texture = new Texture(go.ctx.r, image.surface);
     go.renderEx(texture, &rect, tform.rot);
@@ -39,7 +39,7 @@ class SpriteRenderer: Component {
     if(!debugFrame) return;
     color(0, 255, 0);
     auto tform = go.component!Transform;
-    if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdrawing) return; // 範囲外 Render もうやめて
+    if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
     line(Vec2(rect.x, rect.y), Vec2(rect.x, rect.y + rect.h));
     line(Vec2(rect.x, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y + rect.h));
     line(Vec2(rect.x + rect.w, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y));
