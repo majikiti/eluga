@@ -1,5 +1,5 @@
 import engine;
-import game;
+import stageCreator;
 
 void main() {
   auto game = new Game;
