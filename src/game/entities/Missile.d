@@ -13,7 +13,6 @@ class Missile: GameObject {
     this.type = type;
 
     register(new Transform()).pos = pos;
-    register(new Focus(1));
     auto rb = register(new RigidBody(1));
     rb.a = Vec2(0, 0);
     auto missile = new ImageAsset("hero0.png");
