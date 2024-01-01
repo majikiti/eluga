@@ -8,7 +8,8 @@ import std;
 class Hero: GameObject {
   int life;
   int type;
-  real time = 0,jumpSpeed = 6;
+  real time = 0,jumpSpeed = 3;
+  bool isGround = false;
 
   //// 仮工事
   //real theta = 0;
@@ -23,6 +24,7 @@ class Hero: GameObject {
     auto rend = register(new SpriteRenderer(hero0));
     register(new BoxCollider(rend.size));
     register(new Focus(3)); 
+    tags["Player"] = true;
   }
 
   override void loop() {
@@ -37,13 +39,19 @@ class Hero: GameObject {
     }
 
     //jump
-    if(tform.pos.y >= 340 && im.keyOnce(' ')){
+    if(isGround && im.keyOnce(' ')){
       rb.v -= Vec2(0, jumpSpeed);
+      isGround = false;
     }
 
     // missile
     if(im.keyOnce('\r')){
-      register(new Missile(Missile.Type.Normal, Vec2(100, 0), tform.pos));
+      register(new Missile(Missile.Type.Normal, Vec2(0, 0), tform.pos + Vec2(0,20)));
     }
+  }
+
+  override void collide(GameObject go){
+    auto rb = component!RigidBody;
+    if(go.getTag("Ground") && rb.v.y > -0.5) isGround = true;
   }
 }

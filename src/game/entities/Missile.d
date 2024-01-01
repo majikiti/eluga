@@ -12,11 +12,16 @@ class Missile: GameObject {
   this(Type type, Vec2 dir, Vec2 pos) {
     this.type = type;
 
-    register(new Transform()).pos = pos;
+    auto tform = register(new Transform);
+    tform.pos = pos;
+    tform.scale = Vec2(0.5,0.5);
     auto rb = register(new RigidBody(1));
     rb.a = Vec2(0, 0);
     auto missile = new ImageAsset("hero0.png");
     auto rend = register(new SpriteRenderer(missile));
+
+    auto col = register(new BoxCollider(rend.size));
+    col.isTrigger = true;
 
     final switch(type) {
       case Type.Normal:
@@ -41,5 +46,10 @@ class Missile: GameObject {
     final switch(type) {
       case Type.Normal: break;
     }
+  }
+  
+  override void collide(GameObject go){
+    if(go.getTag("Enemy"))go.component!Status.life -= 1;
+    if(go.getTag("Ground") || go.getTag("Enemy")) destroy;
   }
 }

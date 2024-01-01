@@ -4,6 +4,7 @@ import engine;
 
 class BoxCollider: Component, Collider {
   bool constable;
+  bool isTrigger = false;
   Vec2 size = Vec2(1,1);
 
   this(Vec2 size, bool constable = false){
@@ -18,7 +19,7 @@ class BoxCollider: Component, Collider {
 
   override void debugLoop() {
     if(!debugFrame) return;
-    auto pos = go.component!Transform.pos;
+    auto pos = go.component!Transform.worldPos;
     color(255, 0, 0);
     line(Vec2(pos.x, pos.y), Vec2(pos.x, pos.y + worldScale.y));
     line(Vec2(pos.x, pos.y + worldScale.y), Vec2(pos.x + worldScale.x, pos.y + worldScale.y));

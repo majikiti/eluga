@@ -38,7 +38,7 @@ class RigidBody: Component {
   }
 
   private bool objectsConflict(Vec2 pos1, GameObject obj2) {
-    Vec2 pos2 = obj2.component!Transform.pos;
+    Vec2 pos2 = obj2.component!Transform.worldPos;
     Vec2 size1 = go.component!BoxCollider.worldScale;
     Vec2 size2 = obj2.component!BoxCollider.worldScale;
     Vec2 center1 = pos1 + size1/2;
@@ -52,20 +52,21 @@ class RigidBody: Component {
 
   private Tuple!(Vec2, "v", real, "d") conflict(){
     if(!go.has!BoxCollider) return typeof(return)(v,go.dur);
+    if(go.component!BoxCollider.isTrigger) return typeof(return)(v,go.dur);
     auto tform = go.component!Transform;
     auto gos = go.ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
     Vec2 afterPos, resV = v;
     real dur = go.dur;
     foreach(i, p; gos) {
-      if(p == go) continue;
-      afterPos = tform.pos + v*dur;
+      if(p == go || p.component!BoxCollider.isTrigger) continue;
+      afterPos = tform.worldPos + v*dur;
       foreach(j, q; gos) {
-        if(q == go) continue;
+        if(q == go || q.component!BoxCollider.isTrigger) continue;
         if(objectsConflict(afterPos,q)){
           real ok = 0, ng = dur, mid;
           while(abs(ok - ng) > 0.1){
             mid = (ok + ng) / 2.0;
-            afterPos = tform.pos + resV * mid;
+            afterPos = tform.worldPos + resV * mid;
             if(objectsConflict(afterPos, q)) {
               ng = mid;
             }
@@ -74,8 +75,8 @@ class RigidBody: Component {
           dur = ok;
           resV = v;
         }
-        if(objectsConflict(tform.pos + Vec2(resV.x,0) * (dur + 0.1), q)) resV.x = 0;
-        if(objectsConflict(tform.pos + Vec2(0,resV.y) * (dur + 0.1), q)) resV.y = 0;
+        if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (dur + 0.1), q)) resV.x = 0;
+        if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (dur + 0.1), q)) resV.y = 0;
       }
     }
     return typeof(return)(resV,dur);

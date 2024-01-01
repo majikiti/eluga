@@ -18,7 +18,8 @@ class HomeScene: GameObject {
     // vv hero vv
     hero = register(new Hero);
     register(new Block(Vec2(0,340),Vec2(1,1)));
-    register(new Block(Vec2(400,212),Vec2(1,1)));
+    register(new Block(Vec2(400,280),Vec2(1,1)));
+    register(new Enemy(Vec2(500,100)));
 
     // vv worldTrf vv
     tform = register(new Transform(Transform.Org.World));

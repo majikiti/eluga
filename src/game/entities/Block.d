@@ -13,6 +13,7 @@ class Block: GameObject {
     tform = register(new Transform(Transform.Org.World));
     tform.pos = pos;
     tform.scale = scale;
+    tags["Ground"] = true;
   }
 
   override void setup() {
