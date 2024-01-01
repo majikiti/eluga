@@ -143,8 +143,8 @@ class System: Loggable {
 }
 
 bool objectsConflict(GameObject obj1, GameObject obj2) {
-    Vec2 pos1 = obj1.component!Transform.pos;
-    Vec2 pos2 = obj2.component!Transform.pos;
+    Vec2 pos1 = obj1.component!Transform.worldPos;
+    Vec2 pos2 = obj2.component!Transform.worldPos;
     Vec2 size1 = obj1.component!BoxCollider.worldScale;
     Vec2 size2 = obj2.component!BoxCollider.worldScale;
     Vec2 center1 = pos1 + size1/2;
@@ -155,10 +155,3 @@ bool objectsConflict(GameObject obj1, GameObject obj2) {
 
     return hFlag && wFlag;
 }
-
-  // auto pos1 = obj1.component!Transform.pos;
-  // auto pos2 = obj2.component!Transform.pos;
-  // auto size1 = obj1.component!BoxCollider.size;
-  // auto size2 = obj2.component!BoxCollider.size;
-  // return (abs(pos1.x - pos2.x) < size1.x + size2.x) &&
-  //        (abs(pos1.y - pos2.y) < size1.y + size2.y);

@@ -8,7 +8,7 @@ Vec2 g0 = Vec2(0, 9.81);
 
 // Need components: Transform
 class RigidBody: Component {
-  Vec2 v, a, F, gF, dV;
+  Vec2 v, a, F, gF;
   real m; // 質量
   real e; // 反発係数
   real mu; // 摩擦係数
@@ -24,8 +24,6 @@ class RigidBody: Component {
     this.e = e;
     this.mu = mu;
     this.v = v0;
-
-    dV = Vec2(0,0);
   }
 
   void addForce(Vec2 F) {

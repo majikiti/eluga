@@ -12,7 +12,7 @@ class Missile: GameObject {
   this(Type type, Vec2 dir, Vec2 pos) {
     this.type = type;
 
-    auto tform = register(new Transform);
+    auto tform = register(new Transform(Transform.Org.World));
     tform.pos = pos;
     tform.scale = Vec2(0.5,0.5);
     auto rb = register(new RigidBody(1));
