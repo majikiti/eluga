@@ -13,47 +13,37 @@ class Hero: GameObject {
   //// 仮工事
   //real theta = 0;
 
-  Vec2 v = Vec2(1, 1);
+  Vec2 v = Vec2(2, 2);
   
   override void setup() {
-    register(new Transform(Transform.Org.World)).pos = Vec2(300, 100);
+    register(new Transform(Transform.Org.World)).pos = Vec2(0, 100);
     register(new RigidBody(1)).a = Vec2(0, 0);
 
     auto hero0 = new ImageAsset("hero0.png");
-    register(new SpriteRenderer(hero0));
-    register(new Focus(3)); // 主格のフォーカス
+    auto rend = register(new SpriteRenderer(hero0));
+    register(new BoxCollider(rend.size));
+    register(new Focus(3)); 
   }
 
   override void loop() {
     auto tform = component!Transform;
     auto rb = component!RigidBody;
-    if(im.key('d')) tform.pos.x += v.x * dur;
-    if(im.key('a')) tform.pos.x += v.x * dur * -1;
-
-    //// 仮工事2.0
-    //auto wave = (2 + sin(theta));
-    //theta += 0.04;
-    //tform.scale = Vec2(wave, wave);
-
-    if(tform.pos.y >= 340){
-      tform.pos.y = 340;
-      rb.a = Vec2(0, 0);
-      rb.v = Vec2(0, 0);
+    if(im.key('d')||im.key('a')){
+      if(im.key('d')) rb.v.x = v.x;
+      if(im.key('a')) rb.v.x = -v.x;
     }else{
-      rb.a = Vec2(0, 9.81);
+      rb.v.x = 0;
+      rb.v.x = 0;
     }
 
     //jump
     if(tform.pos.y >= 340 && im.keyOnce(' ')){
-      //auto audio = component!AudioSource;
-      // rb.addForce(Vec2(0, -jumpSpeed));
       rb.v -= Vec2(0, jumpSpeed);
-      //audio.play();
     }
 
     // missile
     if(im.keyOnce('\r')){
-      register(new Missile(Missile.Type.Normal, Vec2(1, 0), tform.pos));
+      register(new Missile(Missile.Type.Normal, Vec2(100, 0), tform.pos));
     }
   }
 }

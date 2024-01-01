@@ -20,7 +20,7 @@ class Enemy: GameObject {
     auto enemy = new ImageAsset(imgdir);
     register(new SpriteRenderer(enemy));
 
-    auto colid = register(new BoxCollider);
+    // auto colid = register(new BoxCollider);
     auto rigid = register(new RigidBody(1));
   }
 }
