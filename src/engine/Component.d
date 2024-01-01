@@ -53,7 +53,7 @@ class Component: Loggable {
 
   void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) => go.color(r, g, b, a);
   auto line(A...)(A args) {
-    color(0, 255, 0); // Green
+    // color(0, 255, 0); // Green
     return go._line(args);
   }
 }

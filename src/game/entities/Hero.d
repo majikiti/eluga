@@ -52,6 +52,6 @@ class Hero: GameObject {
 
   override void collide(GameObject go){
     auto rb = component!RigidBody;
-    if(go.getTag("Ground") && rb.v.y > -0.5) isGround = true;
+    if(go.getTag("Ground") && rb.v.y > -1) isGround = true;
   }
 }

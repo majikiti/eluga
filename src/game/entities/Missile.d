@@ -41,8 +41,7 @@ class Missile: GameObject {
     auto tform = component!Transform;
     auto rb = component!RigidBody;
     tform.rot++;
-    if(tform.pos.x > 1000 || tform.pos.y > 1000) destroy;
-    if(rb.v.x < 0.1) destroy;
+    if(tform.pos.x > 3000 || tform.pos.y > 1000) destroy;
     final switch(type) {
       case Type.Normal: break;
     }

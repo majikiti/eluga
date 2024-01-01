@@ -8,7 +8,7 @@ Vec2 g0 = Vec2(0, 9.81);
 
 // Need components: Transform
 class RigidBody: Component {
-  Vec2 v, a, F, gF;
+  Vec2 v, a, F, gF, dV;
   real m; // 質量
   real e; // 反発係数
   real mu; // 摩擦係数
@@ -24,6 +24,8 @@ class RigidBody: Component {
     this.e = e;
     this.mu = mu;
     this.v = v0;
+
+    dV = Vec2(0,0);
   }
 
   void addForce(Vec2 F) {
@@ -50,36 +52,47 @@ class RigidBody: Component {
     return hFlag && wFlag;
   }
 
-  private Tuple!(Vec2, "v", real, "d") conflict(){
-    if(!go.has!BoxCollider) return typeof(return)(v,go.dur);
-    if(go.component!BoxCollider.isTrigger) return typeof(return)(v,go.dur);
+
+  // 計算量 \(^o^)/  最悪計算量実質的にO(N^4)
+  private void update(){
     auto tform = go.component!Transform;
-    auto gos = go.ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
-    Vec2 afterPos, resV = v;
-    real dur = go.dur;
-    foreach(i, p; gos) {
-      if(p == go || p.component!BoxCollider.isTrigger) continue;
-      afterPos = tform.worldPos + v*dur;
-      foreach(j, q; gos) {
-        if(q == go || q.component!BoxCollider.isTrigger) continue;
-        if(objectsConflict(afterPos,q)){
-          real ok = 0, ng = dur, mid;
-          while(abs(ok - ng) > 0.1){
-            mid = (ok + ng) / 2.0;
-            afterPos = tform.worldPos + resV * mid;
-            if(objectsConflict(afterPos, q)) {
-              ng = mid;
+    Vec2 resV = v, initV;
+    real dur = go.dur, time = dur;
+    while(resV.size > 0 && dur > 0){
+      initV = resV;
+      time = dur;
+      if(go.has!BoxCollider){
+        if(!go.component!BoxCollider.isTrigger){
+          auto gos = go.ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
+          Vec2 afterPos;
+          foreach(i, p; gos) {
+            if(p == go || p.component!BoxCollider.isTrigger) continue;
+            afterPos = tform.worldPos + resV*time;
+            foreach(j, q; gos) {
+              if(q == go || q.component!BoxCollider.isTrigger) continue;
+              if(objectsConflict(afterPos,q)){
+                real ok = 0, ng = time, mid;
+                while(abs(ok - ng) > 0.1){
+                  mid = (ok + ng) / 2.0;
+                  afterPos = tform.worldPos + resV * mid;
+                  if(objectsConflict(afterPos, q)) {
+                    ng = mid;
+                  }
+                  else ok = mid;
+                }
+                time = ok;
+                resV = initV;
+              }
+              if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (time + 0.1), q)) resV.x = 0;
+              if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (time + 0.1), q)) resV.y = 0;
             }
-            else ok = mid;
           }
-          dur = ok;
-          resV = v;
         }
-        if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (dur + 0.1), q)) resV.x = 0;
-        if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (dur + 0.1), q)) resV.y = 0;
       }
+      tform.pos += resV * time;
+      dur -= time;
     }
-    return typeof(return)(resV,dur);
+    v = resV;
   }
 
   override void loop() {
@@ -87,8 +100,21 @@ class RigidBody: Component {
     a = (F+gF) / m;
     F = Vec2(0, 0);
     v += a*go.dur/256;
-    auto res = conflict();
-    v = res.v;
-    tform.pos += v*res.d;
+    update();
+  }
+
+ debug:
+  bool debugFrame = false;
+
+  override void debugLoop() {
+    if(!debugFrame) return;
+    Vec2 size1 = go.component!BoxCollider.worldScale;
+    auto pos = go.component!Transform.campos + size1 / 2;
+    color(255, 241, 0);
+    line(pos, pos + v*50);
+    color(255, 0, 0);
+    line(pos, pos + Vec2(v.x, 0)*50);
+    color(0, 0, 255);
+    line(pos, pos + Vec2(0, v.y)*50);
   }
 }

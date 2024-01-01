@@ -17,9 +17,10 @@ class HomeScene: GameObject {
   override void setup() {
     // vv hero vv
     hero = register(new Hero);
-    register(new Block(Vec2(0,340),Vec2(1,1)));
-    register(new Block(Vec2(400,280),Vec2(1,1)));
-    register(new Enemy(Vec2(500,100)));
+    for(int i = 0; i < 10; i++){
+      register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
+      register(new Enemy(Vec2(i * 400 + 100,100)));
+    }
 
     // vv worldTrf vv
     tform = register(new Transform(Transform.Org.World));
