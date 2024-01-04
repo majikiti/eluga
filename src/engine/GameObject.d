@@ -127,6 +127,12 @@ class GameObject: Loggable {
     };
   }
 
+  void renderRect(SDL_Rect* sdlr){
+    ctx.layers[layer] ~= {
+      SDL_RenderFillRect(ctx.r, sdlr);
+    };
+  }
+
   auto line(Vec2 a, Vec2 b) {
     color(255, 0, 0); // Red
     return _line(a, b);

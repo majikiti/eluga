@@ -19,7 +19,7 @@ class Transform: Component {
   Camera cc;
 
   // Obj範囲内にWinのどっちかの端があるかという考え方
-  bool isin(Vec2 sz) => cc is null ? false : !(((pos.x > cc.pos.x + cc.size.x) || (pos.x + sz.x < cc.pos.x)) && ((pos.y + sz.y < cc.pos.y) || (pos.y > cc.pos.y + cc.size.y)));
+  bool isin(Vec2 sz) => cc is null ? false : !(((worldPos.x > cc.pos.x + cc.size.x) || (worldPos.x + sz.x < cc.pos.x)) && ((worldPos.y + sz.y < cc.pos.y) || (worldPos.y > cc.pos.y + cc.size.y)));
 
   this(Org worldType = Org.Local){
     org = worldType;
@@ -44,7 +44,7 @@ class Transform: Component {
   Vec2 campos() {
     cgo = go;
     while(!cgo.has!Camera) cgo = cgo.parent; // Camera持ちまで登る
-    auto retpos = this.pos  - cgo.component!Camera.pos ;
+    auto retpos = this.worldPos  - cgo.component!Camera.pos ;
     return retpos;
   }
 
