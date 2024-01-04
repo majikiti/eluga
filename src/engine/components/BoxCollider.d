@@ -4,7 +4,7 @@ import engine;
 
 class BoxCollider: Component, Collider {
   bool constable;
-  bool isTrigger = false;
+  bool isTrigger = false; // なんだ？
   Vec2 size = Vec2(1,1);
 
   this(Vec2 size, bool constable = false){

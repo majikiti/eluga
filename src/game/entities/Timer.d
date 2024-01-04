@@ -20,7 +20,11 @@ class Timer: GameObject {
   }
 
   override void loop() {
-    if(!t_remain) component!Transform.pos = Vec2(10,0);
-    timStr.text = t_remain ? (t_remain/1000).to!string : "アルメニア滅亡";
+    timStr.text = (t_remain/1000).to!string;
+    if(!t_remain) timeover;
+  }
+
+  void timeover() {
+    return;
   }
 }

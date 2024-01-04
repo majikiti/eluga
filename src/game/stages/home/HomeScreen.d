@@ -19,7 +19,7 @@ class HomeScene: GameObject {
     hero = register(new Hero);
     for(int i = 0; i < 10; i++){
       register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
-      register(new Enemy(Vec2(i * 400 + 100,100)));
+      register(new Enemy1(Vec2(i * 400 + 100,100)));
     }
 
     // vv worldTrf vv

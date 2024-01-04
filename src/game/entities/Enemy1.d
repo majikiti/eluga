@@ -4,28 +4,21 @@ import engine;
 import game;
 
 class Enemy1: Enemy {
-  /*
-  Enemy enemy1;
-  ImageAsset skin;
-  AudioAsset se; //効果音
-  AudioSource sound;
-  Tranceform tform;
+  real theta = 0;
+  immutable imgdir = "enem1.png";
 
+  this(const Vec2 initPos = Vec2(0, 0)){
+    super(initPos);
+  }
 
-  override void setup(){
-    enemy1 = register(new Enemy);
+  override void eachsetup() {
+    rigid = register(new RigidBody(1, 1, 10));
+  }
 
-
-
-    skin = new ImageAsset("");
-    register(new SpriteRenderer(skin))
-
-    se = new AudioAsset("");
-    sound = register(new AudioSource(se));
-  
-  }*/
-
-  override void loop(){
-    
+  override void eachloop() {
+    if(this.component!Status.isDamaged){
+      rigid.addForce(Vec2(200,-200));
+      this.component!Status.isDamaged = false;
+    }
   }
 }
