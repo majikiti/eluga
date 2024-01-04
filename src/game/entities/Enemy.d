@@ -8,8 +8,8 @@ class Enemy: GameObject {
   Transform tform;
   RigidBody rigid;
   int type;
-  immutable string imgdir = "default.png";
   protected const Vec2 initPos;
+  string imgdir() => "default.png";
 
   this(const Vec2 initPos = Vec2(0, 0)) {
     status = register(new Status(10));

@@ -8,3 +8,4 @@ public import game.entities.Missile;
 public import game.entities.UI;
 public import game.entities.Timer;
 public import game.entities.Point;
+public import game.entities.LifeIndicator;

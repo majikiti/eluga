@@ -7,7 +7,7 @@ class SpriteRenderer: Component {
   private ImageAsset image;
   private SDL_Rect rect;
   bool invisdraw;
-  // 画像が放り込まれないと泣いてしまう対策
+  // 素の矩形を描画できるね
   Vec2 psize;
   ubyte[4] colorArr;
 
@@ -20,20 +20,20 @@ class SpriteRenderer: Component {
   }
 
   // 無いとき〜……
-  this(Vec2 psize, ubyte[3] colorArr = [255, 255, 255], bool invisdraw = false){
-    this.psize = psize;
-    rect.w = cast(int)psize.x;
-    rect.h = cast(int)psize.y;
-    this.colorArr = colorArr ~ cast(ubyte)255;
-    this.invisdraw = invisdraw;
-  }
-
   // Vec4
   this(Vec2 psize, ubyte[4] colorArr, bool invisdraw = false){
     this.psize = psize;
     rect.w = cast(int)psize.x;
     rect.h = cast(int)psize.y;
     this.colorArr = colorArr;
+    this.invisdraw = invisdraw;
+  }
+  // Vec3
+  this(Vec2 psize, ubyte[3] colorArr = [255, 255, 255], bool invisdraw = false){
+    this.psize = psize;
+    rect.w = cast(int)psize.x;
+    rect.h = cast(int)psize.y;
+    this.colorArr = colorArr ~ cast(ubyte)255;
     this.invisdraw = invisdraw;
   }
 

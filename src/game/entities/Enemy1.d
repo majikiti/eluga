@@ -5,13 +5,16 @@ import game;
 
 class Enemy1: Enemy {
   real theta = 0;
-  immutable imgdir = "enem1.png";
+  LifeIndicator lifin;
+  override string imgdir() => "enem1.png";
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
   }
 
   override void eachsetup() {
+    lifin = register(new LifeIndicator);
+    lifin.getStatus(this.component!Status);
     rigid = register(new RigidBody(1, 1, 10));
   }
 
