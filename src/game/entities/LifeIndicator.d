@@ -34,7 +34,8 @@ class LifeIndicator: GameObject {
   int bthick;
   Vec2 margin;
   
-  this(Vec2 border = Vec2(100, 30), int bthick = 3, Vec2 margin = Vec2(20,10)){
+  this(Status st, Vec2 border = Vec2(100, 30), int bthick = 3, Vec2 margin = Vec2(20,10)){
+    this.st = st;
     this.border = border;
     this.bthick = bthick;
     this.margin = margin;
@@ -51,9 +52,5 @@ class LifeIndicator: GameObject {
 
   override void loop() {
     alive.component!Transform.scale.x = cast(real)st.life / cast(real)st.maxlife;
-  }
-
-  void getStatus(Status s) {
-    this.st = s;
   }
 }

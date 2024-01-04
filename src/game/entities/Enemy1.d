@@ -13,8 +13,7 @@ class Enemy1: Enemy {
   }
 
   override void eachsetup() {
-    lifin = register(new LifeIndicator);
-    lifin.getStatus(this.component!Status);
+    lifin = register(new LifeIndicator(this.component!Status));
     rigid = register(new RigidBody(1, 1, 10));
   }
 
