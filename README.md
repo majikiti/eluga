@@ -1,5 +1,7 @@
 # Eluga
 
+アセットのライセンスについては`assets/LICENSE.md`を参照のこと
+
 ## build
 
 ```
