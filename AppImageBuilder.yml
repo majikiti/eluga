@@ -1,0 +1,42 @@
+# appimage-builder recipe see https://appimage-builder.readthedocs.io for details
+
+version: 1
+
+script:
+  - rm -rf $TARGET_APPDIR | true
+  - dub build -b release
+  - mkdir -p $TARGET_APPDIR
+  - cp build/eluga $TARGET_APPDIR/app
+  - cp -r assets $TARGET_APPDIR
+
+AppDir:
+  app_info:
+    id: io.github.majikiti.eluga
+    name: Eluga
+    #icon: dmd-doc
+    version: 0.1.0
+    exec: app
+  files:
+    exclude:
+      - usr/share/man
+      - usr/share/doc
+  pacman:
+    Architecture: auto
+    repositories:
+      core:
+        - https://geo.mirror.pkgbuild.com/$repo/os/$arch
+      extra:
+        - https://geo.mirror.pkgbuild.com/$repo/os/$arch
+    include:
+      - sdl2
+      - sdl2_image
+      - sdl2_mixer
+      - sdl2_ttf
+  test:
+    xenial:
+      image: ubuntu:xenial
+      command: ./AppRun
+
+AppImage:
+  arch: x86_64
+  update-information: guess

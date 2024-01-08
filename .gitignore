@@ -1,5 +1,10 @@
 /build
 
+# appimage-builder
+/*.AppImage*
+/AppDir
+/appimage-build
+
 # docs
 /node_modules
 /package-lock.json
