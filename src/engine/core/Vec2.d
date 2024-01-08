@@ -1,6 +1,6 @@
 module engine.core.Vec2;
 
-import core.math;
+import std.math;
 
 alias Vec2 = _Vec2!real;
 alias Vec2fixed = _Vec2!long;
@@ -26,6 +26,15 @@ struct _Vec2(T) {
 
   auto v() const => typeof(this)(0, _y);
   auto h() const => typeof(this)(_x, 0);
+
+  // くるくる
+  auto rot(real degree) {
+    Vec2 retval;
+    auto rad = degree * PI / 180;
+    retval.x = x*cos(rad) - y*sin(rad);
+    retval.y = x*sin(rad) + y*cos(rad);
+    return retval;
+  }
 
   // op
 
