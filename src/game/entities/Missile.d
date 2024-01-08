@@ -5,6 +5,7 @@ import engine;
 class Missile: GameObject {
   enum Type {
     Normal,
+    CCCP,
     Divergence,
   }
 
@@ -26,9 +27,14 @@ class Missile: GameObject {
 
     final switch(type) {
       case Type.Normal:
-        if(dir.x >= 0) rb.addForce(Vec2(500, 0));
-        else rb.addForce(Vec2(-500, 0));
+        if(dir.x >= 0) rb.addForce(Vec2(100, -100));
+        else rb.addForce(Vec2(-100, -100));
         rb.g = Vec2(0, 0);
+        break;
+      case Type.CCCP:
+        rb.m = 1;
+        rb.v = dir / 8;
+        rb.addForce(dir * 16);
         break;
       case Type.Divergence:
         rb.addForce(dir * 3);
@@ -50,6 +56,7 @@ class Missile: GameObject {
     final switch(type) {
       case Type.Normal: break;
       case Type.Divergence: break;
+      case Type.CCCP: break;
     }
   }
 

@@ -96,9 +96,10 @@ class RigidBody: Component {
 
   override void loop() {
     auto tform = go.component!Transform;
-    a = (F+gF) / m;
+    a = (F + gF) / m;
+    dbg(gF / m);
     F = Vec2(0, 0);
-    v += a*go.dur/256;
+    v += a * go.dur/256;
     update();
   }
 

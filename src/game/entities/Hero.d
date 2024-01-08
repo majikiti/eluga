@@ -10,6 +10,8 @@ class Hero: GameObject {
   int type;
   real time = 0,jumpSpeed = 3;
   bool isGround = false;
+  Transform tform;
+  // ^そのうちStatusに改修する(誰かやってくれるとぼくはうれしいです)
 
   //// 仮工事
   //real theta = 0;
@@ -17,18 +19,21 @@ class Hero: GameObject {
   Vec2 v = Vec2(2, 2);
 
   override void setup() {
-    register(new Transform(Transform.Org.World)).pos = Vec2(0, 100);
+    tform = register(new Transform(Transform.Org.World));
+    tform.pos = Vec2(0, 100);
     register(new RigidBody(1)).a = Vec2(0, 0);
 
     auto hero0 = new ImageAsset("hero0.png");
     auto rend = register(new SpriteRenderer(hero0));
     register(new BoxCollider(rend.size));
     register(new Focus(3)); 
+
+    register(new Kalashnikov);
     tags["Player"] = true;
   }
 
   override void loop() {
-    auto tform = component!Transform;
+    //auto tform = component!Transform;
     auto rb = component!RigidBody;
     if(im.key('d')||im.key('a')){
       if(im.key('d')) rb.v.x = v.x;
