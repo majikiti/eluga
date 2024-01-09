@@ -7,7 +7,7 @@ import game;
 class UI: GameObject {
   override void setup() {
     // timers
-    register(new Timer);
+    register(new TimeLimitClock);
 
     // points
     register(new Point);

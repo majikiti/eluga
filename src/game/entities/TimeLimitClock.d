@@ -1,9 +1,9 @@
-module game.entities.Timer;
+module game.entities.TimeLimitClock;
 
 import std;
 import engine;
 
-class Timer: GameObject {
+class TimeLimitClock: GameObject {
   enum T_LIMIT = 10_000;
 
   Text timStr;

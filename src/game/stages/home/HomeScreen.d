@@ -4,7 +4,7 @@ import std;
 import game;
 import engine;
 
-class HomeScene: GameObject {
+class HomeScene: RouteObject {
   Hero hero;
   ImageAsset bg;
   AudioAsset BGM;

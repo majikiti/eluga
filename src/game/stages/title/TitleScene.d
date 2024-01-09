@@ -3,11 +3,16 @@ module game.stages.title.TitleScene;
 import engine;
 import game;
 
-class TitleScene: GameObject {
+class TitleScene: RouteObject {
   ImageAsset bg;
   AudioAsset BGM;
   AudioSource audio;
   Transform tform;
+  Timer hoge; // gomi
+
+  this() {
+    hoge = new Timer;
+  }
 
   override void setup(){
     tform = register(new Transform(Transform.Org.World));
@@ -19,5 +24,9 @@ class TitleScene: GameObject {
     audio.play(-1);
     audio.volume(15);
     auto title = register(new TextBox("Hello"));
+  }
+
+  override void loop() {
+    if(hoge.cur > 5_000) router.go(Routes.Home);
   }
 }
