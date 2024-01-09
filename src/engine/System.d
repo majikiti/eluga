@@ -34,8 +34,8 @@ class System: Loggable {
     debug ctx.root.register(new DebugView);
 
     // カメラ(なにもわからん……、とりあえずコンポーネントとしてルートに付ける雑実装)
-    ctx.root.register(new Camera(Vec2(320, 240), Vec2(10000, 0), Vec2(0, -20)));
-    ctx.root.component!Camera.size = Vec2(640, 480);
+    ctx.root.register(new Camera(ctx.windowSize/2, Vec2(10000, 0), Vec2(0, -20)));
+    ctx.root.component!Camera.size = ctx.windowSize;
 
     loop; // 初回レンダリング
     while(ctx.running) {
@@ -109,7 +109,9 @@ class System: Loggable {
     // Collider
     auto gos = ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
     foreach(i, p; gos) {
+      if(!p.component!BoxCollider.active)continue;
       foreach(j, q; gos[i+1..$]) {
+        if(!q.component!BoxCollider.active)continue;
         if(objectsConflict(p, q)) {
           p.collide(q);
           q.collide(p);
@@ -151,8 +153,8 @@ bool objectsConflict(GameObject obj1, GameObject obj2) {
     Vec2 center1 = pos1 + size1/2;
     Vec2 center2 = pos2 + size2/2;
     
-    bool hFlag = abs(center1.y - center2.y) <= (size1.y + size2.y)/2 + 0.1;
-    bool wFlag = abs(center1.x - center2.x) <= (size1.x + size2.x)/2 + 0.1;
+    bool hFlag = abs(center1.y - center2.y) <= (size1.y + size2.y)/2 + 0.5;
+    bool wFlag = abs(center1.x - center2.x) <= (size1.x + size2.x)/2 + 0.5;
 
     return hFlag && wFlag;
 }

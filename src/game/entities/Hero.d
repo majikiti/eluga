@@ -12,6 +12,7 @@ class Hero: GameObject {
   bool isGround = false;
   Transform tform;
   // ^そのうちStatusに改修する(誰かやってくれるとぼくはうれしいです)
+  Vec2 dir = Vec2(1,0);
 
   //// 仮工事
   //real theta = 0;
@@ -27,17 +28,22 @@ class Hero: GameObject {
     auto rend = register(new SpriteRenderer(hero0));
     register(new BoxCollider(rend.size));
     register(new Focus(3)); 
-
     register(new Kalashnikov);
-    tags["Player"] = true;
+    addTag("Player");
   }
 
   override void loop() {
     //auto tform = component!Transform;
     auto rb = component!RigidBody;
     if(im.key('d')||im.key('a')){
-      if(im.key('d')) rb.v.x = v.x;
-      if(im.key('a')) rb.v.x = -v.x;
+      if(im.key('d')){
+        rb.v.x = v.x;
+        dir.x = 1;
+      } 
+      if(im.key('a')){
+        rb.v.x = -v.x;
+        dir.x = -1;
+      }
     }else{
       rb.v.x = 0;
       rb.v.x = 0;
@@ -51,8 +57,7 @@ class Hero: GameObject {
 
     // missile
     if(im.keyOnce('\r')){
-      register(new Missile(Missile.Type.Normal, Vec2(0, 0), tform.pos + Vec2(0,20)));
-      //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
+      register(new Missile(Missile.Type.Normal, dir, tform.pos + Vec2(0,20)));
     }
   }
 

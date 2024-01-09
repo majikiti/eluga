@@ -36,6 +36,8 @@ class Camera: Component {
   }
 
   override void loop() {
+    this.size = go.ctx.windowSize;
+    this.centre = go.ctx.windowSize/2;
     if(fgo!is null){
       this.pos = fgo.component!Transform.pos - centre;
     }

@@ -1,6 +1,7 @@
 module game.entities.Missile;
 
 import engine;
+import std;
 
 class Missile: GameObject {
   enum Type {
@@ -16,10 +17,10 @@ class Missile: GameObject {
 
     auto tform = register(new Transform(Transform.Org.World));
     tform.pos = pos;
-    tform.scale = Vec2(0.5,0.5);
+    tform.scale = Vec2(0.1,0.1);
     auto rb = register(new RigidBody(1));
     rb.a = Vec2(0, 0);
-    auto missile = new ImageAsset("hero0.png");
+    auto missile = new ImageAsset("bullet.png");
     auto rend = register(new SpriteRenderer(missile));
 
     auto col = register(new BoxCollider(rend.size));
@@ -27,8 +28,8 @@ class Missile: GameObject {
 
     final switch(type) {
       case Type.Normal:
-        if(dir.x >= 0) rb.addForce(Vec2(100, -100));
-        else rb.addForce(Vec2(-100, -100));
+        if(dir.x >= 0) rb.v = Vec2(10, 0);
+        else rb.v = Vec2(-10, 0);
         rb.g = Vec2(0, 0);
         break;
       case Type.CCCP:
@@ -49,8 +50,8 @@ class Missile: GameObject {
   override void loop() {
     auto tform = component!Transform;
     auto rb = component!RigidBody;
-    tform.rot++;
-    if(tform.pos.x > 3000 || tform.pos.y > 1000) destroy;
+    // tform.rot++;
+    if(abs(tform.pos.x) > 10000 || tform.pos.y > 1000) destroy;
     //if(tform.pos.x > 1000 || tform.pos.y > 1000 || tform.pos.x < -1000 || tform.pos.y < -1000) destroy;
     final switch(type) {
       case Type.Normal: break;

@@ -40,4 +40,10 @@ struct Context {
     this.r = SDL_CreateRenderer(this.w,
                                 -1,
                                 SDL_RENDERER_ACCELERATED);
+  
+  auto windowSize() {
+    int height, width;
+    SDL_GL_GetDrawableSize(this.w, &width, &height);
+    return Vec2(width, height);
+  }
 }

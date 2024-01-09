@@ -50,8 +50,9 @@ class RigidBody: Component {
     return hFlag && wFlag;
   }
 
-  // 解析: Kang
-  // 計算量 \(^o^)/  最悪計算量実質的にO(N^4)
+
+  //最悪計算量実質的にO(N^2)
+  //速い物体の処理を犠牲に計算量を削減
   private void update(){
     auto tform = go.component!Transform;
     Vec2 resV = v, initV; // resVが我が速度
@@ -59,32 +60,27 @@ class RigidBody: Component {
     while(resV.size > 0 && dur > 0){
       initV = resV;
       time = dur;
-      if(go.has!BoxCollider){ // ぼっこ持ってる
-        if(!go.component!BoxCollider.isTrigger){ // TRIGされていない
-          auto gos = go.ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array; // ぼっこととらふぉ持ってる配列
-          Vec2 afterPos; // 
-          foreach(i, p; gos) {
-            if(p == go || p.component!BoxCollider.isTrigger) continue; // 除外すべきタイミング
-            afterPos = tform.worldPos + resV*time; // 事後の位置ベクトル
-            foreach(j, q; gos[i..$]) {
-              if(q == go || q.component!BoxCollider.isTrigger) continue;
-              if(objectsConflict(afterPos,q)){ // 事後位置とqの衝突
-                real ok = 0, ng = time, mid; // どうやら衝突しない事後位置を探すにぶたん処理みたい
-                while(abs(ok - ng) > 0.1){
-                  mid = (ok + ng) / 2.0;
-                  afterPos = tform.worldPos + resV * mid;
-                  if(objectsConflict(afterPos, q)) {
-                    ng = mid;
-                  }
-                  else ok = mid;
+      if(go.has!BoxCollider){
+        if(!go.component!BoxCollider.isTrigger && go.component!BoxCollider.active){
+          auto gos = go.ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
+          Vec2 afterPos = tform.worldPos + resV*time;
+          foreach(j, q; gos) {
+            if(q == go || q.component!BoxCollider.isTrigger || !q.component!BoxCollider.active) continue;
+            if(objectsConflict(afterPos,q)){
+              real ok = 0, ng = time, mid;
+              while(abs(ok - ng) > 0.001){
+                mid = (ok + ng) / 2.0;
+                afterPos = tform.worldPos + resV * mid;
+                if(objectsConflict(afterPos, q)) {
+                  ng = mid;
                 }
-                time = ok;
-                resV = initV;
-                resV.x /= mu;
+                else ok = mid;
               }
-              if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (time + 0.1), q)) resV.x = 0; // 微小振動の削除
-              if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (time + 0.1), q)) resV.y = 0; // ^のy編
+              time = ok;
+              resV = initV;
             }
+            if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (time + 0.1), q)) resV.x = 0;
+            if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (time + 0.1), q)) resV.y = 0;
           }
         }
       }

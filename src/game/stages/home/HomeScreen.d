@@ -17,9 +17,12 @@ class HomeScene: GameObject {
   override void setup() {
     // vv hero vv
     hero = register(new Hero);
-    for(int i = 0; i < 10; i++){
-      register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
-      register(new Enemy1(Vec2(i * 400 + 100,100)));
+    for(int i = 0; i < 50; i++){
+      if(!(i%2)){
+        register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
+        register(new Enemy(Vec2(i * 400 + 100,100)));
+      }
+      else register(new Block2(Vec2(i * 400,280),Vec2(1,0.3)));
     }
 
     // vv worldTrf vv
@@ -41,10 +44,11 @@ class HomeScene: GameObject {
     audio.volume(15);
   }
 
-  //override void loop() {
+  override void loop() {
+    if(im.keyOnce(27))quit();
   //  // 仮工事2.0
   //  auto wave = 100 * (2 + sin(theta));
   //  theta += 0.04;
   //  tform.pos = Vec2(wave, 0);
-  //}
+  }
 }

@@ -9,7 +9,7 @@ class GameObject: Loggable {
   private Component[] components;
   private bool alreadySetup = false;
   short layer = 0;
-  bool[string] tags;
+  private bool[string] tags;
 
   private GameObject _parent;
   package auto ref parent() {
@@ -208,6 +208,10 @@ class GameObject: Loggable {
   }
 
   bool getTag(string tag) => tags.get(tag,false);
+
+  void quit(){
+    ctx.running = false;
+  }
 
   void destroy() {
     foreach(i, e; parent.children) if(e == this) {
