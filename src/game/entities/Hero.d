@@ -9,10 +9,14 @@ class Hero: GameObject {
   int life;
   int type;
   real time = 0,jumpSpeed = 3;
-  bool isGround = false;
   Transform tform;
   // ^そのうちStatusに改修する(誰かやってくれるとぼくはうれしいです)
   Vec2 dir = Vec2(1,0);
+
+  // ジャンプ関連
+  enum DefaultJumpRemain = 1;
+  int jumpRemain = DefaultJumpRemain;
+  bool fromGround = false;
 
   //// 仮工事
   //real theta = 0;
@@ -33,6 +37,8 @@ class Hero: GameObject {
   }
 
   override void loop() {
+    scope(exit) fromGround = false;
+
     //auto tform = component!Transform;
     auto rb = component!RigidBody;
     if(im.key('d')||im.key('a')){
@@ -50,9 +56,11 @@ class Hero: GameObject {
     }
 
     //jump
-    if(isGround && im.keyOnce(' ')){
+    if(jumpRemain > 0 && im.keyOnce(' ')){
       rb.v -= Vec2(0, jumpSpeed);
-      isGround = false;
+      // 1回増やす
+      if(!fromGround) jumpRemain--;
+      fromGround = false;
     }
 
     // missile
@@ -63,6 +71,9 @@ class Hero: GameObject {
 
   override void collide(GameObject go){
     auto rb = component!RigidBody;
-    if(go.getTag("Ground") && rb.v.y > -1) isGround = true;
+    if(go.getTag("Ground") && rb.v.y > -1) {
+      jumpRemain = DefaultJumpRemain;
+      fromGround = true;
+    }
   }
 }

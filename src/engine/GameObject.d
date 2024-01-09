@@ -25,7 +25,7 @@ class GameObject: Loggable {
     return _ctx;
   }
 
-  real dur() const => _ctx.elapsed / 10.;
+  real dur() const => _ctx.elapsed / 8.;
   ulong uptime() const => _ctx.updated;
   auto im() const => _ctx.im;
   auto everyone() => ctx.root.descendant;
