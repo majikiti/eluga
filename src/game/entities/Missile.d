@@ -34,6 +34,7 @@ class Missile: GameObject {
         break;
       case Type.CCCP:
         rb.m = 0.01;
+        rb.g = Vec2(0, 1);
         rb.v = dir / 8;
         break;
       case Type.Divergence:
