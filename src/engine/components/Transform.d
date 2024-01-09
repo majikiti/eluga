@@ -19,7 +19,12 @@ class Transform: Component {
   Camera cc;
 
   // Obj範囲内にWinのどっちかの端があるかという考え方
-  bool isin(Vec2 sz) => cc is null ? false : !(((worldPos.x > cc.pos.x + cc.size.x) || (worldPos.x + sz.x < cc.pos.x)) && ((worldPos.y + sz.y < cc.pos.y) || (worldPos.y > cc.pos.y + cc.size.y)));
+  bool isin(Vec2 sz,bool d = false) {
+    if(d){
+      if(cc is null) return false;
+    }
+    return cc is null ? false : !(((worldPos.x > cc.pos.x + cc.size.x) || (worldPos.x + sz.x < cc.pos.x)) || ((worldPos.y + sz.y < cc.pos.y) || (worldPos.y > cc.pos.y + cc.size.y)));
+  } 
 
   this(Org worldType = Org.Local){
     org = worldType;

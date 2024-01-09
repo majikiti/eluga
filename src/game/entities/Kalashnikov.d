@@ -35,6 +35,6 @@ class Kalashnikov: GameObject {
       audio.play(1);
       //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
     }
-    dbg(tform.rot = 90 * (atan(vecm.y / vecm.x)));
+    // dbg(tform.rot = 90 * (atan(vecm.y / vecm.x)));
   }
 }

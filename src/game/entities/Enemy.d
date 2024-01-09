@@ -30,6 +30,9 @@ class Enemy: GameObject {
   }
 
   override void loop(){
+    auto tform = component!Transform;
+    auto rend = component!SpriteRenderer;
+    active = tform.isin(rend.size);
     if(status.life <= 0){
       death;
       destroy;

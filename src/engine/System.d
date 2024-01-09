@@ -32,9 +32,9 @@ class System: Loggable {
     ctx.updated = SDL_GetTicks64;
     ctx.root.realSetup(&ctx);
     debug ctx.root.register(new DebugView);
-
+    log(ctx.windowSize);
     // カメラ(なにもわからん……、とりあえずコンポーネントとしてルートに付ける雑実装)
-    ctx.root.register(new Camera(ctx.windowSize/2, Vec2(10000, 0), Vec2(0, -20)));
+    ctx.root.register(new Camera(ctx.windowSize/2));
     ctx.root.component!Camera.size = ctx.windowSize;
 
     loop; // 初回レンダリング
@@ -49,6 +49,7 @@ class System: Loggable {
       ctx.updated = cur;
       ctx.elapsed = elapsed;
 
+      ctx.レンダー中のボックスコライダー持ちのオブジェクト = objectPickup(&ctx,false);
       loop;
     }
   }
@@ -107,7 +108,7 @@ class System: Loggable {
     if(!keyUpdated)ctx.im.once ^= ctx.im.once;
 
     // Collider
-    auto gos = ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
+    auto gos = objectPickup(&ctx,true);
     foreach(i, p; gos) {
       if(!p.component!BoxCollider.active)continue;
       foreach(j, q; gos[i+1..$]) {
@@ -157,4 +158,23 @@ bool objectsConflict(GameObject obj1, GameObject obj2) {
     bool wFlag = abs(center1.x - center2.x) <= (size1.x + size2.x)/2 + 0.5;
 
     return hFlag && wFlag;
+}
+
+
+auto objectPickup(Context* ctx,bool trigger){
+    auto gos = ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
+    GameObject[] res;
+    foreach(i, p; gos){
+      auto flag = true;
+      if(!p.has!Transform) continue;
+      if(!p.has!BoxCollider) continue;
+      auto col = p.component!BoxCollider;
+      flag &= col.active && (!col.isTrigger || trigger);
+      flag &= p.has!Transform;
+      flag &= p.active;
+      auto tform = p.component!Transform;
+      flag &= tform.isin(col.size);
+      if(flag) res ~= p;
+    }
+    return res;
 }

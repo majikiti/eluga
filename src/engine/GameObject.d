@@ -12,6 +12,8 @@ class GameObject: Loggable {
   private bool[string] tags;
 
   private GameObject _parent;
+
+  bool active = true;
   package auto ref parent() {
     debug if(!_parent.alreadySetup) warn("parent (", _parent, ") is not set up yet!");
     return _parent;
@@ -64,7 +66,7 @@ class GameObject: Loggable {
   }
 
   package void realLoop() {
-    foreach(c; components) c.realLoop;
+    if(active) foreach(c; components) c.realLoop;
     debug {
       layer++;
       debugLoopPre;
@@ -208,6 +210,8 @@ class GameObject: Loggable {
   }
 
   bool getTag(string tag) => tags.get(tag,false);
+
+  auto windowSize() => ctx.windowSize;
 
   void quit(){
     ctx.running = false;

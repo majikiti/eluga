@@ -30,6 +30,8 @@ struct Context {
   SDL_Window* w;
   SDL_Renderer* r;
 
+  GameObject[] レンダー中のボックスコライダー持ちのオブジェクト;
+
   SDL_Window* createWin(string title = "game", int w = 640, int h = 480) =>
     this.w = SDL_CreateWindow(title.toStringz,
                               SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,

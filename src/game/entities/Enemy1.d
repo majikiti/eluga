@@ -23,4 +23,9 @@ class Enemy1: Enemy {
       this.component!Status.isDamaged = false;
     }
   }
+
+  override void collide(GameObject go){
+    auto rb = component!RigidBody;
+    if(go.getTag("Ground") && rb.v.y > -1) rb.v.x = 0;
+  }
 }

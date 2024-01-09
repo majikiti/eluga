@@ -17,12 +17,12 @@ class HomeScene: RouteObject {
   override void setup() {
     // vv hero vv
     hero = register(new Hero);
-    for(int i = 0; i < 50; i++){
+    for(int i = 0; i < 2500; i++){
       if(!(i%2)){
         register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
-        register(new Enemy(Vec2(i * 400 + 100,100)));
+        register(new Enemy1(Vec2(i * 400 + 100,100)));
       }
-      else register(new Block2(Vec2(i * 400,280),Vec2(1,0.3)));
+      else register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
     }
 
     // vv worldTrf vv
@@ -42,6 +42,7 @@ class HomeScene: RouteObject {
     audio = register(new AudioSource(BGM));
     audio.play(-1);
     audio.volume(15);
+
   }
 
   override void loop() {

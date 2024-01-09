@@ -29,7 +29,7 @@ class Test: Component {
 
   override void loop(){
     if(go.ctx.im.keyOnce('r')){
-      dbg("reset");
+      // dbg("reset");
       reset();
     }
     auto dur = go.ctx.dur/256.0;

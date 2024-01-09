@@ -50,8 +50,9 @@ class Missile: GameObject {
   override void loop() {
     auto tform = component!Transform;
     auto rb = component!RigidBody;
+    auto rend = component!SpriteRenderer;
     // tform.rot++;
-    if(abs(tform.pos.x) > 10000 || tform.pos.y > 1000) destroy;
+    if(!tform.isin(rend.size,true)) destroy;
     //if(tform.pos.x > 1000 || tform.pos.y > 1000 || tform.pos.x < -1000 || tform.pos.y < -1000) destroy;
     final switch(type) {
       case Type.Normal: break;

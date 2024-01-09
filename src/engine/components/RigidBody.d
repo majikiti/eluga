@@ -57,12 +57,12 @@ class RigidBody: Component {
     auto tform = go.component!Transform;
     Vec2 resV = v, initV; // resVが我が速度
     real dur = go.dur, time = dur; // ぢれいしょん
+    auto gos = go.ctx.レンダー中のボックスコライダー持ちのオブジェクト;
     while(resV.size > 0 && dur > 0){
       initV = resV;
       time = dur;
       if(go.has!BoxCollider){
         if(!go.component!BoxCollider.isTrigger && go.component!BoxCollider.active){
-          auto gos = go.ctx.root.everyone.filter!(e => e.has!BoxCollider && e.has!Transform).array;
           Vec2 afterPos = tform.worldPos + resV*time;
           foreach(j, q; gos) {
             if(q == go || q.component!BoxCollider.isTrigger || !q.component!BoxCollider.active) continue;
@@ -79,12 +79,13 @@ class RigidBody: Component {
               time = ok;
               resV = initV;
             }
+            else continue;
             if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (time + 0.1), q)) resV.x = 0;
             if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (time + 0.1), q)) resV.y = 0;
           }
         }
       }
-      tform.pos += resV * time;
+      tform.pos += initV * time;
       dur -= time;
     }
     v = resV;
@@ -93,7 +94,7 @@ class RigidBody: Component {
   override void loop() {
     auto tform = go.component!Transform;
     a = (F + gF) / m;
-    dbg(gF / m);
+    // dbg(gF / m);
     F = Vec2(0, 0);
     v += a * go.dur/256;
     update();
