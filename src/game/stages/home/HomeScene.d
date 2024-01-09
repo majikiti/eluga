@@ -1,8 +1,8 @@
 module game.stages.home.HomeScene;
 
 import std;
-import game;
 import engine;
+import game;
 
 class HomeScene: RouteObject {
   Hero hero;

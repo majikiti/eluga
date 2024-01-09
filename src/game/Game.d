@@ -7,7 +7,7 @@ alias Router = _Router!int;
 alias RouteObject = _RouteObject!int;
 
 enum Routes {
-  Home, Title,
+  Home, Title, Editor,
 }
 
 class Game: GameObject {
@@ -17,6 +17,7 @@ class Game: GameObject {
     router = register(new Router(Routes.Title, [
       Routes.Title: new TitleScene(),
       Routes.Home: new HomeScene(),
+      Routes.Editor: new EditorScene(),
     ]));
   }
 }
