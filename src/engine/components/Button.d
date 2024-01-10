@@ -18,7 +18,7 @@ class Button : Component {
   override void loop(){
     tform = go.component!Transform;
     auto sz = Vec2(tform.scale.x*size.x, tform.scale.y*size.y);
-    auto im = go.ctx.im;
+    auto im = ctx.im;
 
     auto begin = tform.pos;
     auto end = begin + sz;

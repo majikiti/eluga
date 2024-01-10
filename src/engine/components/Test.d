@@ -28,11 +28,11 @@ class Test: Component {
   }
 
   override void loop(){
-    if(go.ctx.im.keyOnce('r')){
+    if(ctx.im.keyOnce('r')){
       // dbg("reset");
       reset();
     }
-    auto dur = go.ctx.dur/256.0;
+    auto dur = ctx.dur/256.0;
     for(int i = 1; i < num; i++){
       y[i] += y[i-1] * dur;
     }

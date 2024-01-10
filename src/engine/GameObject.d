@@ -21,15 +21,9 @@ class GameObject: Loggable {
 
   // context
 
-  private Context* _ctx;
-  package auto ref ctx(string file = __FILE__, size_t line = __LINE__) {
-    debug if(!_ctx) throw new Nullpo("ctx is null!", file, line);
-    return _ctx;
-  }
-
-  real dur() const => _ctx.elapsed / 8.;
-  ulong uptime() const => _ctx.updated;
-  auto im() const => _ctx.im;
+  real dur() const => ctx.elapsed / 8.;
+  ulong uptime() const => ctx.updated;
+  auto im() const => ctx.im;
   auto everyone() => ctx.root.descendant;
 
   // todo: いい感じのRangeにするかもしれないし，しないかもしれない
@@ -48,8 +42,7 @@ class GameObject: Loggable {
     void debugLoop() {}
   }
 
-  package void realSetup(Context* ctx) {
-    this._ctx = ctx;
+  package void realSetup() {
     debug {
       layer++;
       debugSetupPre;
@@ -176,7 +169,7 @@ class GameObject: Loggable {
     auto go = cast(GameObject)e;
     go._parent = this;
     children ~= go;
-    go.realSetup(ctx);
+    go.realSetup;
     return e;
   }
 

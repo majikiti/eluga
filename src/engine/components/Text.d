@@ -26,7 +26,7 @@ class Text: Component {
         continue;
       }
       auto surface = _font.render(row, c);
-      textures ~= new Texture(go.ctx.r, surface);
+      textures ~= new Texture(ctx.r, surface);
     }
   }
 

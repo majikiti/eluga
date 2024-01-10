@@ -1,14 +1,13 @@
 module engine.core.media.Texture;
 
 import sdl;
-import sdl_ttf;
 import engine;
 
 class Texture {
   SDL_Texture* data;
 
   this(SDL_Renderer* r, Surface s) {
-    data = SDL_CreateTextureFromSurface(r, s.data);
+    this(r, s.data);
   }
 
   this(SDL_Renderer* r, SDL_Surface* s) {

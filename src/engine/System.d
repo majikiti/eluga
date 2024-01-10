@@ -19,8 +19,6 @@ shared static ~this() {
 }
 
 class System: Loggable {
-  Context ctx;
-
   this(GameObject root) {
     ctx.root = root;
     ctx.im = new InputManager;
@@ -30,7 +28,7 @@ class System: Loggable {
 
   void run() {
     ctx.updated = SDL_GetTicks64;
-    ctx.root.realSetup(&ctx);
+    ctx.root.realSetup;
     debug ctx.root.register(new DebugView);
     log(ctx.windowSize);
     // カメラ(なにもわからん……、とりあえずコンポーネントとしてルートに付ける雑実装)

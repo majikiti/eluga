@@ -57,7 +57,7 @@ class RigidBody: Component {
     auto tform = go.component!Transform;
     Vec2 resV = v, initV; // resVが我が速度
     real dur = go.dur, time = dur; // ぢれいしょん
-    auto gos = go.ctx.レンダー中のボックスコライダー持ちのオブジェクト;
+    auto gos = ctx.レンダー中のボックスコライダー持ちのオブジェクト;
     while(resV.size > 0 && dur > 0){
       initV = resV;
       time = dur;

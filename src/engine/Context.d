@@ -9,6 +9,8 @@ package:
 
 enum initFps = 60.;
 
+Context ctx;
+
 struct Context {
   bool running = true;
 
@@ -42,7 +44,7 @@ struct Context {
     this.r = SDL_CreateRenderer(this.w,
                                 -1,
                                 SDL_RENDERER_ACCELERATED);
-  
+
   auto windowSize() {
     int height, width;
     SDL_GL_GetDrawableSize(this.w, &width, &height);
