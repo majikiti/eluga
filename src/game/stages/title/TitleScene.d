@@ -29,6 +29,6 @@ class TitleScene: RouteObject {
   }
 
   override void loop() {
-    if(hoge.cur > 5_000) router.go(Routes.Home);
+    if(hoge.cur > 1/*5_000*/) router.go(Routes.Home);
   }
 }

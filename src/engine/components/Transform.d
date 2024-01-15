@@ -10,11 +10,12 @@ class Transform: Component {
     Center,
   }
 
-  // 相対座標か絶対座標か
+  // 相対座標か絶対座標か初期位置のみ相対座標か
   enum Org {
     Real,
     World,
     Local,
+    Spawn, // ToDo: make SpawnOrg
   }
 
   // 一般座標系
@@ -37,7 +38,8 @@ class Transform: Component {
     }
   }
 
-  this(Org worldType = Org.World) {
+  this(Org worldType = Org.Local, Zoom zoomType = Zoom.Corner){
+    zoom = zoomType;
     org = worldType;
   }
 

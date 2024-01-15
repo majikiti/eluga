@@ -14,6 +14,10 @@ class HomeScene: RouteObject {
   // 仮工事
   real theta = 0;
 
+  this() {
+    layer = -100;
+  }
+
   override void setup() {
     // vv hero vv
     hero = register(new Hero);

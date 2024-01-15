@@ -5,6 +5,11 @@ import game;
 import engine;
 
 class Effect : GameObject {
+  enum Motion {
+    Follow,
+    Retention,
+  }
+
   SpriteRenderer sr;
   Transform tf;
   string imdir() => "effect/smoke.png";
@@ -14,7 +19,7 @@ class Effect : GameObject {
   protected ubyte tp;
 
   this(real dratio = 1.1, real scale = 0.001) {
-    tf = register(new Transform(component!Transform.Org.World, component!Transform.Zoom.Center));
+    tf = register(new Transform(component!Transform.Org.Spawn, component!Transform.Zoom.Center));
     auto imga = new ImageAsset(imdir);
     sr = register(new SpriteRenderer(imga));
 
@@ -24,10 +29,8 @@ class Effect : GameObject {
     tf.scale = Vec2(scale, scale);
 
     this.tp = ubyte.max;
-  }
 
-  override void setup() {
-    tf.doNotTraceMe;
+    layer = -50;
   }
 
   override void loop() {
