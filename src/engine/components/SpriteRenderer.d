@@ -28,6 +28,7 @@ class SpriteRenderer: Component {
     this.colorArr = colorArr;
     this.invisdraw = invisdraw;
   }
+  
   // Vec3
   this(Vec2 psize, ubyte[3] colorArr = [255, 255, 255], bool invisdraw = false){
     this.psize = psize;

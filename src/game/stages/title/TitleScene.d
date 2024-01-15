@@ -9,6 +9,7 @@ class TitleScene: RouteObject {
   AudioSource audio;
   Transform tform;
   Timer hoge; // gomi
+  Fade fd;
 
   this() {
     hoge = new Timer;
@@ -24,9 +25,12 @@ class TitleScene: RouteObject {
     audio.play(-1);
     audio.volume(15);
     auto title = register(new TextBox("Hello"));
+    fd = register(new Fade([255, 0, 0]));
   }
 
   override void loop() {
     if(hoge.cur > 5_000) router.go(Routes.Home);
+    if(!fd.isChanging) {dbg("ゲッHikamaniya…"); fd.swap;}
+    dbg("生きてるね。");
   }
 }
