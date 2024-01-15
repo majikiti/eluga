@@ -1,10 +1,10 @@
-module game.entities.Title;
+module game.entities.TextBox;
 
 import std;
 import game;
 import engine;
 
-class Title : GameObject {
+class TextBox : GameObject {
   Transform tform;
   TextAsset txa;
   Text tx;

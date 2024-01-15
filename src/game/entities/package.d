@@ -12,3 +12,5 @@ public import game.entities.Missile;
 public import game.entities.Point;
 public import game.entities.TimeLimitClock;
 public import game.entities.UI;
+public import game.entities.TextBox;
+public import game.entities.ImageBox;

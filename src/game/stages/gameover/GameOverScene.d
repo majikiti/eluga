@@ -4,17 +4,20 @@ import std;
 import game;
 import engine;
 
-class GameOverScene: GameObject {
-  Title tl;
+class GameOverScene: RouteObject {
+  TextBox tl;
   AudioAsset BGM;
   AudioSource audio;
   Focus fc;
   real theta;
 
-  override void setup() {
-    tl = register(new Title("死を賜った"));
+  this() {
+    tl = register(new TextBox("死を賜った"));
     tl.component!Text.setColor(255, 0, 0);
     tl.tform.pos = Vec2(200, 200);
+  }
+ 
+  override void setup() {
 
     BGM = new AudioAsset("DPRKfuneral.ogg");
     audio = register(new AudioSource(BGM));
