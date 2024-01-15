@@ -109,10 +109,13 @@ class GameObject: Loggable {
   }
 
   void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) {
-    //dbg("僕は皇帝Hikakin: ", r, ", ", g, ", ", b, ", ", a);
     ctx.layers[layer] ~= {
       SDL_SetRenderDrawColor(ctx.r, r, g, b, a);
     };
+  }
+
+  void setTextureOpac(SDL_Texture* txu, ubyte opac) {
+    SDL_SetTextureAlphaMod(txu, opac);
   }
 
   void _line(Vec2 a, Vec2 b) {

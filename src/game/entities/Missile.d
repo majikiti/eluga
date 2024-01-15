@@ -23,6 +23,8 @@ class Missile: GameObject {
     auto missile = new ImageAsset("bullet.png");
     auto rend = register(new SpriteRenderer(missile));
 
+    addTag("Missile"); // 仮
+
     auto col = register(new BoxCollider(rend.size));
     col.isTrigger = true;
 

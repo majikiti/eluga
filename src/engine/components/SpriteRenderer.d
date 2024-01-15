@@ -4,12 +4,19 @@ import sdl;
 import engine;
 
 class SpriteRenderer: Component {
+  enum Mode {
+    Image,
+    Rect,
+  }
+
   private ImageAsset image;
   private SDL_Rect rect;
   bool invisdraw;
   // 素の矩形を描画できるね
   Vec2 psize;
   ubyte[4] colorArr;
+  ubyte _opac = 255;
+  Mode mode;
 
   // 画像が あるとき〜
   this(ImageAsset image, bool invisdraw = false) {
@@ -23,6 +30,7 @@ class SpriteRenderer: Component {
     this.colorArr = [255, 255, 255, 255];
 >>>>>>> 11a4722 (wip: effect)
     this.invisdraw = invisdraw;
+    mode = Mode.Image;
   }
 
   // 無いとき〜……
@@ -33,6 +41,7 @@ class SpriteRenderer: Component {
     rect.h = cast(int)psize.y;
     this.colorArr = colorArr;
     this.invisdraw = invisdraw;
+    mode = Mode.Rect;
   }
   
   // Vec3
@@ -42,6 +51,7 @@ class SpriteRenderer: Component {
     rect.h = cast(int)psize.y;
     this.colorArr = colorArr ~ cast(ubyte)255;
     this.invisdraw = invisdraw;
+    mode = Mode.Rect;
   }
 
   override void loop() {
@@ -72,6 +82,7 @@ class SpriteRenderer: Component {
         rect.y -= cast(int)(image.surface.h * tform.scale.y / 2);
       }
       auto texture = new Texture(ctx.r, image.surface);
+      go.setTextureOpac(texture.data, _opac);
       go.renderEx(texture, &rect, tform.rot);
     } else {
       rect.w = cast(int)(psize.x * tform.scale.x);
@@ -91,8 +102,8 @@ class SpriteRenderer: Component {
     return Vec2(rect.w * scale.x, rect.h * scale.y);
   }
 
-  auto opac(ubyte o) => color(colorArr[0..3] ~ o);
 
+  auto opac(ubyte o) => (mode == Mode.Image) ? _opac = o : colorArr[3] = o;
  debug:
   bool debugFrame = true;
 
