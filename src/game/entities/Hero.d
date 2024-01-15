@@ -19,8 +19,7 @@ class Hero: GameObject {
   int jumpRemain = DefaultJumpRemain;
   bool fromGround = false;
 
-  //// 仮工事
-  //real theta = 0;
+  Timer tmr;
 
   Vec2 v = Vec2(2, 2);
 
@@ -32,6 +31,7 @@ class Hero: GameObject {
     auto hero0 = new ImageAsset("hero0.png");
     rend = register(new SpriteRenderer(hero0));
     register(new BoxCollider(rend.size));
+<<<<<<< HEAD
     register(new Focus(3)); 
     register(new Kalashnikov);
     status = register(new Status);
@@ -39,6 +39,14 @@ class Hero: GameObject {
     addTag("Player");
 
     gm.player = this;
+=======
+    register(new Focus(3));
+    tmr = new Timer;
+
+    addTag("Player");
+
+    register(new Kalashnikov);
+>>>>>>> 11a4722 (wip: effect)
   }
 
   override void loop() {
@@ -78,6 +86,12 @@ class Hero: GameObject {
       timer += dur;
     }
     else timer = 0, gm.playerStatus.star = false, rend.active = true;
+
+    // Effect Test
+    if(tmr.cur>=1_000) {
+      register(new Effect);
+      tmr.reset;
+    }
   }
 
   override void collide(GameObject go){

@@ -30,7 +30,5 @@ class TitleScene: RouteObject {
 
   override void loop() {
     if(hoge.cur > 5_000) router.go(Routes.Home);
-    if(!fd.isChanging) {dbg("ゲッHikamaniya…"); fd.swap;}
-    dbg("生きてるね。");
   }
 }

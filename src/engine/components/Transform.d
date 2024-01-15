@@ -4,6 +4,12 @@ import std;
 import engine;
 
 class Transform: Component {
+  // 左端基準ズームか中心基準ズームか
+  enum Zoom{
+    Corner,
+    Center,
+  }
+
   // 相対座標か絶対座標か
   enum Org {
     Real,
@@ -12,6 +18,7 @@ class Transform: Component {
   }
 
   // 一般座標系
+  private Zoom zoom;
   private Org org;
   Vec2 pos, renderPos;
   real rot = 0;
