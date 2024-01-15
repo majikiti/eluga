@@ -3,6 +3,7 @@ module engine.core.media.Font;
 import std;
 import sdl;
 import sdl_ttf;
+import utils;
 
 shared static this() {
   TTF_Init;
@@ -18,13 +19,10 @@ class Font {
   private FontData font;
 
   this(string path, int pt) {
-    auto var = path in fonts;
-    if(var) {
-      auto cache = pt in *var;
-      if(cache) {
-        font = cast(FontData)*cache;
-        return;
-      }
+    auto cache = fonts.at[path][pt];
+    if(cache) {
+      font = cast(FontData)cache;
+      return;
     }
     font = new FontData(path, pt);
     fonts[path][pt] = cast(shared FontData)font;
