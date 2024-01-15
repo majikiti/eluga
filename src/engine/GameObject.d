@@ -42,8 +42,7 @@ class GameObject: Loggable {
     void debugLoop() {}
   }
 
-  package void realSetup(Context* ctx) {
-    this._ctx = ctx;
+  package void realSetup() {
     SDL_SetRenderDrawBlendMode(ctx.r, SDL_BLENDMODE_BLEND);
     debug {
       layer++;

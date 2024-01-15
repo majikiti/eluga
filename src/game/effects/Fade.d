@@ -14,7 +14,7 @@ class Fade: GameObject {
   bool isDisplay = false, isChanging = false;
   uint fadetime;
   ubyte[3] color;
-  private ubyte tp = 255, changeTo = 0;
+  private ubyte tp, changeTo = 0;
 
   bool display(bool d){
     changeTo = d ? 0 : 255;
@@ -24,6 +24,7 @@ class Fade: GameObject {
 
   bool swap(){
     changeTo = (changeTo == 255) ? 0 : 255;
+    dbg(changeTo);
     isChanging = true;
     return (changeTo == 255);
   }
@@ -38,16 +39,17 @@ class Fade: GameObject {
     isChanging = true;
   }
 
-  this(ubyte[3] color = [0, 0, 0], uint fadetime = 1) {
+  this(ubyte[3] color = [0, 0, 0], uint fadetime = 1, ubyte tp = 0) {
     this.color = color;
     this.fadetime = fadetime;
+    this.tp = tp;
     tmr = new Timer;
   }
 
   override void setup() {
     tform = register(new Transform);
     win = register(new WindowParam);
-    ubyte[4] ubyuf = color ~ 255;
+    ubyte[4] ubyuf = color ~ tp;
     dbg(ubyuf, ", ", ubyuf.length);
     sr = register(new SpriteRenderer(win.size, ubyuf));
   
@@ -57,12 +59,12 @@ class Fade: GameObject {
 
   override void loop() {
     if(tmr.cur >= fadetime){
+      tmr.reset;
       if(!isChanging) goto afterfade; // 表示と変化先が等しい(変化済み)
-      (changeTo == 0) ? tp-=4 : tp+=4;
+      (changeTo == 0) ? (tp-=3) : (tp+=3);
       if(changeTo == tp){
         isChanging = false;
       }
-      tmr.reset;
     }
     sr.colorArr = color ~ tp;
     dbg(sr.colorArr);
