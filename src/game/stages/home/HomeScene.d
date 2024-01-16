@@ -24,6 +24,7 @@ class HomeScene: RouteObject {
     register(new Block(Vec2(0,280),Vec2(100,0.3)));
     for(int i = 0; i < 2500; i++){
       register(new Enemy3(Vec2(i * 400 + 100,100),hero.component!Transform));
+      register(new Enemy2(Vec2(i * 400 + 200, 30)));
     }
 
     // vv worldTrf vv

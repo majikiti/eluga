@@ -26,7 +26,7 @@ class Kalashnikov: GameObject {
 
   override void loop() {
     Vec2 vecm = (im.cusorPos - tform.pos).unit;
-    vecm = vecm.rot(-45);
+    vecm = vecm.rotdeg(-45);
     vecm *= 500;
     if(im.mouseOnce(0)){
       register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));

@@ -28,11 +28,18 @@ struct _Vec2(T) {
   auto h() const => typeof(this)(_x, 0);
 
   // くるくる
-  auto rot(real degree) {
+  auto rotdeg(real degree) {
     Vec2 retval;
     auto rad = degree * PI / 180;
     retval.x = x*cos(rad) - y*sin(rad);
     retval.y = x*sin(rad) + y*cos(rad);
+    return retval;
+  }
+
+  auto rot(real radian) {
+    Vec2 retval;
+    retval.x = x*cos(radian) - y*sin(radian);
+    retval.y = x*sin(radian) + y*cos(radian);
     return retval;
   }
 

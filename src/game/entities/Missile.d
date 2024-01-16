@@ -44,7 +44,7 @@ class Missile: GameObject {
         rb.g = Vec2(0, 0);
     }
 
-    auto clip = new AudioAsset("se_rifle01.mp3");
+    //auto clip = new AudioAsset("se_rifle01.mp3");
     // auto audio = register(new AudioSource(clip));
     // audio.volume(20);
     // audio.play();
