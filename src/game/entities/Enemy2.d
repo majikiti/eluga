@@ -5,7 +5,7 @@ import game;
 
 class Enemy2: Enemy {
   /*
-  Enemy enemy2;
+  Enemy enemy2
   ImageAsset skin;
   AudioAsset se; //効果音
   AudioSource sound;
