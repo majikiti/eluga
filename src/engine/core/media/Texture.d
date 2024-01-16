@@ -6,12 +6,16 @@ import engine;
 class Texture {
   SDL_Texture* data;
 
-  this(SDL_Renderer* r, Surface s) {
-    this(r, s.data);
+  this(SDL_Renderer* r, Surface surface) {
+    this(r, surface.data);
   }
 
-  this(SDL_Renderer* r, SDL_Surface* s) {
-    data = SDL_CreateTextureFromSurface(r, s);
+  this(SDL_Renderer* r, SDL_Surface* rawsurface) {
+    data = SDL_CreateTextureFromSurface(r, rawsurface);
+  }
+
+  this(SDL_Texture* rawtexture) {
+    data = rawtexture;
   }
 
   ~this() {

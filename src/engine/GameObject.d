@@ -77,15 +77,22 @@ class GameObject: Loggable {
 
   // utils
 
+  auto render(Texture texture, const SDL_Rect* dest) =>
+    render(texture, null, dest);
+
   void render(Texture texture, const SDL_Rect* src, const SDL_Rect* dest) {
     ctx.layers[layer] ~= {
       SDL_RenderCopy(ctx.r, texture.data, src, dest);
     };
   }
 
-  auto render(Texture texture, const SDL_Rect* dest) {
-    return render(texture, null, dest);
-  }
+  auto renderEx(
+    Texture texture,
+    const SDL_Rect* dest,
+    real rot,
+    const SDL_Point* center = null,
+    const SDL_RendererFlip flip = SDL_FLIP_NONE,
+  ) => renderEx(texture, null, dest, rot, center, flip);
 
   void renderEx(
     Texture texture,
@@ -98,16 +105,6 @@ class GameObject: Loggable {
     ctx.layers[layer] ~= {
       SDL_RenderCopyEx(ctx.r, texture.data, src, dest, cast(double)rot, center, flip);
     };
-  }
-
-  auto renderEx(
-    Texture texture,
-    const SDL_Rect* dest,
-    real rot,
-    const SDL_Point* center = null,
-    const SDL_RendererFlip flip = SDL_FLIP_NONE,
-  ) {
-    return renderEx(texture, null, dest, rot, center, flip);
   }
 
   void color(ubyte r, ubyte g, ubyte b, ubyte a = 255) {

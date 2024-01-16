@@ -49,8 +49,7 @@ class SpriteRenderer: Component {
     if(image!is null){
       rect.w = cast(int)(image.surface.w * tform.scale.x);
       rect.h = cast(int)(image.surface.h * tform.scale.y);
-      auto texture = new Texture(ctx.r, image.surface);
-      go.renderEx(texture, &rect, tform.rot);
+      go.renderEx(image.texture, &rect, tform.rot);
     } else {
       rect.w = cast(int)(psize.x * tform.scale.x);
       rect.h = cast(int)(psize.y * tform.scale.y);
