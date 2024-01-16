@@ -39,10 +39,9 @@ class SpriteRenderer: Component {
 
   override void loop() {
     auto tform = go.component!Transform;
-    auto pos = tform.campos;
 
-    rect.x = cast(int)pos.x;
-    rect.y = cast(int)pos.y;
+    rect.x = cast(int)tform.renderPos.x;
+    rect.y = cast(int)tform.renderPos.y;
 
     if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
 

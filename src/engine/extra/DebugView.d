@@ -11,7 +11,7 @@ class DebugView: GameObject {
   }
 
   override void setup() {
-    auto tform = register(new Transform); // for Text
+    auto tform = register(new Transform(Transform.Org.Real));
     tform.pos = Vec2(8, 8);
 
     auto font = new TextAsset("PixelMplus-20130602/PixelMplus12-Regular.ttf", 16);

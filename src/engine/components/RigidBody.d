@@ -38,12 +38,12 @@ class RigidBody: Component {
   }
 
   private bool objectsConflict(Vec2 pos1, GameObject obj2) {
-    Vec2 pos2 = obj2.component!Transform.worldPos;
+    Vec2 pos2 = obj2.component!Transform.pos;
     Vec2 size1 = go.component!BoxCollider.worldScale;
     Vec2 size2 = obj2.component!BoxCollider.worldScale;
     Vec2 center1 = pos1 + size1/2;
     Vec2 center2 = pos2 + size2/2;
-    
+
     bool hFlag = abs(center1.y - center2.y) < (size1.y + size2.y)/2.0;
     bool wFlag = abs(center1.x - center2.x) < (size1.x + size2.x)/2.0;
 
@@ -63,14 +63,14 @@ class RigidBody: Component {
       time = dur;
       if(go.has!BoxCollider){
         if(!go.component!BoxCollider.isTrigger && go.component!BoxCollider.active){
-          Vec2 afterPos = tform.worldPos + resV*time;
+          Vec2 afterPos = tform.pos + resV * time;
           foreach(j, q; gos) {
             if(q == go || q.component!BoxCollider.isTrigger || !q.component!BoxCollider.active) continue;
             if(objectsConflict(afterPos,q)){
               real ok = 0, ng = time, mid;
               while(abs(ok - ng) > 0.001){
                 mid = (ok + ng) / 2.0;
-                afterPos = tform.worldPos + resV * mid;
+                afterPos = tform.pos + resV * mid;
                 if(objectsConflict(afterPos, q)) {
                   ng = mid;
                 }
@@ -80,8 +80,8 @@ class RigidBody: Component {
               resV = initV;
             }
             else continue;
-            if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (time + 0.1), q)) resV.x = 0;
-            if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (time + 0.1), q)) resV.y = 0;
+            if(objectsConflict(tform.pos + Vec2(resV.x,0) * (time + 0.1), q)) resV.x = 0;
+            if(objectsConflict(tform.pos + Vec2(0,resV.y) * (time + 0.1), q)) resV.y = 0;
           }
         }
       }
@@ -106,7 +106,7 @@ class RigidBody: Component {
   override void debugLoop() {
     if(!debugFrame) return;
     Vec2 size1 = go.component!BoxCollider.worldScale;
-    auto pos = go.component!Transform.campos + size1 / 2;
+    auto pos = go.component!Transform.renderPos + size1 / 2;
     color(255, 241, 0);
     line(pos, pos + v*50);
     color(255, 0, 0);

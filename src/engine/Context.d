@@ -26,6 +26,7 @@ struct Context {
   }
 
   GameObject root;
+  Camera camera;
   InputManager im;
   void delegate()[][short] layers;
 

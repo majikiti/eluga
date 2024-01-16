@@ -1,10 +1,10 @@
-module engine.components.Camera;
+module engine.Camera;
 
 import std;
 import engine;
 
 // HikakinTVでカメラとか扱ったことあんまないけど
-class Camera: Component {
+class Camera: Loggable {
   Vec2 pos; // カメラ絶対位置
   Vec2 size;
   Vec2 centre; // 画面サイズ分のバイアス
@@ -35,12 +35,25 @@ class Camera: Component {
     return;
   }
 
-  override void loop() {
-    this.size = ctx.windowSize;
-    this.centre = ctx.windowSize/2;
-    if(fgo!is null){
-      this.pos = fgo.component!Transform.pos - centre;
+  void loop() {
+    // focus
+    auto gos = ctx.root.everyone.filter!(e => e.has!Focus).array;
+    ushort prio = ushort.max;
+    GameObject gobj = null;
+    foreach(i, f; gos){
+      if(f.component!Focus.priority == prio) warn("Duplicate Focus priority: ", gobj, ", ", f);
+      if(f.component!Focus.priority < prio && f.component!Focus.enable){
+        gobj = f;
+        prio = f.component!Focus.priority;
+      }
     }
+    if(gobj !is null) focus(gobj);
+
+    // window size
+    size = ctx.windowSize;
+    centre = ctx.windowSize / 2;
+    if(fgo !is null) pos = fgo.component!Transform.pos - centre;
+
     // 範囲外 カメラ もうやめて
     pos.x = max(min(pos.x, lim.max.x), lim.min.x);
     pos.y = max(min(pos.y, lim.max.y), lim.min.y);

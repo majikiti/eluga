@@ -68,15 +68,13 @@ class Text: Component {
       }
 
       auto tform = go.component!Transform;
-      auto pos = tform.worldPos;
-      auto scale = tform.scale;
 
       auto size = texture.size;
       auto dest = rect(
-        pos.x,
-        pos.y + voffset,
-        size.x * scale.x,
-        size.y * scale.y,
+        tform.pos.x,
+        tform.pos.y + voffset,
+        size.x * tform.scale.x,
+        size.y * tform.scale.y,
       );
 
       go.renderEx(texture, dest, tform.rot);

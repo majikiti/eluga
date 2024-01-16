@@ -52,7 +52,7 @@ class Missile: GameObject {
     auto rb = component!RigidBody;
     auto rend = component!SpriteRenderer;
     // tform.rot++;
-    if(!tform.isin(rend.size,true)) destroy;
+    if(!tform.isin(rend.size)) destroy;
     //if(tform.pos.x > 1000 || tform.pos.y > 1000 || tform.pos.x < -1000 || tform.pos.y < -1000) destroy;
     final switch(type) {
       case Type.Normal: break;

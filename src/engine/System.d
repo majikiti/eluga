@@ -29,11 +29,11 @@ class System: Loggable {
   void run() {
     ctx.updated = SDL_GetTicks64;
     ctx.root.realSetup;
+
+    ctx.camera = new Camera(ctx.windowSize / 2);
+    ctx.camera.size = ctx.windowSize;
+
     debug ctx.root.register(new DebugView);
-    log(ctx.windowSize);
-    // カメラ(なにもわからん……、とりあえずコンポーネントとしてルートに付ける雑実装)
-    ctx.root.register(new Camera(ctx.windowSize/2));
-    ctx.root.component!Camera.size = ctx.windowSize;
 
     loop; // 初回レンダリング
     while(ctx.running) {
@@ -118,23 +118,11 @@ class System: Loggable {
       }
     }
 
-    // Camera & Focus
-    gos = ctx.root.everyone.filter!(e => e.has!Focus).array;
-    ushort prio = ushort.max;
-    GameObject gobj = null;
-    foreach(i, f; gos){
-      if(f.component!Focus.priority == prio) warn("Duplicate Focus priority: ", gobj, ", ", f);
-      if(f.component!Focus.priority < prio && f.component!Focus.enable){
-        gobj = f;
-        prio = f.component!Focus.priority;
-      }
-    }
-    if(gobj!is null) ctx.root.component!Camera.focus(gobj);
-
     // background
     SDL_SetRenderDrawColor(ctx.r, 0, 0, 0, 255);
     SDL_RenderClear(ctx.r);
 
+    ctx.camera.loop;
     ctx.root.realLoop;
     foreach(layer; ctx.layers.keys.sort)
       foreach(f; ctx.layers[layer]) f();
@@ -145,8 +133,8 @@ class System: Loggable {
 }
 
 bool objectsConflict(GameObject obj1, GameObject obj2) {
-    Vec2 pos1 = obj1.component!Transform.worldPos;
-    Vec2 pos2 = obj2.component!Transform.worldPos;
+    Vec2 pos1 = obj1.component!Transform.pos;
+    Vec2 pos2 = obj2.component!Transform.pos;
     Vec2 size1 = obj1.component!BoxCollider.worldScale;
     Vec2 size2 = obj2.component!BoxCollider.worldScale;
     Vec2 center1 = pos1 + size1/2;

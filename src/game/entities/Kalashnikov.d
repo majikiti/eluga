@@ -29,7 +29,7 @@ class Kalashnikov: GameObject {
     vecm = vecm.rot(-45);
     vecm *= 500;
     if(im.mouseOnce(0)){
-      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));
+      register(new Missile(Missile.Type.CCCP, vecm, tform.pos));
       // vv bgm vv
       audio.volume(10);
       audio.play(1);

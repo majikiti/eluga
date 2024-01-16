@@ -3,7 +3,6 @@ module engine.components;
 public import engine.components.AudioSource;
 public import engine.components.BoxCollider;
 public import engine.components.Button;
-public import engine.components.Camera;
 public import engine.components.Focus;
 public import engine.components.RigidBody;
 public import engine.components.SpriteRenderer;
