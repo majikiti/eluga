@@ -42,7 +42,7 @@ class Transform: Component {
 
       case Org.World:
       case Org.Local:
-        renderPos = pos - ctx.camera.pos;
+        renderPos = worldPos - ctx.camera.pos;
         break;
     }
   }

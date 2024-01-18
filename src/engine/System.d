@@ -133,8 +133,8 @@ class System: Loggable {
 }
 
 bool objectsConflict(GameObject obj1, GameObject obj2) {
-    Vec2 pos1 = obj1.component!Transform.pos;
-    Vec2 pos2 = obj2.component!Transform.pos;
+    Vec2 pos1 = obj1.component!Transform.worldPos;
+    Vec2 pos2 = obj2.component!Transform.worldPos;
     Vec2 size1 = obj1.component!BoxCollider.worldScale;
     Vec2 size2 = obj2.component!BoxCollider.worldScale;
     Vec2 center1 = pos1 + size1/2;

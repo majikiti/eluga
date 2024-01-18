@@ -20,7 +20,7 @@ class LifeIndicator: GameObject {
     }
 
     override void setup() {
-      tform = register(new Transform);
+      tform = register(new Transform(Transform.Org.Local));
       tform.pos = initpos;
       liobj = register(new SpriteRenderer(size, vc));
     }
@@ -43,7 +43,7 @@ class LifeIndicator: GameObject {
 
   override void setup() {
     tform = register(new Transform(Transform.Org.Local));
-    tform.pos = Vec2(0, 40);
+    tform.pos = Vec2(0, -20);
     register(new liObjects(border, tform.pos, [128, 128, 128]));
     register(new liObjects(border - Vec2(bthick*2, bthick*2), tform.pos + Vec2(bthick, bthick), [125, 45, 16]));
     register(new liObjects(border - margin*2, tform.pos + margin, [255, 0, 0]));

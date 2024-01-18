@@ -53,7 +53,7 @@ class RigidBody: Component {
   }
 
   private bool objectsConflict(Vec2 pos1, GameObject obj2) {
-    Vec2 pos2 = obj2.component!Transform.renderPos;
+    Vec2 pos2 = obj2.component!Transform.worldPos;
     Vec2 size1 = go.component!BoxCollider.worldScale;
     Vec2 size2 = obj2.component!BoxCollider.worldScale;
     Vec2 center1 = pos1 + size1/2;
@@ -78,7 +78,7 @@ class RigidBody: Component {
       time = dur;
       if(go.has!BoxCollider){
         if(!go.component!BoxCollider.isTrigger && go.component!BoxCollider.active){
-          Vec2 afterPos = tform.renderPos + resV * time;
+          Vec2 afterPos = tform.worldPos + resV * time;
           foreach(j, q; gos) {
             if(q == go || q.component!BoxCollider.isTrigger || !q.component!BoxCollider.active) continue;
             auto qTags = q.getTags;
