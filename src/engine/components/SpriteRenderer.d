@@ -21,14 +21,9 @@ class SpriteRenderer: Component {
   // 画像が あるとき〜
   this(ImageAsset image, bool invisdraw = false) {
     this.image = image;
-<<<<<<< HEAD
     rect.w = cast(int)image.surface.w;
     rect.h = cast(int)image.surface.h;
-=======
-    rect.w = image.surface.w;
-    rect.h = image.surface.h;
     this.colorArr = [255, 255, 255, 255];
->>>>>>> 11a4722 (wip: effect)
     this.invisdraw = invisdraw;
     mode = Mode.Image;
   }
@@ -71,27 +66,8 @@ class SpriteRenderer: Component {
     if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
 
     if(image!is null){
-<<<<<<< HEAD
       go.renderEx(image.texture, &rect, tform.rot);
     } else {
-=======
-      rect.w = cast(int)(image.surface.w * tform.scale.x);
-      rect.h = cast(int)(image.surface.h * tform.scale.y);
-      if(tform.isZoomCenter) {
-        rect.x -= cast(int)(image.surface.w * tform.scale.x / 2);
-        rect.y -= cast(int)(image.surface.h * tform.scale.y / 2);
-      }
-      auto texture = new Texture(ctx.r, image.surface);
-      go.setTextureOpac(texture.data, _opac);
-      go.renderEx(texture, &rect, tform.rot);
-    } else {
-      rect.w = cast(int)(psize.x * tform.scale.x);
-      rect.h = cast(int)(psize.y * tform.scale.y);
-      if(tform.isZoomCenter) {
-        rect.x -= cast(int)(psize.x * tform.scale.x / 2);
-        rect.y -= cast(int)(psize.y * tform.scale.y / 2);
-      }
->>>>>>> 11a4722 (wip: effect)
       color(colorArr);
       go.renderRect(&rect);
     }

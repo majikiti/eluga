@@ -25,6 +25,8 @@ class Transform: Component {
   real rot = 0;
   Vec2 scale = Vec2(1,1);
 
+  private bool looped;
+
   auto worldPos() {
     switch(org) {
       case Org.World: return pos;
@@ -48,9 +50,9 @@ class Transform: Component {
       case Org.Real:
         renderPos = pos;
         break;
-
       case Org.World:
       case Org.Local:
+      case Org.Spawn:
         renderPos = worldPos - ctx.camera.pos;
         break;
     }

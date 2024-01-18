@@ -5,6 +5,9 @@ import engine;
 import game;
 
 class Enemy2: Enemy {
+  LifeIndicator lifin;
+  override string imgdir() => "flyingenem.png";
+
   EnemFoot[2] enmfts;
 
   Timer jumptmr;
@@ -22,7 +25,6 @@ class Enemy2: Enemy {
     enmfts = [register(new EnemFoot([PI/6, PI/2], 1000)), register(new EnemFoot([-PI/6, -PI/2], 1000))];
     jumptmr = new Timer;
   }
-
   override void loop() {
     super.loop();
     if(this.component!Status.isDamaged){

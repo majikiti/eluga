@@ -33,7 +33,6 @@ class Hero: GameObject {
     auto hero0 = new ImageAsset("hero0.png");
     rend = register(new SpriteRenderer(hero0));
     register(new BoxCollider(rend.size));
-<<<<<<< HEAD
     register(new Focus(3)); 
     register(new Kalashnikov);
     status = register(new Status);
@@ -41,15 +40,9 @@ class Hero: GameObject {
     addTag("Player");
 
     gm.player = this;
-=======
-    register(new Focus(3));
+
     rndtmr = new Timer;
     dashtmr = new Timer;
-
-    addTag("Player");
-
-    register(new Kalashnikov);
->>>>>>> 11a4722 (wip: effect)
   }
 
   override void loop() {
