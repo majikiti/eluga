@@ -13,7 +13,7 @@ class Kalashnikov: GameObject {
   override void setup() {
     layer = 30;
 
-    tform = register(new Transform);
+    tform = register(new Transform(Transform.Org.Local));
     tform.pos = Vec2(20, 40);
     tform.scale = Vec2(0.5, 0.5);
 

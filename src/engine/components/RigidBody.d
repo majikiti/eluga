@@ -6,6 +6,9 @@ import utils;
 
 Vec2 g0 = Vec2(0, 9.81);
 
+static bool[string][string] layer;
+
+
 // Need components: Transform
 class RigidBody: Component {
   Vec2 v, a, F, gF;
@@ -24,6 +27,18 @@ class RigidBody: Component {
     this.e = e;
     this.mu = mu;
     this.v = v0;
+    initLayer;
+  }
+
+  private void initLayer(){
+    layer["Player"]["Enemy"] = true;
+    layer["Enemy"]["Enemy"] = true;
+  }
+
+  private bool tagsCheck(string pt, string qt){
+    auto flag = pt in layer;
+    if(flag is null) return false;
+    else return !((qt in (*flag)) is null);
   }
 
   void addForce(Vec2 F) {
@@ -38,7 +53,7 @@ class RigidBody: Component {
   }
 
   private bool objectsConflict(Vec2 pos1, GameObject obj2) {
-    Vec2 pos2 = obj2.component!Transform.pos;
+    Vec2 pos2 = obj2.component!Transform.renderPos;
     Vec2 size1 = go.component!BoxCollider.worldScale;
     Vec2 size2 = obj2.component!BoxCollider.worldScale;
     Vec2 center1 = pos1 + size1/2;
@@ -50,7 +65,6 @@ class RigidBody: Component {
     return hFlag && wFlag;
   }
 
-
   //最悪計算量実質的にO(N^2)
   //速い物体の処理を犠牲に計算量を削減
   private void update(){
@@ -58,14 +72,21 @@ class RigidBody: Component {
     Vec2 resV = v, initV; // resVが我が速度
     real dur = go.dur, time = dur; // ぢれいしょん
     auto gos = ctx.レンダー中のボックスコライダー持ちのオブジェクト;
+
     while(resV.size > 0 && dur > 0){
       initV = resV;
       time = dur;
       if(go.has!BoxCollider){
         if(!go.component!BoxCollider.isTrigger && go.component!BoxCollider.active){
-          Vec2 afterPos = tform.pos + resV * time;
+          Vec2 afterPos = tform.renderPos + resV * time;
           foreach(j, q; gos) {
             if(q == go || q.component!BoxCollider.isTrigger || !q.component!BoxCollider.active) continue;
+            auto qTags = q.getTags;
+            auto pTags = go.getTags;
+            bool flag = false;
+
+            foreach(k,qt; qTags) foreach(l, pt; pTags) flag |= (tagsCheck(qt,pt) | tagsCheck(pt,qt));
+            if(flag) continue;
             if(objectsConflict(afterPos,q)){
               real ok = 0, ng = time, mid;
               while(abs(ok - ng) > 0.001){
@@ -80,8 +101,14 @@ class RigidBody: Component {
               resV = initV;
             }
             else continue;
-            if(objectsConflict(tform.pos + Vec2(resV.x,0) * (time + 0.1), q)) resV.x = 0;
-            if(objectsConflict(tform.pos + Vec2(0,resV.y) * (time + 0.1), q)) resV.y = 0;
+            if(objectsConflict(tform.pos + Vec2(resV.x,0) * (time + 0.1), q)) {
+              if(q.has!RigidBody) time = 0;
+              resV.x = 0;
+            }
+            if(objectsConflict(tform.pos + Vec2(0,resV.y) * (time + 0.1), q)) {
+              if(q.has!RigidBody) time = 0;
+              resV.y = 0;
+            }
           }
         }
       }

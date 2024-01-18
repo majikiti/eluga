@@ -201,6 +201,8 @@ class GameObject: Loggable {
 
   bool getTag(string tag) => tags.get(tag,false);
 
+  auto getTags() => tags.keys;
+
   auto windowSize() => ctx.windowSize;
 
   void quit(){

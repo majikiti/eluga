@@ -14,7 +14,7 @@ class Game: GameObject {
   Router router;
 
   override void setup() {
-    router = register(new Router(Routes.Title, [
+    router = register(new Router(Routes.Home, [
       Routes.Title: new TitleScene(),
       Routes.Home: new HomeScene(),
       Routes.Editor: new EditorScene(),

@@ -17,12 +17,9 @@ class HomeScene: RouteObject {
   override void setup() {
     // vv hero vv
     hero = register(new Hero);
+    register(new Block(Vec2(0,280),Vec2(100,0.3)));
     for(int i = 0; i < 2500; i++){
-      if(!(i%2)){
-        register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
-        register(new Enemy1(Vec2(i * 400 + 100,100)));
-      }
-      else register(new Block(Vec2(i * 400,280),Vec2(1,0.3)));
+      register(new Enemy3(Vec2(i * 400 + 100,100),hero.component!Transform));
     }
 
     // vv worldTrf vv

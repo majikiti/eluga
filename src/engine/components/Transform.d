@@ -1,5 +1,6 @@
 module engine.components.Transform;
 
+import std;
 import engine;
 
 class Transform: Component {
@@ -16,26 +17,33 @@ class Transform: Component {
   real rot = 0;
   Vec2 scale = Vec2(1,1);
 
+  auto worldPos() {
+    switch(org) {
+      case Org.World: return pos;
+      case Org.Local: {
+        if(!go.parent.has!Transform) err("parent (", go.parent, ") doesn't have Transform!");
+        auto ptform = go.parent.component!Transform;
+        return ptform.worldPos + pos;
+      }
+      default:
+        throw new Error(org.to!string ~ " cannot convert to worldpos");
+    }
+  }
+
   this(Org worldType = Org.World) {
     org = worldType;
   }
 
   override void loop() {
     final switch(org) {
-      case Org.Real: {
+      case Org.Real:
         renderPos = pos;
         break;
-      }
-      case Org.World: {
-        renderPos = Vec2(pos.x, ctx.windowSize.y - pos.y) - ctx.camera.pos;
+
+      case Org.World:
+      case Org.Local:
+        renderPos = pos - ctx.camera.pos;
         break;
-      }
-      case Org.Local: {
-        if(!go.parent.has!Transform) err("parent (", go.parent, ") doesn't have Transform!");
-        auto ptform = go.parent.component!Transform;
-        renderPos = ptform.renderPos + Vec2(pos.x, -pos.y);
-        break;
-      }
     }
   }
 

@@ -19,7 +19,7 @@ class BoxCollider: Component, Collider {
 
   override void debugLoop() {
     if(!debugFrame) return;
-    auto pos = go.component!Transform.pos;
+    auto pos = go.component!Transform.renderPos;
     color(255, 0, 0);
     line(Vec2(pos.x, pos.y), Vec2(pos.x, pos.y + worldScale.y));
     line(Vec2(pos.x, pos.y + worldScale.y), Vec2(pos.x + worldScale.x, pos.y + worldScale.y));

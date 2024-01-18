@@ -6,9 +6,10 @@ import engine;
 import game;
 
 class Hero: GameObject {
-  int life;
+  Status status;
+  SpriteRenderer rend;
   int type;
-  real time = 0,jumpSpeed = 3;
+  real time = 0,jumpSpeed = 3, sterTime = 100, timer = 0;
   Transform tform;
   // ^そのうちStatusに改修する(誰かやってくれるとぼくはうれしいです)
   Vec2 dir = Vec2(1,0);
@@ -29,11 +30,15 @@ class Hero: GameObject {
     register(new RigidBody(1)).a = Vec2(0, 0);
 
     auto hero0 = new ImageAsset("hero0.png");
-    auto rend = register(new SpriteRenderer(hero0));
+    rend = register(new SpriteRenderer(hero0));
     register(new BoxCollider(rend.size));
     register(new Focus(3)); 
     register(new Kalashnikov);
+    status = register(new Status);
+    register(new LifeIndicator(status));
     addTag("Player");
+
+    gm.player = this;
   }
 
   override void loop() {
@@ -57,7 +62,7 @@ class Hero: GameObject {
 
     //jump
     if(jumpRemain > 0 && im.keyOnce(' ')){
-      rb.v -= Vec2(0, jumpSpeed);
+      rb.v = Vec2(0, -jumpSpeed);
       // 1回増やす
       if(!fromGround) jumpRemain--;
       fromGround = false;
@@ -67,6 +72,12 @@ class Hero: GameObject {
     if(im.keyOnce('\r')){
       register(new Missile(Missile.Type.Normal, dir, tform.pos + Vec2(0,20)));
     }
+
+    if(gm.playerStatus.star && sterTime > timer){
+      rend.active = !rend.active;
+      timer += dur;
+    }
+    else timer = 0, gm.playerStatus.star = false, rend.active = true;
   }
 
   override void collide(GameObject go){

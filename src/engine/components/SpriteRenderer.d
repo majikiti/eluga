@@ -14,8 +14,8 @@ class SpriteRenderer: Component {
   // 画像が あるとき〜
   this(ImageAsset image, bool invisdraw = false) {
     this.image = image;
-    rect.w = image.surface.w;
-    rect.h = image.surface.h;
+    rect.w = cast(int)image.surface.w;
+    rect.h = cast(int)image.surface.h;
     this.invisdraw = invisdraw;
   }
 
@@ -40,36 +40,48 @@ class SpriteRenderer: Component {
   override void loop() {
     auto tform = go.component!Transform;
 
+    if(image!is null){
+      rect.w = cast(int)(image.surface.w * tform.scale.x);
+      rect.h = cast(int)(image.surface.h * tform.scale.y);
+    } else {
+      rect.w = cast(int)(psize.x * tform.scale.x);
+      rect.h = cast(int)(psize.y * tform.scale.y);
+    }
+    
     rect.x = cast(int)tform.renderPos.x;
     rect.y = cast(int)tform.renderPos.y;
 
     if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
 
     if(image!is null){
-      rect.w = cast(int)(image.surface.w * tform.scale.x);
-      rect.h = cast(int)(image.surface.h * tform.scale.y);
       go.renderEx(image.texture, &rect, tform.rot);
     } else {
-      rect.w = cast(int)(psize.x * tform.scale.x);
-      rect.h = cast(int)(psize.y * tform.scale.y);
       color(colorArr);
       go.renderRect(&rect);
     }
   }
 
-  Vec2 size() const => Vec2(rect.w, rect.h);
+  Vec2 size() {
+    auto scale = go.component!Transform.scale;
+    return Vec2(rect.w * scale.x, rect.h * scale.y);
+  }
 
  debug:
   bool debugFrame = true;
 
   override void debugLoop() {
     if(!debugFrame) return;
-    color(0, 255, 0);
     auto tform = go.component!Transform;
-    if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
-    line(Vec2(rect.x, rect.y), Vec2(rect.x, rect.y + rect.h));
-    line(Vec2(rect.x, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y + rect.h));
-    line(Vec2(rect.x + rect.w, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y));
-    line(Vec2(rect.x + rect.w, rect.y), Vec2(rect.x, rect.y));
+    color(255,0,0);
+    auto rndPos1 = tform.renderPos;
+    auto rndPos2 = tform.renderPos;
+
+    line(rndPos1,rndPos2);
+    // color(0, 255, 0);
+    // if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
+    // line(Vec2(rect.x, rect.y), Vec2(rect.x, rect.y + rect.h));
+    // line(Vec2(rect.x, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y + rect.h));
+    // line(Vec2(rect.x + rect.w, rect.y + rect.h), Vec2(rect.x + rect.w, rect.y));
+    // line(Vec2(rect.x + rect.w, rect.y), Vec2(rect.x, rect.y));
   }
 }
