@@ -30,9 +30,11 @@ class Transform: Component {
   auto worldPos() {
     switch(org) {
       case Org.World: return pos;
-      case Org.Local: {
-        if(!go.parent.has!Transform) err("parent (", go.parent, ") doesn't have Transform!");
-        auto ptform = go.parent.component!Transform;
+      case Org.Local:
+      case Org.Spawn: {
+        auto ptform = go.parent.has!Transform
+          ? go.parent.component!Transform
+          : go.parent.register(new Transform);
         return ptform.worldPos + pos;
       }
       default:
