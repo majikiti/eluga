@@ -78,8 +78,12 @@ class SpriteRenderer: Component {
     return Vec2(rect.w * scale.x, rect.h * scale.y);
   }
 
+  void opac(ubyte o){
+    if(mode == Mode.Image) go.setTextureOpac(image.texture.data, o);
+    else colorArr[3] = o;
+    return;
+  }
 
-  auto opac(ubyte o) => (mode == Mode.Image) ? _opac = o : colorArr[3] = o;
  debug:
   bool debugFrame = true;
 

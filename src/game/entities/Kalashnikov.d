@@ -10,7 +10,7 @@ class Kalashnikov: GameObject {
   AudioAsset SHOT;
   AudioSource audio;
 
-  Vec2 fixvec = Vec2(50,120);
+  Vec2 fixvec = Vec2(80,50);
 
   override void setup() {
     layer = 30;
@@ -29,14 +29,14 @@ class Kalashnikov: GameObject {
   override void loop() {
     Vec2 vecm = (im.cusorPos - tform.pos).unit;
     vecm = vecm.rotdeg(-45);
-    vecm *= 500;
+    vecm *= 100;
     if(im.mouseOnce(0)){
-      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos + fixvec));
+      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));
       // vv bgm vv
       audio.volume(10);
       audio.play(1);
       //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
     }
-    // dbg(tform.rot = 90 * (atan(vecm.y / vecm.x)));
+     dbg(tform.rot = 90 * (atan(vecm.y / vecm.x)));
   }
 }

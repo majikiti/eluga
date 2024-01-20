@@ -63,8 +63,7 @@ class Transform: Component {
   // Obj範囲内にWinのどっちかの端があるかという考え方
   bool isin(Vec2 sz) {
     auto c = ctx.camera;
-    dbg(pos.x, ":")
-    return !((pos.x > c.pos.x + c.size.x) || (pos.x + sz.x < c.pos.x))
+    return !((pos.x > c.pos.x + c.size.x) || (pos.x > c.pos.x + c.size.x))
         && !((pos.y + sz.y < c.pos.y) || (pos.y > c.pos.y + c.size.y));
   }
 }

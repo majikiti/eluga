@@ -12,6 +12,7 @@ class Enemy2: Enemy {
 
   Timer jumptmr;
   real limittime = 1;
+  auto randomSrc = Random(0);
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
@@ -35,10 +36,10 @@ class Enemy2: Enemy {
     if(jumptmr.cur > limittime) {
       rigid.a = Vec2(0, 0);
       rigid.v = Vec2(0, 0);
-      rigid.addForce(Vec2(-20, min(max(0, 20 - tform.pos.x), -20)));
+      rigid.addForce(Vec2(uniform(-50, 50, randomSrc), min(max(0, tform.pos.y * 0.125), -10)));
       foreach(enmft; enmfts) enmft.jump;
 
-      auto randomSrc = Random(cast(uint)jumptmr.cur);
+      randomSrc = Random(cast(uint)jumptmr.cur);
       limittime = uniform(500, 1_000, randomSrc);
       jumptmr.reset;
     }

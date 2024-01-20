@@ -30,5 +30,8 @@ class Enemy3: Enemy {
       gm.playerStatus.star = true;
       gm.playerStatus.hp -= 1;
     }
+    if(go.getTag("Missile")) {
+      register(new Damage);
+    }
   }
 }
