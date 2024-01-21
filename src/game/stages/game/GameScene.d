@@ -1,10 +1,10 @@
-module game.stages.home.HomeScene;
+module game.stages.game.GameScene;
 
 import std;
 import engine;
 import game;
 
-class HomeScene: RouteObject {
+class GameScene: RouteObject {
   Hero hero;
   ImageAsset bg;
   AudioAsset BGM;
@@ -48,7 +48,7 @@ class HomeScene: RouteObject {
   }
 
   override void loop() {
-    if(im.keyOnce(27))quit();
+    if(im.keyOnce(27)) nuke;
   //  // 仮工事2.0
   //  auto wave = 100 * (2 + sin(theta));
   //  theta += 0.04;

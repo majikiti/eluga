@@ -7,7 +7,7 @@ import engine;
 class GameObject: Loggable {
   private GameObject[] children;
   private Component[] components;
-  private bool alreadySetup = false;
+  private bool ready = false;
   short layer = 0;
   private bool[string] tags;
 
@@ -15,7 +15,7 @@ class GameObject: Loggable {
 
   bool active = true;
   package auto ref parent() {
-    debug if(!_parent.alreadySetup) warn("parent (", _parent, ") is not set up yet!");
+    debug if(!_parent.ready) warn("parent (", _parent, ") is not set up yet!");
     return _parent;
   }
 
@@ -56,7 +56,7 @@ class GameObject: Loggable {
       debugSetup;
       layer--;
     }
-    alreadySetup = true;
+    ready = true;
   }
 
   package void realLoop() {
@@ -169,8 +169,12 @@ class GameObject: Loggable {
 
   GO register(GO: GameObject)(GO e) {
     auto go = cast(GameObject)e;
-    go._parent = this;
     children ~= go;
+    if(go.ready) {
+      go.resurrection;
+      return e;
+    }
+    go._parent = this;
     go.realSetup;
     return e;
   }
@@ -179,7 +183,6 @@ class GameObject: Loggable {
     c.go = this;
     if(has!C) {
       warn("registering ", C.stringof, " to ", this, " is duplicate; dropping this");
-      warn("hint: you can update component with upsert(component)");
       return component!C;
     }
     components ~= c;
@@ -187,13 +190,23 @@ class GameObject: Loggable {
     return c;
   }
 
-  C upsert(C: Component)(C c) {
-    c.go = this;
-    auto old = findComponent!C;
-    if(old.e) components[old.i] = c;
-    else components ~= c;
-    c.realSetup;
-    return c;
+  deprecated
+  alias destroy = bye;
+
+  final void bye(bool unregister = true) {
+    foreach(e; children) e.bye(false);
+    foreach(c; components) c.bye;
+    if(unregister) {
+      foreach(i, e; parent.children) if(e == this) {
+        parent.children = parent.children.remove(i);
+        break;
+      }
+    }
+  }
+
+  final void resurrection() {
+    foreach(c; components) c.resurrection;
+    foreach(e; children) e.resurrection;
   }
 
   void addTag(string tag) {
@@ -210,14 +223,7 @@ class GameObject: Loggable {
 
   auto windowSize() => ctx.windowSize;
 
-  void quit(){
+  void nuke() {
     ctx.running = false;
-  }
-
-  void destroy() {
-    foreach(i, e; parent.children) if(e == this) {
-      parent.children = parent.children.remove(i);
-      return;
-    }
   }
 }

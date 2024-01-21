@@ -5,6 +5,7 @@ import engine;
 
 class AudioSource: Component {
   private Player player;
+  private bool playing;
 
   this(AudioAsset asset) {
     this.player = new Player(asset.sound);
@@ -12,6 +13,15 @@ class AudioSource: Component {
 
   void set(AudioAsset asset) {
     this.player = new Player(asset.sound);
+  }
+
+  override void bye() {
+    playing = player.playing;
+    if(playing) pause;
+  }
+
+  override void resurrection() {
+    if(playing) play;
   }
 
   void play(int loop = 0) { player.play(loop); }

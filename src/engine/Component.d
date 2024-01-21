@@ -10,6 +10,8 @@ class Component: Loggable {
   // override this!
   void setup() {}
   void loop() {}
+  void bye() {}
+  void resurrection() {}
 
   debug {
     void debugSetupPre() {}

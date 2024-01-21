@@ -10,8 +10,12 @@ class _Router(T): GameObject {
 
   this(T init, _RouteObject!T[T] routes) {
     this.current = init;
-    this.routes = routes;
-    foreach(i; routes.keys) routes[i].router = this;
+    foreach(i; routes.keys) registerRoute(i, routes[i]);
+  }
+
+  auto registerRoute(T id, _RouteObject!T route) {
+    route.router = this;
+    return routes[id] = route;
   }
 
   override void setup() {
@@ -21,7 +25,7 @@ class _Router(T): GameObject {
   override void loop() {
     if(change) {
       change = false;
-      currentGO.destroy;
+      currentGO.bye;
       currentGO = register(routes[current]);
     }
   }

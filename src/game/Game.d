@@ -7,16 +7,16 @@ alias Router = _Router!int;
 alias RouteObject = _RouteObject!int;
 
 enum Routes {
-  Home, Title, Editor, GameOver, Abstract,
+  Title, Game, Editor, GameOver, Abstract,
 }
 
 class Game: GameObject {
   Router router;
 
   override void setup() {
-    router = register(new Router(Routes.Home, [
+    router = register(new Router(Routes.Game, [
       Routes.Title: new TitleScene(),
-      Routes.Home: new HomeScene(),
+      Routes.Game: new GameScene(),
       Routes.Editor: new EditorScene(),
       Routes.GameOver: new GameOverScene(),
       Routes.Abstract: new AbstractScene(),

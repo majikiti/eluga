@@ -1,4 +1,4 @@
-module game.stages.home.BackGround;
+module game.stages.game.BackGround;
 
 import game;
 import engine;

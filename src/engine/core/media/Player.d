@@ -11,10 +11,6 @@ class Player {
     this.sound = sound;
   }
 
-  ~this() {
-    if(ctx.running) pause; // todo: check channel leak
-  }
-
   int play(int loop) => chan = Mix_PlayChannel(chan, sound.data, loop);
   int volume(int vol) => Mix_Volume(chan, vol);
   void pause() => Mix_Pause(chan);
