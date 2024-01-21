@@ -20,36 +20,76 @@ class Explosion : GameObject {
 
     this.size = size;
 
+    this.outside = outside;
+    this.inside = inside;
+    this.smoke = smoke;
+
     layer = -50;
 
     tmr = new Timer;
   }
 
   override void setup() {
-    real phi = 0;
+    auto randomSrc = Random(cast(uint)tmr.cur);
+    real theta = 0, dtheta = 0, ranlen;
     // 外の爆破
-    foreach(i; 0..cast(int)10*size){
-      auto randomSrc = Random(cast(uint)tmr.cur);
-      phi = uniform(-PI, PI, randomSrc);
-      exsc ~= new ExpScatter(outside, Vec2(cos(phi), sin(phi)));
+    theta = 0;
+    dtheta = (2*PI)/(30*size);
+    foreach(i; 0..cast(int)30*size){
+      ranlen = uniform(0.85, 1.25, randomSrc);
+      exsc ~= register(new ExpScatter(outside, Vec2(cos(theta), -sin(theta)) * ranlen));
+      theta += dtheta;
     }
     // 内の爆破
-    foreach(i; 0..cast(int)10*size){
-      auto randomSrc = Random(cast(uint)tmr.cur);
-      phi = uniform(-PI, PI, randomSrc);
-      exsc ~= register(new ExpScatter(inside, Vec2(cos(phi)*0.8, sin(phi)*0.8)));
+    theta = 0;
+    dtheta = (2*PI)/(15*size);
+    foreach(i; 0..cast(int)15*size){
+      ranlen = uniform(0.85, 1.25, randomSrc);
+      exsc ~= register(new ExpScatter(inside, Vec2(cos(theta), sin(theta)) * 0.8 * ranlen));
+      theta += dtheta;
     }
     // 煙
-    foreach(i; 0..cast(int)10*size){
-      auto randomSrc = Random(cast(uint)tmr.cur);
-      phi = uniform(-PI, PI, randomSrc);
-      exsc ~= register(new ExpScatter(smoke, Vec2(cos(phi)*0.5, sin(phi)*0.5)));
+    theta = 0;
+    dtheta = (2*PI)/(5*size);
+    foreach(i; 0..cast(int)5*size){
+      ranlen = uniform(0.85, 1.25, randomSrc);
+      exsc ~= register(new ExpScatter(smoke, Vec2(cos(theta), sin(theta)) * 2 * ranlen));
     }
-
-    register(exsc);
   }
 
   override void loop() {
-    if(exsc.length == 0) destroy;
+    if(!has!ExpScatter) destroy;
+  }
+}
+
+class ExpScatter : GameObject {
+  SpriteRenderer sr;
+  Transform tf;
+  
+  Vec2 force;
+  RigidBody rb;
+
+  real dratio;
+  protected ubyte tp;
+
+  this(ubyte[3] colorArr, Vec2 force) {
+    tf = register(new Transform(component!Transform.Org.Local, component!Transform.Zoom.Center));
+    sr = register(new SpriteRenderer(Vec2(30, 30), colorArr));
+    rb = register(new RigidBody(0.2));
+    this.force = force*50;
+
+    dratio = 1;
+    sr.setOpac(192);
+
+    layer = -45;
+  }
+
+  override void setup() {
+    rb.addForce(force);
+  }
+
+  override void loop() {
+    sr.setOpac(sr.opac - 6);
+    if(sr.opac == 0) destroy;
   }
 }

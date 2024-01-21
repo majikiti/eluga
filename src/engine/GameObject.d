@@ -209,6 +209,19 @@ class GameObject: Loggable {
     foreach(e; children) e.resurrection;
   }
 
+  bool has(GO: GameObject)() const => findChildren!GO.e !is null;
+
+  private Tuple!(ulong, "i", GO, "e") findChildren(GO: GameObject)() const {
+    foreach(i, e; children) {
+      auto res = cast(GO)e;
+      if(res) return typeof(return)(i, res);
+    }
+    enum notFound = typeof(return)(0, null);
+    return notFound;
+  }
+
+  // Tags
+
   void addTag(string tag) {
     tags[tag] = true;
   }

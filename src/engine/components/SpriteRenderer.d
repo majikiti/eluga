@@ -13,10 +13,12 @@ class SpriteRenderer: Component {
   private ImageAsset image;
   private SDL_Rect rect;
   bool invisdraw;
+  bool enable = true;
   // 素の矩形を描画できるね
   Vec2 psize;
   ubyte[4] colorArr;
-  ubyte _opac = 255;
+  private ubyte _opac = 255;
+  private bool opacChanged = false;
   Mode mode;
 
   bool flipedH = false, flipedV = false;
@@ -71,10 +73,24 @@ class SpriteRenderer: Component {
     rect.y = cast(int)tform.renderPos.y;
 
     if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
+    if(!enable) return; // 死ぬオブジェクト 描画 もうやめて
 
+<<<<<<< HEAD
     if(image!is null){
       go.renderEx(image.texture, &rect, tform.rot, null, flip);
+=======
+    if(mode == Mode.Image){
+      if(opacChanged){
+        go.setTextureOpac(image.texture.data, _opac);
+        opacChanged = false;
+      }
+      go.renderEx(image.texture, &rect, tform.rot);
+>>>>>>> c9750e2 (RIP: EXPLOSION)
     } else {
+      if(opacChanged){
+        colorArr[3] = _opac;
+        opacChanged = false;
+      }
       color(colorArr);
       go.renderRect(&rect);
     }
@@ -91,9 +107,14 @@ class SpriteRenderer: Component {
     else return Vec2(cast(int)(psize.x), cast(int)(psize.y));
   }
 
-  void opac(ubyte o){
-    if(mode == Mode.Image) go.setTextureOpac(image.texture.data, o);
-    else colorArr[3] = o;
+  // Opacity
+  ubyte opac() const => _opac;
+
+  void setOpac(int o){
+    if(o < 0) warn("cannot set negative opacity. [in SpriteRenderer]");
+    if(o > 255) warn("Opacity overflow. [in SpriteRenderer]");
+    _opac = cast(ubyte)o;
+    opacChanged = true;
     return;
   }
 

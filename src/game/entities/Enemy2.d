@@ -17,7 +17,12 @@ class Enemy2: Enemy {
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
+<<<<<<< HEAD
     status = gm.getStatus(this);
+=======
+
+    addTag("Flying");
+>>>>>>> c9750e2 (RIP: EXPLOSION)
   }
 
   override void setup() {
@@ -30,15 +35,12 @@ class Enemy2: Enemy {
   }
   override void loop() {
     super.loop();
-    if(status.isDamaged){
-      rigid.addForce(Vec2(200,-200));
-      status.isDamaged = false;
-    }
 
+    if(status.willDead) return; // 死の直前にはただ見守ることしかできなかった
     if(jumptmr.cur > limittime) {
       rigid.a = Vec2(0, 0);
       rigid.v = Vec2(0, 0);
-      rigid.addForce(Vec2(uniform(-50, 50, randomSrc), min(max(0, tform.pos.y * 0.125), -10)));
+      rigid.addForce(Vec2(uniform(-20, 20, randomSrc), min(max(0, tform.pos.y * 0.125), -10)));
       foreach(enmft; enmfts) enmft.jump;
 
       randomSrc = Random(cast(uint)jumptmr.cur);

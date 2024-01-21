@@ -14,15 +14,16 @@ class WeirdAir : Effect {
     //layer = -40;
     tmr = new Timer;
     auto rnd = Random(cast(uint)Clock.currTime.toUnixTime());
-    tp = 192;
+    sr.setOpac(192);
     angle = 0;
   }
 
   override void loop() {
+    tf.scale *= dratio;
+    sr.setOpac(sr.opac - 3);
+    if(sr.opac == 0) destroy;
     auto rnd = Random(cast(uint)tmr.cur);
     dratio += uniform(-0.001, 0.001, rnd);
-    super.loop;
-    //dbg("onwa: ", tp);
     angle += uniform(-0.3, 0.3, rnd);
     real ampl = uniform(1.0L, 2.0L, rnd);
     tf.pos += Vec2(cos(angle), sin(angle)) * ampl;

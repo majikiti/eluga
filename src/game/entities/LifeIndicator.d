@@ -1,5 +1,6 @@
 module game.entities.LifeIndicator;
 
+import std;
 import engine;
 import game;
 
@@ -51,6 +52,6 @@ class LifeIndicator: GameObject {
   }
 
   override void loop() {
-    alive.component!Transform.scale.x = cast(real)st.life / cast(real)st.maxlife;
+    alive.component!Transform.scale.x = max(0, cast(real)st.life / cast(real)st.maxlife);
   }
 }

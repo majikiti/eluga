@@ -22,6 +22,10 @@ class Hero: GameObject {
   Timer rndtmr;
   Timer dashtmr;
   bool isDash;
+  Kalashnikov ak;
+
+  AudioAsset SHOT;
+  AudioSource audio;
 
   Vec2 v = Vec2(10, 2);
 
@@ -32,9 +36,13 @@ class Hero: GameObject {
 
     auto hero0 = new ImageAsset("hero0.png");
     rend = register(new SpriteRenderer(hero0));
+
+    SHOT = new AudioAsset("attack_heavy.mp3");
+    audio = register(new AudioSource(SHOT));
+
     register(new BoxCollider(rend.size));
-    register(new Focus(3)); 
-    register(new Kalashnikov);
+    register(new Focus(3));
+    ak = register(new Kalashnikov);
     status = gm.makeStatus(this);
     register(new LifeIndicator(status));
     addTag("Player");
@@ -87,6 +95,8 @@ class Hero: GameObject {
     // missile
     if(im.keyOnce('\r')){
       register(new Missile(Missile.Type.Normal, dir, tform.pos + Vec2(0,20)));
+      audio.volume(10);
+      audio.play(1);
     }
 
     if(gm.playerStatus.star && sterTime > timer){

@@ -30,7 +30,6 @@ class Kalashnikov: GameObject {
 
   override void loop() {
     vecm = (im.cusorPos - tform.renderPos).unit;
-    vecm = vecm.rotdeg(-45);
     vecm *= 100;
     if(im.mouseOnce(0) && !(dm.debugMode && dm.rapidFire)){
       register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));
@@ -51,5 +50,6 @@ class Kalashnikov: GameObject {
       audio.play(1);
       //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
     }
+    tform.rot = 180 * (atan2(vecm.y, vecm.x) / PI);
   }
 }

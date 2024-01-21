@@ -14,12 +14,16 @@ class Enemy1: Enemy {
     status = gm.getStatus(this);
   }
 
-  override void eachsetup() {
+  override void setup() {
+    super.setup;
+
     lifin = register(new LifeIndicator(status));
     rigid = register(new RigidBody(1, 1, 10));
   }
 
-  override void eachloop() {
+  override void loop() {
+    super.loop;
+    
     if(status.isDamaged){
       rigid.addForce(Vec2(200,-200));
       status.isDamaged = false;

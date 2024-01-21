@@ -16,7 +16,6 @@ class Effect : GameObject {
 
   // dratio: 公比
   real dratio, scale;
-  protected ubyte tp;
 
   this(real dratio = 1.1, real scale = 0.001) {
     tf = register(new Transform(component!Transform.Org.Spawn, component!Transform.Zoom.Center));
@@ -28,15 +27,12 @@ class Effect : GameObject {
     this.scale = scale;
     tf.scale = Vec2(scale, scale);
 
-    this.tp = ubyte.max;
-
     layer = -50;
   }
 
   override void loop() {
     tf.scale *= dratio;
-    tp-=3;
-    sr.opac(tp);
-    if(tp == 0) destroy;
+    sr.setOpac(sr.opac - 3);
+    if(sr.opac == 0) destroy;
   }
 }

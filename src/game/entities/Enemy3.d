@@ -1,8 +1,8 @@
 module game.entities.Enemy3;
 
+import std.algorithm;
 import engine;
 import game;
-import std.algorithm;
 
 class Enemy3: Enemy {
   real theta = 0;
@@ -17,14 +17,17 @@ class Enemy3: Enemy {
     status = gm.getStatus(this);
   }
 
-  override void eachsetup() {
+  override void setup() {
+    super.setup();
     lifin = register(new LifeIndicator(status));
     rigid = register(new RigidBody(1, 1, 10));
   }
 
   override void collide(GameObject go){
+    if(status.willDead) return; // 死ぬ時ぐらいはそっとしてあげよう
+    super.collide(go);
     auto rb = component!RigidBody;
-    auto tform = component!Transform;
+
     if(go.getTag("Ground")){
       if(player) rb.v = Vec2(max(min(2,0.02*(player.pos.x - tform.pos.x)),-2),-2);
     }
