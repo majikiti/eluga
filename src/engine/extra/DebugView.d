@@ -1,6 +1,7 @@
 module engine.extra.DebugView;
 
 import std;
+import sdl_mixer;
 import engine;
 
 class DebugView: GameObject {
@@ -27,8 +28,10 @@ class DebugView: GameObject {
       "DEBUG MODE\n",
       ctx.fps.to!string ~ " fps",
       everyone.length.to!string ~ " objects",
+      "Camera " ~ (ctx.camera.pos + ctx.camera.centre).toString,
+      "Audio " ~ iota(Mix_AllocateChannels(-1)).map!Mix_Playing.to!string,
+      "\n",
     ].join('\n');
-    lstr ~= '\n';
     foreach(i, ly; ctx.layers){
       lstr ~= "Layer" ~ i.to!string ~ ": " ~ ly.length.to!string ~ " drawing\n";
     }
