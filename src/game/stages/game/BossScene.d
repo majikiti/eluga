@@ -1,4 +1,4 @@
-module game.stages.boss.BossScene;
+module game.stages.game.BossScene;
 
 import game;
 import engine;

@@ -22,4 +22,8 @@ class Game: GameObject {
       Routes.Abstract: new AbstractScene(),
     ]));
   }
+
+  override void loop() {
+    if(im.keyOnce(27)) nuke;
+  }
 }

@@ -5,5 +5,3 @@ public import game.stages.game;
 public import game.stages.gameover;
 public import game.stages.theabstract;
 public import game.stages.title;
-
-public import game.stages.StageGenerator;
