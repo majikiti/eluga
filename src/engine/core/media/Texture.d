@@ -14,10 +14,6 @@ class Texture {
     data = SDL_CreateTextureFromSurface(r, rawsurface);
   }
 
-  this(SDL_Texture* rawtexture) {
-    data = rawtexture;
-  }
-
   ~this() {
     SDL_DestroyTexture(data);
   }

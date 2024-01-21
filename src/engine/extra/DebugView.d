@@ -27,8 +27,9 @@ class DebugView: GameObject {
       "DEBUG MODE\n",
       ctx.fps.to!string ~ " fps",
       everyone.length.to!string ~ " objects",
+      "Camera " ~ (ctx.camera.pos + ctx.camera.centre).toString,
+      "\n",
     ].join('\n');
-    lstr ~= '\n';
     foreach(i, ly; ctx.layers){
       lstr ~= "Layer" ~ i.to!string ~ ": " ~ ly.length.to!string ~ " drawing\n";
     }

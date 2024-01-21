@@ -1,11 +1,13 @@
 module engine.core.Vec2;
 
-import std.math;
+import std;
 
 alias Vec2 = _Vec2!real;
 alias Vec2fixed = _Vec2!long;
 
 struct _Vec2(T) {
+  alias This = _Vec2!T;
+
   T[2] pos = [0, 0];
 
   this(U)(U[] pos) {
@@ -16,16 +18,14 @@ struct _Vec2(T) {
     this([x, y]);
   }
 
-  auto ref x() => pos[0];
-  auto ref y() => pos[1];
-  auto _x() const => pos[0];
-  auto _y() const => pos[1];
+  auto ref x() inout => pos[0];
+  auto ref y() inout => pos[1];
 
-  real size() const => sqrt(cast(real)(_x ^^ 2 + _y ^^ 2));
-  auto unit() const => Vec2(pos) / size;
+  real size() inout => sqrt(cast(real)(x ^^ 2 + y ^^ 2));
+  auto unit() inout => Vec2(pos) / size;
 
-  auto v() const => typeof(this)(0, _y);
-  auto h() const => typeof(this)(_x, 0);
+  auto v() inout => This(0, y);
+  auto h() inout => This(x, 0);
 
   // くるくる
   auto rotdeg(real degree) {
@@ -45,20 +45,19 @@ struct _Vec2(T) {
 
   // op
 
-  auto opUnary(string op)() const =>
-    typeof(this)(mixin(op ~ ` pos[]`));
+  auto opUnary(string op)() const => This(mixin(op ~ ` pos[]`));
 
   auto opBinary(string op, T: Vec2)(T rhs) const {
     typeof(pos) v = mixin(`pos[] ` ~ op ~ ` rhs.pos[]`);
-    return typeof(this)(v);
+    return This(v);
   }
 
   auto opBinary(string op, T)(T rhs) const {
     typeof(pos) v = mixin(`pos[] ` ~ op ~ ` rhs`);
-    return typeof(this)(v);
+    return This(v);
   }
 
-  auto opBinaryRight(string op, T)(T lhs) => opBinary!(op)(lhs);
+  auto opBinaryRight(string op, T)(T lhs) const => opBinary!(op)(lhs);
 
   auto opOpAssign(string op, T: Vec2)(T rhs) {
     mixin(`pos[] ` ~ op ~ `= rhs.pos[];`);
@@ -69,4 +68,6 @@ struct _Vec2(T) {
     mixin(`pos[] ` ~ op ~ `= rhs;`);
     return this;
   }
+
+  auto toString() const => "(" ~ x.to!string ~ ", " ~ y.to!string ~ ")";
 }
