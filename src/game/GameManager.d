@@ -1,17 +1,30 @@
 module game.GameManager;
 
+import utils;
 import engine;
 import game;
 
 GameManager gm;
 
-struct PlayerStatus{
-  int hp = 10;
+struct Status{
+  int maxlife;
+  int life;
+  int damage;
   bool star = false; // 無敵かどうか
+  bool isDamaged = false;
 }
 
 //ゲーム全体のステータスを管理
 struct GameManager {
-  PlayerStatus playerStatus;
+  Status*[GameObject] status;
   GameObject player;
+
+  auto ref makeStatus(GameObject go, int maxlife = 10, int damage = 1){
+    auto s = new Status(maxlife, maxlife, damage);
+    return status[go] = s;
+  }
+
+  auto ref getStatus(GameObject go) => status[go];
+
+  auto ref playerStatus () => status[player];
 }

@@ -7,16 +7,18 @@ import std.algorithm;
 class Enemy3: Enemy {
   real theta = 0;
   LifeIndicator lifin;
+  Status* status;
   override string imgdir() => "enem1.png";
   Transform player;
 
   this(const Vec2 initPos = Vec2(0, 0),Transform tform){
     super(initPos);
     player = tform;
+    status = gm.getStatus(this);
   }
 
   override void eachsetup() {
-    lifin = register(new LifeIndicator(this.component!Status));
+    lifin = register(new LifeIndicator(status));
     rigid = register(new RigidBody(1, 1, 10));
   }
 
@@ -28,7 +30,7 @@ class Enemy3: Enemy {
     }
     if(go.getTag("Player") && !gm.playerStatus.star){
       gm.playerStatus.star = true;
-      gm.playerStatus.hp -= 1;
+      gm.playerStatus.life -= 1;
     }
     if(go.getTag("Missile")) {
       register(new Damage);

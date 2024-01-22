@@ -4,7 +4,7 @@ import engine;
 import game;
 
 class Enemy: GameObject {
-  Status status;
+  Status* status;
   Transform tform;
   RigidBody rigid;
   int type;
@@ -12,7 +12,7 @@ class Enemy: GameObject {
   string imgdir() => "default.png";
 
   this(const Vec2 initPos = Vec2(0, 0)) {
-    status = register(new Status(10));
+    status = gm.makeStatus(this,10);
     this.initPos = initPos;
     addTag("Enemy");
   }

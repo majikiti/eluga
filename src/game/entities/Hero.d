@@ -6,7 +6,7 @@ import engine;
 import game;
 
 class Hero: GameObject {
-  Status status;
+  Status* status;
   SpriteRenderer rend;
   int type;
   real time = 0,jumpSpeed = 3, sterTime = 100, timer = 0;
@@ -35,7 +35,7 @@ class Hero: GameObject {
     register(new BoxCollider(rend.size));
     register(new Focus(3)); 
     register(new Kalashnikov);
-    status = register(new Status);
+    status = gm.makeStatus(this);
     register(new LifeIndicator(status));
     addTag("Player");
 

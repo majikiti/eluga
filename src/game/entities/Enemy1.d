@@ -6,21 +6,23 @@ import game;
 class Enemy1: Enemy {
   real theta = 0;
   LifeIndicator lifin;
+  Status* status;
   override string imgdir() => "enem1.png";
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
+    status = gm.getStatus(this);
   }
 
   override void eachsetup() {
-    lifin = register(new LifeIndicator(this.component!Status));
+    lifin = register(new LifeIndicator(status));
     rigid = register(new RigidBody(1, 1, 10));
   }
 
   override void eachloop() {
-    if(this.component!Status.isDamaged){
+    if(status.isDamaged){
       rigid.addForce(Vec2(200,-200));
-      this.component!Status.isDamaged = false;
+      status.isDamaged = false;
     }
   }
 

@@ -28,13 +28,13 @@ class LifeIndicator: GameObject {
 
   Transform tform;
   liObjects alive;
-  Status st;
+  Status* st;
 
   Vec2 border;
   int bthick;
   Vec2 margin;
   
-  this(Status st, Vec2 border = Vec2(100, 30), int bthick = 3, Vec2 margin = Vec2(20,10)){
+  this(Status* st, Vec2 border = Vec2(100, 30), int bthick = 3, Vec2 margin = Vec2(20,10)){
     this.st = st;
     this.border = border;
     this.bthick = bthick;

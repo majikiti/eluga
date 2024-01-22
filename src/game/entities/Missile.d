@@ -1,6 +1,7 @@
 module game.entities.Missile;
 
 import engine;
+import game;
 import std;
 
 class Missile: GameObject {
@@ -65,7 +66,7 @@ class Missile: GameObject {
   }
 
   override void collide(GameObject go){
-    if(go.getTag("Enemy"))go.component!Status.getDamage;
+    if(go.getTag("Enemy")) gm.getStatus(go).life -= 1;
     if(go.getTag("Ground") || go.getTag("Enemy")) destroy;
   }
 }

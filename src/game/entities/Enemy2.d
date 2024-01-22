@@ -6,6 +6,7 @@ import game;
 
 class Enemy2: Enemy {
   LifeIndicator lifin;
+  Status* status;
   override string imgdir() => "flyingenem.png";
 
   EnemFoot[2] enmfts;
@@ -16,21 +17,22 @@ class Enemy2: Enemy {
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
+    status = gm.getStatus(this);
   }
 
   override void setup() {
     super.setup();
     tform.scale = Vec2(0.3, 0.3);
-    lifin = register(new LifeIndicator(this.component!Status));
+    lifin = register(new LifeIndicator(status));
     rigid = register(new RigidBody(0.1, 1, 10));
     enmfts = [register(new EnemFoot([PI/6, PI/2], 1000)), register(new EnemFoot([-PI/6, -PI/2], 1000))];
     jumptmr = new Timer;
   }
   override void loop() {
     super.loop();
-    if(this.component!Status.isDamaged){
+    if(status.isDamaged){
       rigid.addForce(Vec2(200,-200));
-      this.component!Status.isDamaged = false;
+      status.isDamaged = false;
     }
 
     if(jumptmr.cur > limittime) {
