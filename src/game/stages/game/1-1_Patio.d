@@ -49,9 +49,19 @@ class Patio: RouteObject {
   }
 
   override void loop() {
-  //  // 仮工事2.0
-  //  auto wave = 100 * (2 + sin(theta));
-  //  theta += 0.04;
-  //  tform.pos = Vec2(wave, 0);
+    if(gm.playerStatus){
+      if(gm.playerStatus.life <= 0){
+        router.go(Routes.GameOver);
+      }
+    }
+  }
+
+  debug:
+
+  bool debugFrame = true;
+  override void debugLoop() {
+    if(!debugFrame) return;
+    if(im.keyOnce('k')) gm.playerStatus.life = 1;
+    if(im.keyOnce('=')) router.go(Routes.GameOver);
   }
 }

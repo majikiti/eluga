@@ -24,7 +24,7 @@ struct GameManager {
     return status[go] = s;
   }
 
-  auto ref getStatus(GameObject go) => status[go];
+  auto ref getStatus(GameObject go) => go ? status[go] : null;
 
-  auto ref playerStatus () => status[player];
+  auto ref playerStatus () => player ? status[player] : null;
 }

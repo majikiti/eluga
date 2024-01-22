@@ -14,7 +14,7 @@ class ImageBox : GameObject {
   }
 
   override void setup() {
-    tform = register(new Transform);
+    tform = register(new Transform(Transform.Org.Local));
     sr = register(new SpriteRenderer(ima));
   }
 }

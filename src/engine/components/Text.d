@@ -71,8 +71,8 @@ class Text: Component {
 
       auto size = texture.size;
       auto dest = rect(
-        tform.pos.x,
-        tform.pos.y + voffset,
+        tform.renderPos.x,
+        tform.renderPos.y + voffset,
         size.x * tform.scale.x,
         size.y * tform.scale.y,
       );

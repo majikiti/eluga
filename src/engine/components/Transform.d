@@ -42,7 +42,7 @@ class Transform: Component {
     }
   }
 
-  this(Org worldType = Org.Local, Zoom zoomType = Zoom.Corner){
+  this(Org worldType = Org.World, Zoom zoomType = Zoom.Corner){
     zoom = zoomType;
     org = worldType;
   }

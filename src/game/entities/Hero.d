@@ -47,7 +47,7 @@ class Hero: GameObject {
 
   override void loop() {
     scope(exit) fromGround = false;
-
+    
     //auto tform = component!Transform;
     auto rb = component!RigidBody;
     if(im.key('d')||im.key('a')){

@@ -24,11 +24,12 @@ class TitleScene: RouteObject {
     audio = register(new AudioSource(BGM));
     audio.play(-1);
     audio.volume(15);
-    auto title = register(new TextBox("Hello"));
+    auto title = register(new TextBox("ホンジュラス革命", Vec2(150,200)));
+    auto text = register(new TextBox("Pless Enter", Vec2(200,350)));
     fd = register(new Fade([255, 0, 0]));
   }
 
   override void loop() {
-    if(hoge.cur > 5_000) router.go(Routes.Game);
+    if(im.keyOnce('\r')) router.go(Routes.Game);
   }
 }

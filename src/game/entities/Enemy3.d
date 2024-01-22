@@ -26,11 +26,13 @@ class Enemy3: Enemy {
     auto rb = component!RigidBody;
     auto tform = component!Transform;
     if(go.getTag("Ground")){
-      rb.v = Vec2(max(min(2,0.02*(player.pos.x - tform.pos.x)),-2),-2);
+      if(player) rb.v = Vec2(max(min(2,0.02*(player.pos.x - tform.pos.x)),-2),-2);
     }
     if(go.getTag("Player") && !gm.playerStatus.star){
-      gm.playerStatus.star = true;
-      gm.playerStatus.life -= 1;
+      if(gm.playerStatus){
+        gm.playerStatus.star = true;
+        gm.playerStatus.life -= 1;
+      }
     }
     if(go.getTag("Missile")) {
       register(new Damage);

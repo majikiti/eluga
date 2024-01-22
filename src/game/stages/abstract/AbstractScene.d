@@ -73,7 +73,17 @@ class AbstractScene: RouteObject {
   override void loop() {
     if(tmr.cur>=50) {
       tf.pos -= Vec2(0, 2);
+      if(im.key('d')) tf.pos -= Vec2(0, 2) * 9;
       tmr.reset;
     }
+    if(im.keyOnce('\r')) router.go(Routes.Title);
+    if(tf.worldPos.y <= -2900) router.go(Routes.Title);
+  }
+
+  debug:
+  bool debugFrame = false;
+  override void debugLoop() {
+    if(!debugFrame) return;
+    dbg(tf.worldPos);
   }
 }
