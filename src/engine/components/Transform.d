@@ -19,7 +19,7 @@ class Transform: Component {
   }
 
   // 一般座標系
-  private Zoom zoom;
+  Zoom zoom;
   private Org org;
   Vec2 pos, renderPos;
   real rot = 0;
@@ -27,14 +27,16 @@ class Transform: Component {
 
   private bool looped;
 
-  auto worldPos() {
-    switch(org) {
-      case Org.World: return pos;
-      case Org.Local:
-      case Org.Spawn: {
-        auto ptform = go.parent.has!Transform
+  Transform getPtform() => go.parent.has!Transform
           ? go.parent.component!Transform
           : go.parent.register(new Transform);
+
+  auto worldPos() {
+    switch(org) {
+      case Org.Spawn:
+      case Org.World: return pos;
+      case Org.Local: {
+        auto ptform = getPtform;
         return ptform.worldPos + pos;
       }
       default:
@@ -48,6 +50,12 @@ class Transform: Component {
   }
 
   override void loop() {
+    if(!looped && org == Org.Spawn) {
+      looped = true;
+      auto ptform = getPtform;
+      pos = ptform.worldPos;
+    }
+
     final switch(org) {
       case Org.Real:
         renderPos = pos;

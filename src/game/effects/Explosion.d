@@ -79,7 +79,7 @@ class ExpScatter : GameObject {
     this.force = force*50;
 
     dratio = 1;
-    sr.setOpac(192);
+    sr.setOpac(246);
 
     layer = -45;
   }

@@ -72,6 +72,11 @@ class SpriteRenderer: Component {
     rect.x = cast(int)tform.renderPos.x;
     rect.y = cast(int)tform.renderPos.y;
 
+    if(tform.zoom == tform.Zoom.Center){
+      rect.x -= cast(int)(rect.w * tform.scale.x * 0.5);
+      rect.y -= cast(int)(rect.h * tform.scale.y * 0.5); 
+    }
+
     if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
     if(!enable) return; // 死ぬオブジェクト 描画 もうやめて
 
