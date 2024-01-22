@@ -54,10 +54,12 @@ class Hero: GameObject {
       if(im.key('d')){
         rb.v.x = v.x;
         dir.x = 1;
+        if(tform.scale.x < 0) tform.scale.x *= -1;
       } 
       if(im.key('a')){
         rb.v.x = -v.x;
         dir.x = -1;
+        if(tform.scale.x > 0) tform.scale.x *= -1;
       }
       if(dashtmr.cur >= 1000) isDash = true;
       if(dashtmr.cur >= 250 && isDash){

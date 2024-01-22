@@ -16,7 +16,8 @@ class Patio: RouteObject {
   // 仮工事
   real theta = 0;
 
-  this() {
+  this(Router router) {
+    this.router = router;
     layer = -100;
   }
 

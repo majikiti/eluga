@@ -54,8 +54,8 @@ class RigidBody: Component {
 
   private bool objectsConflict(Vec2 pos1, GameObject obj2) {
     Vec2 pos2 = obj2.component!Transform.worldPos;
-    Vec2 size1 = go.component!BoxCollider.worldScale;
-    Vec2 size2 = obj2.component!BoxCollider.worldScale;
+    Vec2 size1 = go.component!BoxCollider.worldScale.absVec;
+    Vec2 size2 = obj2.component!BoxCollider.worldScale.absVec;
     Vec2 center1 = pos1 + size1/2;
     Vec2 center2 = pos2 + size2/2;
 

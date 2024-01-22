@@ -43,6 +43,8 @@ struct _Vec2(T) {
     return retval;
   }
 
+  auto absVec() => Vec2(abs(x), abs(y));
+
   // op
 
   auto opUnary(string op)() const => This(mixin(op ~ ` pos[]`));

@@ -7,7 +7,7 @@ class GameScene: RouteObject {
   override void setup() {
     auto stage = "1-1";
     register([
-      "1-1": () => new Patio,
+      "1-1": () => new Patio(router),
     ][stage]());
   }
 }

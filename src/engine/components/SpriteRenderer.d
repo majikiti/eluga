@@ -2,6 +2,7 @@ module engine.components.SpriteRenderer;
 
 import sdl;
 import engine;
+import std;
 
 class SpriteRenderer: Component {
   enum Mode {
@@ -17,6 +18,8 @@ class SpriteRenderer: Component {
   ubyte[4] colorArr;
   ubyte _opac = 255;
   Mode mode;
+
+  bool flipedH = false, flipedV = false;
 
   // 画像が あるとき〜
   this(ImageAsset image, bool invisdraw = false) {
@@ -51,13 +54,17 @@ class SpriteRenderer: Component {
 
   override void loop() {
     auto tform = go.component!Transform;
+    auto scale = tform.scale;
+    int flip = 0;
 
+    flip = cast(int)(scale.x < 0) + cast(int)(scale.y < 0) * 2;
+    
     if(image!is null){
-      rect.w = cast(int)(image.surface.w * tform.scale.x);
-      rect.h = cast(int)(image.surface.h * tform.scale.y);
+      rect.w = cast(int)(image.surface.w * abs(tform.scale.x));
+      rect.h = cast(int)(image.surface.h * abs(tform.scale.y));
     } else {
-      rect.w = cast(int)(psize.x * tform.scale.x);
-      rect.h = cast(int)(psize.y * tform.scale.y);
+      rect.w = cast(int)(psize.x * abs(tform.scale.x));
+      rect.h = cast(int)(psize.y * abs(tform.scale.y));
     }
     
     rect.x = cast(int)tform.renderPos.x;
@@ -66,7 +73,7 @@ class SpriteRenderer: Component {
     if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
 
     if(image!is null){
-      go.renderEx(image.texture, &rect, tform.rot);
+      go.renderEx(image.texture, &rect, tform.rot, null, flip);
     } else {
       color(colorArr);
       go.renderRect(&rect);

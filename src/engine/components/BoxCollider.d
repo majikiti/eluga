@@ -15,16 +15,17 @@ class BoxCollider: Component, Collider {
   Vec2 worldScale() => Vec2(size.x * go.component!Transform.scale.x, size.y * go.component!Transform.scale.y);
 
  debug:
-  bool debugFrame = false;
+  bool debugFrame = true;
 
   override void debugLoop() {
     if(!debugFrame) return;
     auto pos = go.component!Transform.renderPos;
     color(255, 0, 0);
-    line(Vec2(pos.x, pos.y), Vec2(pos.x, pos.y + worldScale.y));
-    line(Vec2(pos.x, pos.y + worldScale.y), Vec2(pos.x + worldScale.x, pos.y + worldScale.y));
-    line(Vec2(pos.x + worldScale.x, pos.y + worldScale.y), Vec2(pos.x + worldScale.x, pos.y));
-    line(Vec2(pos.x + worldScale.x, pos.y), Vec2(pos.x, pos.y));
+    auto sc = worldScale.absVec;
+    line(Vec2(pos.x, pos.y), Vec2(pos.x, pos.y + sc.y));
+    line(Vec2(pos.x, pos.y + sc.y), Vec2(pos.x + sc.x, pos.y + sc.y));
+    line(Vec2(pos.x + sc.x, pos.y + sc.y), Vec2(pos.x + sc.x, pos.y));
+    line(Vec2(pos.x + sc.x, pos.y), Vec2(pos.x, pos.y));
   }
 
   // override bool collideBox(BoxCollider box);
