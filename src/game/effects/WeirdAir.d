@@ -19,13 +19,13 @@ class WeirdAir : Effect {
   }
 
   override void loop() {
-    tf.scale *= dratio;
-    sr.setOpac(sr.opac - 3);
-    if(sr.opac == 0) destroy;
     auto rnd = Random(cast(uint)tmr.cur);
     dratio += uniform(-0.001, 0.001, rnd);
     angle += uniform(-0.3, 0.3, rnd);
     real ampl = uniform(1.0L, 2.0L, rnd);
     tf.pos += Vec2(cos(angle), sin(angle)) * ampl;
+    tf.scale *= dratio;
+    sr.setOpac(sr.opac - 3);
+    if(sr.opac == 0) destroy;
   }
 }

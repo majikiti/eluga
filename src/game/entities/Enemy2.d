@@ -14,6 +14,7 @@ class Enemy2: Enemy {
   Timer jumptmr;
   real limittime = 1;
   auto randomSrc = Random(0);
+  ushort bombDrop = 0;
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
@@ -38,13 +39,20 @@ class Enemy2: Enemy {
 
     if(status.willDead) return; // 死の直前にはただ見守ることしかできなかった
     if(jumptmr.cur > limittime) {
+      bombDrop++;
+      
+      if(bombDrop == 10) {
+        bombDrop = 0;
+        register(new Bomb);
+      }
+
       rigid.a = Vec2(0, 0);
       rigid.v = Vec2(0, 0);
       rigid.addForce(Vec2(uniform(-20, 20, randomSrc), min(max(0, tform.pos.y * 0.125), -10)));
       foreach(enmft; enmfts) enmft.jump;
 
       randomSrc = Random(cast(uint)jumptmr.cur);
-      limittime = uniform(500, 1_000, randomSrc);
+      limittime = uniform(100, 800, randomSrc);
       jumptmr.reset;
     }
   }

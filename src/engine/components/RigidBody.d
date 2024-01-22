@@ -33,6 +33,7 @@ class RigidBody: Component {
   private void initLayer(){
     layer["Player"]["Enemy"] = true;
     layer["Enemy"]["Enemy"] = true;
+    layer["Enemy"]["Bomb"] = true;
   }
 
   private bool tagsCheck(string pt, string qt){

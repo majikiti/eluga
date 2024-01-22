@@ -67,6 +67,6 @@ class Missile: GameObject {
 
   override void collide(GameObject go){
     if(go.getTag("Enemy")) gm.getStatus(go).life -= 1;
-    if(go.getTag("Ground") || go.getTag("Enemy")) destroy;
+    if(go.getTag("Ground") || go.getTag("Enemy") || go.getTag("Bomb")) destroy;
   }
 }
