@@ -2,7 +2,8 @@ module engine.extra.Timer;
 
 import sdl;
 
-class Timer {
+// please use "components > NTimer"
+deprecated class Timer {
   ulong started = 0;
 
   this() { reset; }

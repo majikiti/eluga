@@ -105,7 +105,7 @@ class RigidBody: Component {
               }
 
               real ok = 0, ng = time, mid;
-              while(abs(ok - ng) > 0.001){
+              while(abs(ok - ng) > 0.0001){
                 mid = (ok + ng) / 2.0;
                 afterPos = tform.worldPos + resV * mid;
                 if(objectsConflict(afterPos, q)) {

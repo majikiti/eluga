@@ -14,6 +14,8 @@ class Effect : GameObject {
   Transform tf;
   string imdir() => "effect/smoke.png";
 
+  NTimer trgtmr;
+
   // dratio: 公比
   real dratio, scale;
 
@@ -21,11 +23,14 @@ class Effect : GameObject {
     tf = register(new Transform(component!Transform.Org.Spawn, component!Transform.Zoom.Center));
     auto imga = new ImageAsset(imdir);
     sr = register(new SpriteRenderer(imga));
+    trgtmr = register(new NTimer);
 
     this.dratio = dratio;
 
     this.scale = scale;
     tf.scale = Vec2(scale, scale);
+
+    trgtmr.sched(&itsEnd, 3_000);
 
     layer = -50;
   }
@@ -34,5 +39,10 @@ class Effect : GameObject {
     tf.scale *= dratio;
     sr.setOpac(sr.opac - 3);
     if(sr.opac == 0) destroy;
+  }
+
+  void itsEnd() {
+    log("The time has come. I will self-destruct.");
+    destroy;
   }
 }
