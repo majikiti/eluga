@@ -21,9 +21,9 @@ class TestScene: RouteObject {
   override void setup() {
     // vv hero vv
     hero = register(new Hero);
-    register(new Block(Vec2(0,280),Vec2(100,0.3)));
+    register(new Block(Vec2(0,280),Vec2(10,0.3)));
 
-    register(new Enemy3(Vec2(200, 0), hero.component!Transform));
+    // register(new Enemy3(Vec2(200, 0), hero.component!Transform));
 
     // vv background vv
     bg = new ImageAsset("_.jpeg");

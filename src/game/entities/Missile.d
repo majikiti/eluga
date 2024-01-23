@@ -26,7 +26,7 @@ class Missile: GameObject {
 
     addTag("Missile"); // 仮
 
-    auto col = register(new BoxCollider(rend.size));
+    auto col = register(new BoxCollider(rend.localSize));
     col.isTrigger = true;
 
     final switch(type) {

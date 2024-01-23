@@ -17,9 +17,8 @@ class Block: GameObject {
   }
 
   override void setup() {
-    //auto block = new ImageAsset("block.png");
-    //auto rend = register(new SpriteRenderer(block));
     auto rend = register(new SpriteRenderer(Vec2(256, 256)));
-    register(new BoxCollider(rend.size));
+    register(new BoxCollider(rend.localSize.absVec));
   }
+
 }

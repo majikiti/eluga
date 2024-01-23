@@ -133,6 +133,7 @@ class System: Loggable {
 }
 
 bool objectsConflict(GameObject obj1, GameObject obj2) {
+
     Vec2 pos1 = obj1.component!Transform.worldPos;
     Vec2 pos2 = obj2.component!Transform.worldPos;
     Vec2 size1 = obj1.component!BoxCollider.worldScale.absVec;
@@ -141,7 +142,7 @@ bool objectsConflict(GameObject obj1, GameObject obj2) {
     Vec2 center2 = pos2 + size2/2;
     
     bool hFlag = abs(center1.y - center2.y) <= (size1.y + size2.y)/2 + 0.5;
-    bool wFlag = abs(center1.x - center2.x) <= (size1.y + size2.y)/2 + 0.5;
+    bool wFlag = abs(center1.x - center2.x) <= (size1.x + size2.x)/2 + 0.5;
 
     return hFlag && wFlag;
 }

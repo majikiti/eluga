@@ -57,7 +57,7 @@ class SpriteRenderer: Component {
     auto scale = tform.scale;
     int flip = 0;
 
-    flip = cast(int)(scale.x < 0) + cast(int)(scale.y < 0) * 2;
+    flip = cast(int)(scale.x < 0) | (cast(int)(scale.y < 0) << 1);
     
     if(image!is null){
       rect.w = cast(int)(image.surface.w * abs(tform.scale.x));
@@ -82,7 +82,13 @@ class SpriteRenderer: Component {
 
   Vec2 size() {
     auto scale = go.component!Transform.scale;
-    return Vec2(rect.w * scale.x, rect.h * scale.y);
+    if(image) return Vec2(cast(int)(image.surface.w * abs(scale.x)), cast(int)(image.surface.h * abs(scale.y)));
+    else return Vec2(cast(int)(psize.x * abs(scale.x)), cast(int)(psize.y * abs(scale.y)));
+  }
+
+  Vec2 localSize() {
+    if(image) return Vec2(cast(int)(image.surface.w), cast(int)(image.surface.h));
+    else return Vec2(cast(int)(psize.x), cast(int)(psize.y));
   }
 
   void opac(ubyte o){

@@ -91,7 +91,7 @@ class RigidBody: Component {
               real ok = 0, ng = time, mid;
               while(abs(ok - ng) > 0.001){
                 mid = (ok + ng) / 2.0;
-                afterPos = tform.pos + resV * mid;
+                afterPos = tform.worldPos + resV * mid;
                 if(objectsConflict(afterPos, q)) {
                   ng = mid;
                 }
@@ -101,11 +101,11 @@ class RigidBody: Component {
               resV = initV;
             }
             else continue;
-            if(objectsConflict(tform.pos + Vec2(resV.x,0) * (time + 0.1), q)) {
+            if(objectsConflict(tform.worldPos + Vec2(resV.x,0) * (time + 0.1), q)) {
               if(q.has!RigidBody) time = 0;
               resV.x = 0;
             }
-            if(objectsConflict(tform.pos + Vec2(0,resV.y) * (time + 0.1), q)) {
+            if(objectsConflict(tform.worldPos + Vec2(0,resV.y) * (time + 0.1), q)) {
               if(q.has!RigidBody) time = 0;
               resV.y = 0;
             }
