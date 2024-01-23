@@ -27,7 +27,8 @@ class Bomb : GameObject {
     auto bomb = new ImageAsset(imgdir);
     rend = register(new SpriteRenderer(bomb));
 
-    auto colid = register(new BoxCollider(rend.size));
+    rigid = register(new RigidBody(1));
+    auto colid = register(new BoxCollider(rend.size + Vec2(0, 300)));
   }
 
   override void loop() {
