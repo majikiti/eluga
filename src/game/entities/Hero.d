@@ -23,7 +23,7 @@ class Hero: GameObject {
   Timer dashtmr;
   bool isDash;
 
-  Vec2 v = Vec2(2, 2);
+  Vec2 v = Vec2(10, 2);
 
   override void setup() {
     tform = register(new Transform(Transform.Org.World));
@@ -109,6 +109,23 @@ class Hero: GameObject {
     if(go.getTag("Ground") && rb.v.y > -1) {
       jumpRemain = DefaultJumpRemain;
       fromGround = true;
+    }
+  }
+
+  debug:
+  override void debugLoop(){
+    if(!gm.debugFrame) v.x = 2;
+    else{
+      v.x = 10;
+      auto tform = component!Transform;
+      if(im.key('w')||im.key('s')){
+        if(im.key('s')){
+          tform.pos.y += 10;
+        } 
+        if(im.key('w')){
+          tform.pos.y += -10;
+        }
+      }
     }
   }
 }

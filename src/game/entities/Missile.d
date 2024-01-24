@@ -36,7 +36,7 @@ class Missile: GameObject {
         rb.g = Vec2(0, 0);
         break;
       case Type.CCCP:
-        rb.m = 0.01;
+        rb.m = 1;
         rb.g = Vec2(0, 1);
         rb.v = dir / 8;
         break;

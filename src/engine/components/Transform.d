@@ -63,7 +63,13 @@ class Transform: Component {
   // Obj範囲内にWinのどっちかの端があるかという考え方
   bool isin(Vec2 sz) {
     auto c = ctx.camera;
-    return !((pos.x > c.pos.x + c.size.x) || (pos.x > c.pos.x + c.size.x))
-        && !((pos.y + sz.y < c.pos.y) || (pos.y > c.pos.y + c.size.y));
+    return !((worldPos.x > c.pos.x + c.size.x) || (worldPos.x + sz.x < c.pos.x))
+        && !((worldPos.y + sz.y < c.pos.y) || (worldPos.y > c.pos.y + c.size.y));
+  }
+
+  bool hidein(Vec2 sz, int range) {
+    auto c = ctx.camera;
+    return !((worldPos.x > c.pos.x + c.size.x + range) || (worldPos.x + sz.x + range < c.pos.x))
+        && !((worldPos.y + sz.y + range < c.pos.y) || (worldPos.y > c.pos.y + c.size.y + range));
   }
 }

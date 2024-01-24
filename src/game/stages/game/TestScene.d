@@ -5,6 +5,8 @@ import engine;
 import game;
 
 class TestScene: RouteObject {
+  Don!"Patio.don" don;
+
   Hero hero;
   ImageAsset bg;
   AudioAsset BGM;
@@ -20,8 +22,9 @@ class TestScene: RouteObject {
 
   override void setup() {
     // vv hero vv
-    hero = register(new Hero);
-    register(new Block(Vec2(0,280),Vec2(10,0.3)));
+    // hero = register(new Hero);
+    // register(new Block(Vec2(0,280),Vec2(10,0.3)));
+    register(new MakeDonMap(Vec2(64,64)));
 
     // register(new Enemy3(Vec2(200, 0), hero.component!Transform));
 

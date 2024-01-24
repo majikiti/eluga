@@ -27,7 +27,7 @@ class Kalashnikov: GameObject {
   }
 
   override void loop() {
-    Vec2 vecm = (im.cusorPos - tform.pos).unit;
+    Vec2 vecm = (im.cusorPos - tform.renderPos).unit;
     vecm = vecm.rotdeg(-45);
     vecm *= 100;
     if(im.mouse(0)){

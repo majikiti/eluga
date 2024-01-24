@@ -69,16 +69,17 @@ class RigidBody: Component {
   //速い物体の処理を犠牲に計算量を削減
   private void update(){
     auto tform = go.component!Transform;
+    auto colScals = go.component!BoxCollider.worldScale.absVec;
     Vec2 resV = v, initV; // resVが我が速度
     real dur = go.dur, time = dur; // ぢれいしょん
-    auto gos = ctx.レンダー中のボックスコライダー持ちのオブジェクト;
+    auto gos = ctx.カメラ外のボックスコライダー持ちのオブジェクト; //変更
+    if(!tform.isin(go.component!BoxCollider.size)) return; //追加
 
     while(resV.size > 0 && dur > 0){
       initV = resV;
       time = dur;
       if(go.has!BoxCollider){
         if(!go.component!BoxCollider.isTrigger && go.component!BoxCollider.active){
-          Vec2 afterPos = tform.worldPos + resV * time;
           foreach(j, q; gos) {
             if(q == go || q.component!BoxCollider.isTrigger || !q.component!BoxCollider.active) continue;
             auto qTags = q.getTags;
@@ -87,7 +88,21 @@ class RigidBody: Component {
 
             foreach(k,qt; qTags) foreach(l, pt; pTags) flag |= (tagsCheck(qt,pt) | tagsCheck(pt,qt));
             if(flag) continue;
+            if(resV.size == 0) break;
+            Vec2 afterPos = tform.worldPos + resV * time;
             if(objectsConflict(afterPos,q)){
+
+              // 無限ループ回避用
+              auto goPos1 = tform.worldPos;
+              auto goPos2 = tform.worldPos + colScals;
+              auto qPos1 = q.component!Transform.worldPos;
+              auto qPos2 = qPos1 + q.component!BoxCollider.worldScale.absVec;
+
+              if(abs(goPos1.y - qPos2.y) < 0.001 || abs(qPos1.y - goPos2.y) < 0.001){
+                initV.y = 0;
+                resV.y = 0;
+              }
+
               real ok = 0, ng = time, mid;
               while(abs(ok - ng) > 0.001){
                 mid = (ok + ng) / 2.0;
@@ -97,6 +112,7 @@ class RigidBody: Component {
                 }
                 else ok = mid;
               }
+
               time = ok;
               resV = initV;
             }

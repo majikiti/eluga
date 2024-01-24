@@ -31,6 +31,6 @@ auto parseDon(string src) {
     delta.x = x, delta.y = y;
     break;
   }
-  mat[delta.y][delta.x] = -1;
+  // mat[delta.y][delta.x] = -1;
   return tuple!("tags", "mat", "delta")(tags, mat, delta);
 }

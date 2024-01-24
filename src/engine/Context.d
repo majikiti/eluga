@@ -34,6 +34,7 @@ struct Context {
   SDL_Renderer* r;
 
   GameObject[] レンダー中のボックスコライダー持ちのオブジェクト;
+  GameObject[] カメラ外のボックスコライダー持ちのオブジェクト; //追加
 
   SDL_Window* createWin(string title = "game", int w = 640, int h = 480) =>
     this.w = SDL_CreateWindow(title.toStringz,
