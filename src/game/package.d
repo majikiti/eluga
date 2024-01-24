@@ -9,4 +9,4 @@ public import game.Don;
 public import game.Game;
 public import game.GameManager;
 
-public import game.DebugMode;
+public import game.DebugTools;

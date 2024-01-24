@@ -114,10 +114,13 @@ class Hero: GameObject {
 
   debug:
   override void debugLoop(){
-    if(!gm.debugFrame) v.x = 2;
-    else{
-      v.x = 10;
-      auto tform = component!Transform;
+    if(!dm.debugMode || !dm.speedupX) v.x = 2;
+
+    if(!dm.debugMode) return;
+
+    if(dm.speedupX) v.x = 10;
+    auto tform = component!Transform;
+    if(dm.moonJump){
       if(im.key('w')||im.key('s')){
         if(im.key('s')){
           tform.pos.y += 10;
@@ -127,5 +130,8 @@ class Hero: GameObject {
         }
       }
     }
+
+    if(dm.noGravity) component!RigidBody.g = Vec2(0, 0);
+    else component!RigidBody.g = Vec2(0, 9.81);
   }
 }

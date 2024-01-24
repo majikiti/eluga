@@ -12,6 +12,8 @@ class Kalashnikov: GameObject {
 
   Vec2 fixvec = Vec2(80,50);
 
+  Vec2 vecm;
+
   override void setup() {
     layer = 30;
 
@@ -27,10 +29,22 @@ class Kalashnikov: GameObject {
   }
 
   override void loop() {
-    Vec2 vecm = (im.cusorPos - tform.renderPos).unit;
+    vecm = (im.cusorPos - tform.renderPos).unit;
     vecm = vecm.rotdeg(-45);
     vecm *= 100;
-    if(im.mouse(0)){
+    if(im.mouseOnce(0) && !(dm.debugMode && dm.rapidFire)){
+      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));
+      // vv bgm vv
+      audio.volume(10);
+      audio.play(1);
+      //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
+    }
+  }
+
+  debug:
+  override void debugLoop() {
+    if(!dm.debugMode) return;
+    if(im.mouse(0) && (dm.debugMode && dm.rapidFire)){
       register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));
       // vv bgm vv
       audio.volume(10);

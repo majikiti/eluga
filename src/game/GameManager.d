@@ -27,7 +27,5 @@ struct GameManager {
   auto ref getStatus(GameObject go) => go ? status[go] : null;
 
   auto ref playerStatus () => player ? status[player] : null;
-
-  debug:
-  bool debugFrame = false;
+  
 }

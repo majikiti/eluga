@@ -36,9 +36,11 @@ class InputManager {
   }
 
   // マウスカーソルの座標を返す
-  Vec2 cusorPos() const {
+  Vec2 cusorPos(bool worldPos = false) const {
     int x,y;
     SDL_GetMouseState(&x,&y);
-    return Vec2(x,y);
+    auto res = Vec2(x,y);
+    if(worldPos) res += ctx.camera.pos;
+    return res;
   }
 }
