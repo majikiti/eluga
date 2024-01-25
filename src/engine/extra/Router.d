@@ -3,9 +3,11 @@ module engine.extra.Router;
 import engine;
 
 class _Router(T): GameObject {
-  private _RouteObject!T[T] routes;
+  alias RouteObject = _RouteObject!T;
+
+  private RouteObject[T] routes;
   private T current;
-  private GameObject currentGO = null;
+  private RouteObject currentGO = null;
   private bool change = false;
 
   this(T init, _RouteObject!T[T] routes) {
@@ -27,6 +29,7 @@ class _Router(T): GameObject {
       change = false;
       currentGO.bye;
       currentGO = register(routes[current]);
+      currentGO.route;
     }
   }
 
@@ -38,4 +41,6 @@ class _Router(T): GameObject {
 
 class _RouteObject(T): GameObject {
   protected _Router!T router;
+
+  void route() {}
 }
