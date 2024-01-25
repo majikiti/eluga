@@ -80,17 +80,17 @@ class SpriteRenderer: Component {
     if(!tform.isin(Vec2(rect.w, rect.h)) && !invisdraw) return; // 範囲外 Render もうやめて
     if(!enable) return; // 死ぬオブジェクト 描画 もうやめて
 
-<<<<<<< HEAD
-    if(image!is null){
-      go.renderEx(image.texture, &rect, tform.rot, null, flip);
-=======
+    // Opacity
     if(mode == Mode.Image){
       if(opacChanged){
         go.setTextureOpac(image.texture.data, _opac);
         opacChanged = false;
       }
-      go.renderEx(image.texture, &rect, tform.rot);
->>>>>>> c9750e2 (RIP: EXPLOSION)
+    }
+
+    // imageDraw
+    if(image!is null){
+      go.renderEx(image.texture, &rect, tform.rot, null, flip);
     } else {
       if(opacChanged){
         colorArr[3] = _opac;

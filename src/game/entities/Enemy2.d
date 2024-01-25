@@ -18,12 +18,9 @@ class Enemy2: Enemy {
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
-<<<<<<< HEAD
     status = gm.getStatus(this);
-=======
 
     addTag("Flying");
->>>>>>> c9750e2 (RIP: EXPLOSION)
   }
 
   override void setup() {

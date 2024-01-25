@@ -12,6 +12,7 @@ struct Status{
   int damage;
   bool star = false; // 無敵かどうか
   bool isDamaged = false;
+  bool willDead = false;
 }
 
 //ゲーム全体のステータスを管理

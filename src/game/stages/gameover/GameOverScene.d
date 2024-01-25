@@ -33,12 +33,7 @@ class GameOverScene: RouteObject {
   }
 
   override void loop() {
-<<<<<<< HEAD
     if(im.keyOnce('\r')) router.go(Routes.Title);
-  }
-}
-=======
     if(!fd.isChanging) fd.swap;
   }
 }
->>>>>>> c9750e2 (RIP: EXPLOSION)

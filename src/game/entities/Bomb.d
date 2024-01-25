@@ -44,12 +44,14 @@ class Bomb : GameObject {
       //se.play(1);
       register(new Explosion);
 
+      // damage function
+      real dmgf(real x) => (12 * max(0, exp(-1 * x / 300) - 0.1));
       // damage calc
       auto ptf = gm.player.component!Transform;
       Vec2 r = ptf.pos - tform.pos;
       real len = r.size;
-      real dmgf(real x) => (12 * max(0, exp(-1 * x / 300) - 0.1));
-      gm.playerStatus.hp -= cast(int)dmgf(len);
+      Status* pstat = gm.playerStatus();
+      pstat.life -= cast(int)dmgf(len);
       rigid.addForce(r * dmgf(len));
       dbg("damaged! :", dmgf(len));
 

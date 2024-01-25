@@ -7,6 +7,7 @@ class Enemy: GameObject {
   Status* status;
   Transform tform;
   RigidBody rigid;
+  SpriteRenderer rend;
   int type;
   protected const Vec2 initPos;
   string imgdir() => "default.png";
@@ -45,8 +46,9 @@ class Enemy: GameObject {
     auto rb = component!RigidBody;
     auto tform = component!Transform;
     if(go.getTag("Player") && !gm.playerStatus.star){
-      gm.playerStatus.star = true;
-      gm.playerStatus.hp -= 1;
+      Status* pstat = gm.playerStatus;
+      pstat.star = true;
+      pstat.life -= 1;
     }
     if(go.getTag("Missile")) {
       register(new Damage);
