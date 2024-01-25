@@ -62,20 +62,23 @@ class Explosion : GameObject {
   }
 }
 
-class ExpScatter : GameObject {
+class ExpScatter : GameObject { // 壊れました
   SpriteRenderer sr;
   Transform tf;
   
   Vec2 force;
   RigidBody rb;
+  BoxCollider bc;
 
   real dratio;
   protected ubyte tp;
 
   this(ubyte[3] colorArr, Vec2 force) {
     tf = register(new Transform(component!Transform.Org.Local, component!Transform.Zoom.Center));
-    sr = register(new SpriteRenderer(Vec2(30, 30), colorArr));
+    Vec2 mysize = Vec2(30, 30);
+    sr = register(new SpriteRenderer(mysize, colorArr));
     rb = register(new RigidBody(0.2));
+    bc = register(new BoxCollider(mysize, false));
     this.force = force*50;
 
     dratio = 1;
@@ -89,6 +92,7 @@ class ExpScatter : GameObject {
   }
 
   override void loop() {
+    dbg(rb.v);
     sr.setOpac(sr.opac - 6);
     if(sr.opac == 0) destroy;
   }

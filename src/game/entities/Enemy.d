@@ -57,7 +57,7 @@ class Enemy: GameObject {
 
   void death() {
     if(!status.willDead) {
-      se.play(1);
+      //se.play(1);
       register(new Explosion);
     }
     status.willDead = true;

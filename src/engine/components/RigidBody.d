@@ -74,15 +74,15 @@ class RigidBody: Component {
     Vec2 resV = v, initV; // resVが我が速度
     real dur = go.dur, time = dur; // ぢれいしょん
     auto gos = ctx.カメラ外のボックスコライダー持ちのオブジェクト;
-    if(!tform.hidein(go.component!BoxCollider.size, 40)) return;
+    if(!tform.hidein(go.component!BoxCollider.size, 40) || go.component!BoxCollider.constable) return;
 
     while(resV.size > 0 && dur > 0){
       initV = resV;
       time = dur;
       if(go.has!BoxCollider){
-        if(!go.component!BoxCollider.isTrigger && go.component!BoxCollider.active){
+        if(!go.component!BoxCollider.isTrigger){
           foreach(j, q; gos) {
-            if(q == go || q.component!BoxCollider.isTrigger || !q.component!BoxCollider.active) continue;
+            if(q == go || q.component!BoxCollider.isTrigger || q.component!BoxCollider.constable) continue;
             auto qTags = q.getTags;
             auto pTags = go.getTags;
             bool flag = false;

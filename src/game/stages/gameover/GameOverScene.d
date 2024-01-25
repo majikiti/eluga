@@ -16,11 +16,9 @@ class GameOverScene: RouteObject {
   this() {
     tl = register(new TextBox("死を賜った"));
     tl.component!Text.setColor(255, 0, 0);
-    tl.tform.pos = Vec2(200, 200);
 
     tl2 = register(new TextBox("Press Enter"));
     tl2.component!Text.setColor(255, 255, 255);
-    tl2.tform.pos = Vec2(220, 350);
     tl2.tform.scale *= 0.75;
     fd = register(new Fade([127, 0, 0], 50));
   }
