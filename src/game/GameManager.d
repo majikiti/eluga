@@ -15,10 +15,16 @@ struct Status{
   bool willDead = false;
 }
 
+struct Persist {
+ align(1):
+  ubyte ver = 1; // 適当
+}
+
 //ゲーム全体のステータスを管理
 struct GameManager {
   Status*[GameObject] status;
   GameObject player;
+  DataStore!Persist ds;
 
   auto ref makeStatus(GameObject go, int maxlife = 10, int damage = 1){
     auto s = new Status(maxlife, maxlife, damage);
@@ -28,5 +34,4 @@ struct GameManager {
   auto ref getStatus(GameObject go) => go ? status[go] : null;
 
   auto ref playerStatus () => player ? status[player] : null;
-  
 }

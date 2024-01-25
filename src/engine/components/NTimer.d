@@ -20,7 +20,7 @@ class NTimer: Component {
   override void loop() {
     auto now = cur;
     foreach(F i; counter.keys) {
-      auto ctr = counter[i];
+      auto ctr = &counter[i];
       if(ctr.itrvl * (ctr.count + 1) <= now) {
         i();
         ctr.count++;

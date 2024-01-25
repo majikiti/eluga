@@ -14,6 +14,7 @@ class Game: GameObject {
   Router router;
 
   override void setup() {
+    gm.ds = register(new DataStore!Persist("main.dat"));
     router = register(new Router(Routes.Test, [
       Routes.Title: new TitleScene(),
       Routes.Game: new GameScene(),
