@@ -41,11 +41,21 @@ class Bomb : GameObject {
 
   void explosion() {
     if(!isExplosion) {
-      se.play(1);
+      //se.play(1);
       register(new Explosion);
+
+      // damage calc
+      auto ptf = gm.player.component!Transform;
+      Vec2 r = ptf.pos - tform.pos;
+      real len = r.size;
+      real dmgf(real x) => (12 * max(0, exp(-1 * x / 300) - 0.1));
+      gm.playerStatus.hp -= cast(int)dmgf(len);
+      rigid.addForce(r * dmgf(len));
+      dbg("damaged! :", dmgf(len));
+
       isExplosion = true;
     }
     if(has!Explosion) return;
     destroy;
-  } // 死と向き合う関数
+  } // 爆発は芸術なのかもしれませんね
 }

@@ -48,6 +48,8 @@ class Kalashnikov: GameObject {
       // vv bgm vv
       audio.volume(10);
       audio.play(1);
+      //destroy; // SDL_mixer SIGSERV test
+      
       //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
     }
     tform.rot = 180 * (atan2(vecm.y, vecm.x) / PI);
