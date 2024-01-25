@@ -38,7 +38,7 @@ class Enemy: GameObject {
       death;
     }
     auto rend = component!SpriteRenderer;
-    active = tform.isin(rend.size);
+    active = tform.hidein(rend.size, 40);
   }
 
   override void collide(GameObject go){

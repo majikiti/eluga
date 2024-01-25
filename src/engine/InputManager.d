@@ -8,7 +8,7 @@ class InputManager {
   package BitArray state,once;
 
   this() {
-    enum stateSize = ubyte.max;
+    enum stateSize = 256;
     state = BitArray(new ubyte[stateSize / 8], stateSize);
     once = BitArray(new ubyte[stateSize / 8], stateSize);
   }

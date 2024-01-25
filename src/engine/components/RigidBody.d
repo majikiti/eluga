@@ -73,8 +73,8 @@ class RigidBody: Component {
     auto colScals = go.component!BoxCollider.worldScale.absVec;
     Vec2 resV = v, initV; // resVが我が速度
     real dur = go.dur, time = dur; // ぢれいしょん
-    auto gos = ctx.カメラ外のボックスコライダー持ちのオブジェクト; //変更
-    if(!tform.isin(go.component!BoxCollider.size)) return; //追加
+    auto gos = ctx.カメラ外のボックスコライダー持ちのオブジェクト;
+    if(!tform.hidein(go.component!BoxCollider.size, 40)) return;
 
     while(resV.size > 0 && dur > 0){
       initV = resV;

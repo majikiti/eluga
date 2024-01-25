@@ -23,6 +23,7 @@ struct DebugManager {
   bool createEntity1 = false;
   bool createEntity2 = false;
   bool createEntity3 = false;
+  bool createEntity4 = false;
   // teleportOrigin
 }
 
@@ -79,20 +80,21 @@ class DebugTools : GameObject {
     }
 
 
-    if(dm.createEntity1 || dm.createEntity2 || dm.createEntity3) createEntity;
+    if(dm.createEntity1 || dm.createEntity2 || dm.createEntity3 || dm.createEntity4) createEntity;
     if(dm.teleport) teleport;
   }
 
   void createEntity(){
-    if(im.mouseOnce(1)){
+    if(im.mouseOnce(2)){
       if(dm.createEntity1)register(new Enemy1(im.cusorPos(true)));
       if(dm.createEntity2)register(new Enemy2(im.cusorPos(true)));
       if(dm.createEntity3)register(new Enemy3(im.cusorPos(true), gm.player.component!Transform));
+      if(dm.createEntity4)register(new Enemy4(im.cusorPos(true), gm.player.component!Transform));
     }
   }
 
   void teleport(){
-    if(im.mouseOnce(1)) gm.player.component!Transform.pos = im.cusorPos(true);
+    if(im.mouseOnce(2)) gm.player.component!Transform.pos = im.cusorPos(true);
   }
 
   void page1Func(){
@@ -141,12 +143,13 @@ class DebugTools : GameObject {
       textUpdate;
     }
     if(im.keyOnce('4')){
+      dm.createEntity4 = !dm.createEntity4;
+      textUpdate;
+    }
+    if(im.keyOnce('5')){
       gm.player.component!Transform.pos = Vec2(0, 0);
       gm.player.component!RigidBody.v = Vec2(0, 0);
       gm.player.component!RigidBody.a = Vec2(0, 0);
-    }
-    if(im.keyOnce('5')){
-
     }
     if(im.keyOnce('6')){
 
@@ -212,8 +215,8 @@ class DebugTools : GameObject {
         "[1]:createEntity1    " ~ "[" ~ (dm.createEntity1 ? "o" : "-") ~ "]",
         "[2]:createEntity2    " ~ "[" ~ (dm.createEntity2 ? "o" : "-") ~ "]",
         "[3]:createEntity3    " ~ "[" ~ (dm.createEntity3 ? "o" : "-") ~ "]",
-        "[4]:teleportOrigin   " ,
-        "[5]:                 " ,
+        "[4]:createEntity4    " ~ "[" ~ (dm.createEntity4 ? "o" : "-") ~ "]",
+        "[5]:teleportOrigin   " ,
         "[6]:                 " ,
         "[7]:                 " ,
         "[8]:                 " ,
