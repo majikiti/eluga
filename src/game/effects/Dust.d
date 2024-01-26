@@ -9,6 +9,7 @@ class Dust : Effect {
 
   this(real dratio = 0.99, real scale = 0.2) {
     super(dratio, scale);
+    layer = 20;
   }
 
   override void loop() {

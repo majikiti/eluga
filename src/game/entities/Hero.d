@@ -72,7 +72,7 @@ class Hero: GameObject {
       if(dashtmr.cur >= 1000) isDash = true;
       if(dashtmr.cur >= 250 && isDash){
         auto dust = register(new Dust);
-        dust.component!Transform.pos += Vec2(0, 100);
+        dust.component!Transform.initPos = Vec2(0, rend.size.x);
         dashtmr.reset;
       }
     }else{

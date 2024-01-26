@@ -21,7 +21,7 @@ class Transform: Component {
   // 一般座標系
   Zoom zoom;
   private Org org;
-  Vec2 pos, renderPos;
+  Vec2 pos, renderPos, initPos;
   real rot = 0;
   Vec2 scale = Vec2(1,1);
 
@@ -49,11 +49,15 @@ class Transform: Component {
     org = worldType;
   }
 
+  override void setup() {
+    pos = initPos;
+  }
+
   override void loop() {
     if(!looped && org == Org.Spawn) {
       looped = true;
       auto ptform = getPtform;
-      pos = ptform.worldPos;
+      pos = ptform.worldPos + initPos;
     }
 
     final switch(org) {
