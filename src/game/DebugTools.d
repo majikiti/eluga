@@ -24,6 +24,7 @@ struct DebugManager {
   bool createEntity2 = false;
   bool createEntity3 = false;
   bool createEntity4 = false;
+  bool createEntity5 = false;
   // teleportOrigin
 }
 
@@ -80,7 +81,7 @@ class DebugTools : GameObject {
     }
 
 
-    if(dm.createEntity1 || dm.createEntity2 || dm.createEntity3 || dm.createEntity4) createEntity;
+    if(dm.createEntity1 || dm.createEntity2 || dm.createEntity3 || dm.createEntity4 || dm.createEntity5) createEntity;
     if(dm.teleport) teleport;
   }
 
@@ -90,6 +91,7 @@ class DebugTools : GameObject {
       if(dm.createEntity2)register(new Enemy2(im.cusorPos(true)));
       if(dm.createEntity3)register(new Enemy3(im.cusorPos(true), gm.player.component!Transform));
       if(dm.createEntity4)register(new Enemy4(im.cusorPos(true), gm.player.component!Transform));
+      if(dm.createEntity5)register(new Enemy5(im.cusorPos(true), gm.player.component!Transform));
     }
   }
 
@@ -147,12 +149,13 @@ class DebugTools : GameObject {
       textUpdate;
     }
     if(im.keyOnce('5')){
+      dm.createEntity5 = !dm.createEntity5;
+      textUpdate;
+    }
+    if(im.keyOnce('6')){
       gm.player.component!Transform.pos = Vec2(0, 0);
       gm.player.component!RigidBody.v = Vec2(0, 0);
       gm.player.component!RigidBody.a = Vec2(0, 0);
-    }
-    if(im.keyOnce('6')){
-
     }
     if(im.keyOnce('7')){
 
@@ -216,8 +219,8 @@ class DebugTools : GameObject {
         "[2]:createEntity2    " ~ "[" ~ (dm.createEntity2 ? "o" : "-") ~ "]",
         "[3]:createEntity3    " ~ "[" ~ (dm.createEntity3 ? "o" : "-") ~ "]",
         "[4]:createEntity4    " ~ "[" ~ (dm.createEntity4 ? "o" : "-") ~ "]",
-        "[5]:teleportOrigin   " ,
-        "[6]:                 " ,
+        "[5]:createEntity5    " ~ "[" ~ (dm.createEntity5 ? "o" : "-") ~ "]",
+        "[6]:teleportOrigin   " ,
         "[7]:                 " ,
         "[8]:                 " ,
       ].join('\n');

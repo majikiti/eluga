@@ -94,7 +94,7 @@ class Hero: GameObject {
 
     // missile
     if(im.keyOnce('\r')){
-      register(new Missile(Missile.Type.Normal, dir, tform.pos + Vec2(0,20)));
+      register(new Missile(Missile.Type.Normal, dir, tform.pos + Vec2(0,20), Missile.Target.Enemy));
       audio.volume(10);
       audio.play(1);
     }

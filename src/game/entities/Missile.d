@@ -10,11 +10,28 @@ class Missile: GameObject {
     CCCP,
     Divergence,
   }
+  enum Target {
+    Player,
+    Enemy,
+  }
 
   Type type;
+  Target target;
+  string tStr;
 
-  this(Type type, Vec2 dir, Vec2 pos) {
+  this(Type type, Vec2 dir, Vec2 pos, Target target) {
     this.type = type;
+    this.target = target;
+    final switch(target){
+      case Target.Player:
+        tStr = "Player";
+        addTag("EnemyMissile");
+        break;
+      case Target.Enemy:
+        tStr = "Enemy";
+        addTag("Missile");
+        break;
+    }
 
     auto tform = register(new Transform(Transform.Org.World));
     tform.pos = pos;
@@ -23,8 +40,6 @@ class Missile: GameObject {
     rb.a = Vec2(0, 0);
     auto missile = new ImageAsset("bullet.png");
     auto rend = register(new SpriteRenderer(missile));
-
-    addTag("Missile"); // 仮
 
     auto col = register(new BoxCollider(rend.localSize));
     col.isTrigger = true;
@@ -66,7 +81,10 @@ class Missile: GameObject {
   }
 
   override void collide(GameObject go){
-    if(go.getTag("Enemy")) gm.getStatus(go).life -= 1;
-    if(go.getTag("Ground") || go.getTag("Enemy") || go.getTag("Bomb")) destroy;
+    if(go.getTag(tStr)) {
+      gm.getStatus(go).life -= 1;
+      if(target == Target.Player) gm.playerStatus.star = true;
+    }
+    if(go.getTag("Ground") || go.getTag(tStr) || go.getTag("Bomb")) destroy;
   }
 }

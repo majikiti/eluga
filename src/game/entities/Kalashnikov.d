@@ -32,11 +32,11 @@ class Kalashnikov: GameObject {
     vecm = (im.cusorPos - tform.renderPos).unit;
     vecm *= 100;
     if(im.mouseOnce(0) && !(dm.debugMode && dm.rapidFire)){
-      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));
+      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos, Missile.Target.Enemy));
       // vv bgm vv
       audio.volume(10);
       audio.play(1);
-      //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
+      //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos, Missile.Target.Enemy));
     }
   }
 
@@ -44,13 +44,13 @@ class Kalashnikov: GameObject {
   override void debugLoop() {
     if(!dm.debugMode) return;
     if(im.mouse(0) && (dm.debugMode && dm.rapidFire)){
-      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos));
+      register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos, Missile.Target.Enemy));
       // vv bgm vv
       audio.volume(10);
       audio.play(1);
       //destroy; // SDL_mixer SIGSERV test
       
-      //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos));
+      //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos, Missile.Target.Enemy));
     }
     tform.rot = 180 * (atan2(vecm.y, vecm.x) / PI);
   }
