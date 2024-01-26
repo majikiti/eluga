@@ -79,6 +79,7 @@ class ExpScatter : GameObject { // 壊れました
     sr = register(new SpriteRenderer(mysize, colorArr));
     rb = register(new RigidBody(0.2));
     bc = register(new BoxCollider(mysize, false));
+    bc.isTrigger = true;
     this.force = force*50;
 
     dratio = 1;

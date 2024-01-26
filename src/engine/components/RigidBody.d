@@ -74,7 +74,9 @@ class RigidBody: Component {
     Vec2 resV = v, initV; // resVが我が速度
     real dur = go.dur, time = dur; // ぢれいしょん
     auto gos = ctx.カメラ外のボックスコライダー持ちのオブジェクト;
-    if(!tform.hidein(go.component!BoxCollider.size, 40) || go.component!BoxCollider.constable) return;
+
+    auto isact = go.has!BoxCollider ? go.component!BoxCollider.active : false;
+    if(!tform.hidein(go.component!BoxCollider.size, 40) || !isact) return;
 
     while(resV.size > 0 && dur > 0){
       initV = resV;
