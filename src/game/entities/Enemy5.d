@@ -8,12 +8,12 @@ class Enemy5: Enemy {
   LifeIndicator lifin;
   Status* status;
   override string imgdir() => "enem1.png";
-  Transform player;
+  Transform hero;
   Timer atkTmr;
 
   this(const Vec2 initPos = Vec2(0, 0),Transform tform){
     super(initPos);
-    player = tform;
+    hero = tform;
     status = gm.getStatus(this);
   }
 
@@ -28,16 +28,16 @@ class Enemy5: Enemy {
     super.loop();
     auto tform = component!Transform;
     if(atkTmr.cur > 2000){
-      register(new Missile(Missile.Type.Normal, player.pos-tform.pos, tform.pos + Vec2(0,10), Missile.Target.Player));
+      register(new Missile(Missile.Type.Normal, hero.pos-tform.pos, tform.pos + Vec2(0,10), Missile.Target.Hero));
       atkTmr.reset;
     }
   }
 
   override void collide(GameObject go){
-    if(go.getTag("Player") && !gm.playerStatus.star){
-      if(gm.playerStatus){
-        gm.playerStatus.star = true;
-        gm.playerStatus.life -= 1;
+    if(go.getTag("Hero") && !gm.heroStatus.star){
+      if(gm.heroStatus){
+        gm.heroStatus.star = true;
+        gm.heroStatus.life -= 1;
       }
     }
     if(go.getTag("Missile")) {

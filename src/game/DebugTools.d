@@ -89,14 +89,14 @@ class DebugTools : GameObject {
     if(im.mouseOnce(2)){
       if(dm.createEntity1)register(new Enemy1(im.cusorPos(true)));
       if(dm.createEntity2)register(new Enemy2(im.cusorPos(true)));
-      if(dm.createEntity3)register(new Enemy3(im.cusorPos(true), gm.player.component!Transform));
-      if(dm.createEntity4)register(new Enemy4(im.cusorPos(true), gm.player.component!Transform));
-      if(dm.createEntity5)register(new Enemy5(im.cusorPos(true), gm.player.component!Transform));
+      if(dm.createEntity3)register(new Enemy3(im.cusorPos(true), gm.hero.component!Transform));
+      if(dm.createEntity4)register(new Enemy4(im.cusorPos(true), gm.hero.component!Transform));
+      if(dm.createEntity5)register(new Enemy5(im.cusorPos(true), gm.hero.component!Transform));
     }
   }
 
   void teleport(){
-    if(im.mouseOnce(2)) gm.player.component!Transform.pos = im.cusorPos(true);
+    if(im.mouseOnce(2)) gm.hero.component!Transform.pos = im.cusorPos(true);
   }
 
   void page1Func(){
@@ -121,13 +121,13 @@ class DebugTools : GameObject {
       textUpdate;
     }
     if(im.keyOnce('6')){
-      gm.playerStatus.life = gm.playerStatus.maxlife;
+      gm.heroStatus.life = gm.heroStatus.maxlife;
     }
     if(im.keyOnce('7')){
-      gm.playerStatus.life = 1;
+      gm.heroStatus.life = 1;
     }
     if(im.keyOnce('8')){
-      gm.playerStatus.life = 0;
+      gm.heroStatus.life = 0;
     }
   }
 
@@ -153,9 +153,9 @@ class DebugTools : GameObject {
       textUpdate;
     }
     if(im.keyOnce('6')){
-      gm.player.component!Transform.pos = Vec2(0, 0);
-      gm.player.component!RigidBody.v = Vec2(0, 0);
-      gm.player.component!RigidBody.a = Vec2(0, 0);
+      gm.hero.component!Transform.pos = Vec2(0, 0);
+      gm.hero.component!RigidBody.v = Vec2(0, 0);
+      gm.hero.component!RigidBody.a = Vec2(0, 0);
     }
     if(im.keyOnce('7')){
 

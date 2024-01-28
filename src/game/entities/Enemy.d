@@ -45,8 +45,8 @@ class Enemy: GameObject {
     if(status.willDead) return; // 死ぬ時ぐらいはそっとしてあげよう
     auto rb = component!RigidBody;
     auto tform = component!Transform;
-    if(go.getTag("Player") && !gm.playerStatus.star){
-      Status* pstat = gm.playerStatus;
+    if(go.getTag("Hero") && !gm.heroStatus.star){
+      Status* pstat = gm.heroStatus;
       pstat.star = true;
       pstat.life -= 1;
     }

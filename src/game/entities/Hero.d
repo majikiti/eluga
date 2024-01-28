@@ -45,9 +45,9 @@ class Hero: GameObject {
     ak = register(new Kalashnikov);
     status = gm.makeStatus(this);
     register(new LifeIndicator(status));
-    addTag("Player");
+    addTag("Hero");
 
-    gm.player = this;
+    gm.hero = this;
 
     rndtmr = new Timer;
     dashtmr = new Timer;
@@ -99,11 +99,11 @@ class Hero: GameObject {
       audio.play(1);
     }
 
-    if(gm.playerStatus.star && sterTime > timer){
+    if(gm.heroStatus.star && sterTime > timer){
       rend.active = !rend.active;
       timer += dur;
     }
-    else timer = 0, gm.playerStatus.star = false, rend.active = true;
+    else timer = 0, gm.heroStatus.star = false, rend.active = true;
 
     // Effect Test
     auto randomSrc = Random(cast(int)rndtmr.cur);

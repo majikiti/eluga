@@ -23,7 +23,7 @@ struct Persist {
 //ゲーム全体のステータスを管理
 struct GameManager {
   Status*[GameObject] status;
-  GameObject player;
+  GameObject hero;
   DataStore!Persist ds;
 
   auto ref makeStatus(GameObject go, int maxlife = 10, int damage = 1){
@@ -33,5 +33,5 @@ struct GameManager {
 
   auto ref getStatus(GameObject go) => go ? status[go] : null;
 
-  auto ref playerStatus () => player ? status[player] : null;
+  auto ref heroStatus () => hero ? status[hero] : null;
 }

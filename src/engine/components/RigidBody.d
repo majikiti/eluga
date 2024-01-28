@@ -31,7 +31,7 @@ class RigidBody: Component {
   }
 
   private void initLayer(){
-    layer["Player"]["Enemy"] = true;
+    layer["Hero"]["Enemy"] = true;
     layer["Enemy"]["Enemy"] = true;
     layer["Enemy"]["Bomb"] = true;
   }

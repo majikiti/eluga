@@ -50,8 +50,8 @@ class Patio: RouteObject {
   }
 
   override void loop() {
-    if(gm.playerStatus){
-      if(gm.playerStatus.life <= 0){
+    if(gm.heroStatus){
+      if(gm.heroStatus.life <= 0){
         router.go(Routes.GameOver);
       }
     }
@@ -62,7 +62,7 @@ class Patio: RouteObject {
   bool debugFrame = true;
   override void debugLoop() {
     if(!debugFrame) return;
-    if(im.keyOnce('k')) gm.playerStatus.life = 1;
+    if(im.keyOnce('k')) gm.heroStatus.life = 1;
     if(im.keyOnce('=')) router.go(Routes.GameOver);
   }
 }

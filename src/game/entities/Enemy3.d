@@ -9,11 +9,11 @@ class Enemy3: Enemy {
   LifeIndicator lifin;
   Status* status;
   override string imgdir() => "enem1.png";
-  Transform player;
+  Transform hero;
 
   this(const Vec2 initPos = Vec2(0, 0),Transform tform){
     super(initPos);
-    player = tform;
+    hero = tform;
     status = gm.getStatus(this);
   }
 
@@ -29,12 +29,12 @@ class Enemy3: Enemy {
     auto rb = component!RigidBody;
 
     if(go.getTag("Ground")){
-      if(player) rb.v = Vec2(max(min(2,0.02*(player.pos.x - tform.pos.x)),-2),-2);
+      if(hero) rb.v = Vec2(max(min(2,0.02*(hero.pos.x - tform.pos.x)),-2),-2);
     }
-    if(go.getTag("Player") && !gm.playerStatus.star){
-      if(gm.playerStatus){
-        gm.playerStatus.star = true;
-        gm.playerStatus.life -= 1;
+    if(go.getTag("Hero") && !gm.heroStatus.star){
+      if(gm.heroStatus){
+        gm.heroStatus.star = true;
+        gm.heroStatus.life -= 1;
       }
     }
     if(go.getTag("Missile")) {

@@ -11,7 +11,7 @@ class Missile: GameObject {
     Divergence,
   }
   enum Target {
-    Player,
+    Hero,
     Enemy,
   }
 
@@ -23,8 +23,8 @@ class Missile: GameObject {
     this.type = type;
     this.target = target;
     final switch(target){
-      case Target.Player:
-        tStr = "Player";
+      case Target.Hero:
+        tStr = "Hero";
         addTag("EnemyMissile");
         break;
       case Target.Enemy:
@@ -83,7 +83,7 @@ class Missile: GameObject {
   override void collide(GameObject go){
     if(go.getTag(tStr)) {
       gm.getStatus(go).life -= 1;
-      if(target == Target.Player) gm.playerStatus.star = true;
+      if(target == Target.Hero) gm.heroStatus.star = true;
     }
     if(go.getTag("Ground") || go.getTag(tStr) || go.getTag("Bomb")) destroy;
   }
