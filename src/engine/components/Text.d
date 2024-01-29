@@ -13,6 +13,8 @@ class Text: Component {
   private string _text;
   SDL_Color c;
 
+  bool enable = true;
+
   this(TextAsset asset) {
     _font = asset;
     c.a = 255;
@@ -60,6 +62,7 @@ class Text: Component {
   }
 
   override void loop() {
+    if(!enable) return;
     int voffset = 0;
     foreach(texture; textures) {
       if(texture is null) {

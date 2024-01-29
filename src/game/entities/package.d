@@ -15,6 +15,7 @@ public import game.entities.Enemy4;
 public import game.entities.Enemy5;
 public import game.entities.Boss;
 public import game.entities.Bomb;
+public import game.entities.BombMeter;
 public import game.entities.Hero;
 public import game.entities.Kalashnikov;
 public import game.entities.LifeIndicator;

@@ -18,6 +18,9 @@ class UI: GameObject {
     // points
     register(new Point);
 
+    // bombs
+    register(new BombMeter);
+
     // and more...
   }
 
