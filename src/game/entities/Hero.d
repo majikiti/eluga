@@ -19,6 +19,17 @@ class Hero: GameObject {
   int jumpRemain = DefaultJumpRemain;
   bool fromGround = false;
 
+  // いまなにしてる？
+  enum State { Standing, Walking, Jumping, Die }
+  auto state = State.Jumping;
+  NTimer tmr;
+
+  // skin
+  ImageAsset[] walkSkin;
+  size_t walkSkinCur;
+  auto jumpSkin() => walkSkin[0]; //
+  auto standSkin() => walkSkin[1]; //
+
   Timer rndtmr;
   Timer dashtmr;
   Timer bombdtmr;
@@ -32,13 +43,22 @@ class Hero: GameObject {
 
   Vec2 v = Vec2(3, 2);
 
+  void changeSkin(ImageAsset img) {
+    component!SpriteRenderer.bye;
+    auto rdr = upsert(new SpriteRenderer(img));
+    upsert(new BoxCollider(rdr.size));
+  }
+
   override void setup() {
     tform = register(new Transform(Transform.Org.World));
     tform.pos = Vec2(0, 100);
     register(new RigidBody(1)).a = Vec2(0, 0);
 
-    auto hero0 = new ImageAsset("hero0.png");
-    rend = register(new SpriteRenderer(hero0));
+    walkSkin = [
+      new ImageAsset("hero0.png"),
+      new ImageAsset("hero1.png"),
+    ];
+    rend = register(new SpriteRenderer(walkSkin[0]));
 
     SHOT = new AudioAsset("attack_heavy.mp3");
     audio = register(new AudioSource(SHOT));
@@ -59,6 +79,14 @@ class Hero: GameObject {
     rndtmr = new Timer;
     dashtmr = new Timer;
     bombdtmr = new Timer;
+
+    tmr = register(new NTimer);
+    tmr.sched({
+      if(state == State.Walking) {
+        auto i = ++walkSkinCur == walkSkin.length ? walkSkinCur = 0 : walkSkinCur;
+        changeSkin(walkSkin[i]);
+      }
+    }, 100);
   }
 
   override void loop() {
@@ -90,6 +118,7 @@ class Hero: GameObject {
         dust.component!Transform.initPos = Vec2(0, rend.size.x);
         dashtmr.reset;
       }
+      if(state == state.Standing) state = state.Walking;
     } else if(im.key('t') && gm.heroStatus.haveObj !is null && gm.heroStatus.haveObj.length != 0 && bombdtmr.cur >= 2_000) {
       auto bm = register(gm.heroStatus.haveObj[$-1]);
       gm.heroStatus.haveObj.popBack;
@@ -101,6 +130,10 @@ class Hero: GameObject {
       rb.v.x = 0;
       isDash = false;
       dashtmr.reset;
+      if(state == state.Walking) {
+        state = State.Standing;
+        changeSkin(standSkin);
+      }
     }
 
     if(!fromGround) dashtmr.reset;
@@ -111,6 +144,8 @@ class Hero: GameObject {
       // 1回増やす
       if(!fromGround) jumpRemain--;
       fromGround = false;
+      state = State.Jumping;
+      changeSkin(jumpSkin);
     }
 
     // missile
@@ -141,10 +176,15 @@ class Hero: GameObject {
     if(go.getTag("Ground") && rb.v.y > -1) {
       jumpRemain = DefaultJumpRemain;
       fromGround = true;
+      if(state == State.Jumping) {
+        state = State.Standing;
+        changeSkin(standSkin);
+      }
     }
   }
 
   void death() {
+    state = State.Die;
     if(!status.willDead) {
       component!SpriteRenderer.active = false;
       register(new Explosion);
