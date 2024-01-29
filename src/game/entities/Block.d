@@ -8,6 +8,8 @@ class Block: GameObject {
   int life;
   real time = 0;
   Transform tform;
+  SpriteRenderer rend;
+  string dir() => "notxtre.png";
 
   this(Vec2 pos, Vec2 scale){
     tform = register(new Transform(Transform.Org.World));
@@ -17,7 +19,8 @@ class Block: GameObject {
   }
 
   override void setup() {
-    auto rend = register(new SpriteRenderer(Vec2(256, 256)));
+    auto ia = new ImageAsset(dir);
+    rend = register(new SpriteRenderer(ia));
     register(new BoxCollider(rend.localSize.absVec));
   }
 

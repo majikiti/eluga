@@ -25,10 +25,20 @@ class MakeDonMap : GameObject {
         register(new Hero);
         break;
       case 1:
+        register(new BlockBlock(pos, Vec2(1/4.0,1/4.0)));
+        break;
       case 2:
+        register(new BlockBrick(pos, Vec2(1/4.0,1/4.0)));
+        break;
       case 3:
+        register(new BlockHatena(pos, Vec2(1/4.0,1/4.0)));
+        break;
       case 4:
+        register(new BlockTube(pos, Vec2(1/4.0,1/4.0)));
+        break;
       case 5:
+        register(new BlockTube(pos, Vec2(1/4.0,1/4.0)));
+        break;
       case 6:
       case 7:
         register(new Block(pos, Vec2(1/4.0,1/4.0)));

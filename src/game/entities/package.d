@@ -2,6 +2,10 @@ module game.entities;
 
 public import game.entities.BackGround;
 public import game.entities.Block;
+public import game.entities.BlockBrick;
+public import game.entities.BlockBlock;
+public import game.entities.BlockHatena;
+public import game.entities.BlockTube;
 public import game.entities.Block2;
 public import game.entities.Enemy;
 public import game.entities.Enemy1;
