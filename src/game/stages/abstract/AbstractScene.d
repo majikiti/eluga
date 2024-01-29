@@ -23,6 +23,7 @@ class AbstractScene: RouteObject {
   
   this() {
     tf = register(new Transform);
+    tf.pos.y = windowSize.y - 200;
 
     tl0 = register(new TextBox("Welcome to"));
     tl0.component!Text.setColor(225, 225, 255);

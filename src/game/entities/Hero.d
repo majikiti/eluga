@@ -26,6 +26,8 @@ class Hero: GameObject {
 
   AudioAsset SHOT;
   AudioSource audio;
+  AudioAsset itai;
+  AudioSource se;
 
   Vec2 v = Vec2(3, 2);
 
@@ -47,6 +49,10 @@ class Hero: GameObject {
     register(new LifeIndicator(status));
     addTag("Hero");
 
+    itai = new AudioAsset("explosion.ogg");
+    se = register(new AudioSource(itai));
+    se.volume(50);
+
     gm.hero = this;
 
     rndtmr = new Timer;
@@ -55,8 +61,15 @@ class Hero: GameObject {
 
   override void loop() {
     scope(exit) fromGround = false;
+    auto tform = component!Transform;
+    if(status.life <= 0 || tform.pos.y >= gm.worldEnd.y){
+      death;
+      return;
+    }
     
-    //auto tform = component!Transform;
+    if(tform.pos.x < gm.worldBegin.x) tform.pos.x = gm.worldBegin.x;
+    if(tform.pos.x > gm.worldEnd.x) tform.pos.x = gm.worldEnd.x;
+
     auto rb = component!RigidBody;
     if(im.key('d')||im.key('a')){
       if(im.key('d')){
@@ -115,12 +128,27 @@ class Hero: GameObject {
   }
 
   override void collide(GameObject go){
+
     auto rb = component!RigidBody;
     if(go.getTag("Ground") && rb.v.y > -1) {
       jumpRemain = DefaultJumpRemain;
       fromGround = true;
     }
   }
+
+  void death() {
+    if(!status.willDead) {
+      component!SpriteRenderer.active = false;
+      register(new Explosion);
+      se.volume(50);
+      se.play(0);
+    }
+    auto rb = component!RigidBody;
+    rb.a = rb.v = Vec2(0, 0);
+    status.willDead = true;
+    if(has!Explosion) return;
+    status.dead = true;
+  } // 死と向き合う関数
 
   override void debugLoop(){
     if(!debugging || !dm.speedupX) v.x = 3;

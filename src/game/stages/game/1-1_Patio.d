@@ -24,12 +24,10 @@ class Patio: RouteObject {
     getCamera().lim.min.x = 0;
     getCamera().lim.max.x = 13185;
     getCamera().lim.max.y = 200;
-    // vv hero vv
-    // hero = register(new Hero);
-    // register(new Block(Vec2(0,280),Vec2(10,0.3)));
-    register(new MakeDonMap(Vec2(64,64)));
+    gm.worldBegin.x = 0;
+    gm.worldEnd = Vec2(13185, 500) + windowSize/2;
 
-    // register(new Enemy3(Vec2(200, 0), hero.component!Transform));
+    register(new MakeDonMap(Vec2(64,64)));
 
     // vv background vv
     auto beijing = register(new BackGround("bg.png"));
@@ -49,7 +47,7 @@ class Patio: RouteObject {
   override void loop() {
     if(im.keyOnce(27)) nuke;
     if(gm.heroStatus){
-      if(gm.heroStatus.life <= 0){
+      if(gm.heroStatus.dead){
         router.go(Routes.GameOver);
       }
     }

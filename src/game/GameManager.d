@@ -13,6 +13,7 @@ struct Status{
   bool star = false; // 無敵かどうか
   bool isDamaged = false;
   bool willDead = false;
+  bool dead = false;
 }
 
 struct Persist {
@@ -25,6 +26,7 @@ struct GameManager {
   Status*[GameObject] status;
   GameObject hero;
   DataStore!Persist ds;
+  Vec2 worldEnd = Vec2(real.infinity, real.infinity), worldBegin = Vec2(-real.infinity, -real.infinity);
 
   auto ref makeStatus(GameObject go, int maxlife = 10, int damage = 1){
     auto s = new Status(maxlife, maxlife, damage);

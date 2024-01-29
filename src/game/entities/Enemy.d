@@ -57,13 +57,14 @@ class Enemy: GameObject {
 
   void death() {
     if(!status.willDead) {
+      component!SpriteRenderer.active = false;
       register(new Explosion);
       se.volume(50);
       se.play(0);
-      dbg("aaa1");
     }
+    auto rb = component!RigidBody;
+    rb.a = rb.v = Vec2(0, 0);
     status.willDead = true;
-    dbg("aaa2");
     if(has!Explosion) return;
     destroy;
   } // 死と向き合う関数
