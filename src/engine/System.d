@@ -28,10 +28,9 @@ class System: Loggable {
 
   void run() {
     ctx.updated = SDL_GetTicks64;
-    ctx.root.realSetup;
-
     ctx.camera = new Camera(ctx.windowSize / 2);
     ctx.camera.size = ctx.windowSize;
+    ctx.root.realSetup;
 
     debug ctx.root.register(new DebugView);
 

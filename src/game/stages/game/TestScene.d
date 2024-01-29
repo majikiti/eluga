@@ -20,6 +20,9 @@ class TestScene: RouteObject {
   }
 
   override void setup() {
+    getCamera().lim.min.x = 0;
+    getCamera().lim.max.x = 13185;
+    getCamera().lim.max.y = 300;
     // vv hero vv
     // hero = register(new Hero);
     // register(new Block(Vec2(0,280),Vec2(10,0.3)));

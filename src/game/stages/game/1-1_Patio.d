@@ -8,36 +8,30 @@ class Patio: RouteObject {
   Don!"Patio.don" don;
 
   Hero hero;
-  ImageAsset bg;
   AudioAsset BGM;
   AudioSource audio;
   Transform tform;
 
-  // 仮工事
-  real theta = 0;
-
   this(Router router) {
-    this.router = router;
     layer = -100;
-  }
-
-  override void setup() {
-    // vv hero vv
-    hero = register(new Hero);
-    register(new Block(Vec2(0,280),Vec2(100,0.3)));
-    for(int i = 0; i < 1000; i++){
-      register(new Enemy3(Vec2(i * 400 + 100,100),hero.component!Transform));
-      register(new Enemy2(Vec2(i * 400 + 200, 30)));
-    }
-
     // vv worldTrf vv
     tform = register(new Transform(Transform.Org.World));
     tform.scale.x = 1.5;
+  }
+
+  override void setup() {
+    getCamera().lim.min.x = 0;
+    getCamera().lim.max.x = 13185;
+    getCamera().lim.max.y = 300;
+    // vv hero vv
+    // hero = register(new Hero);
+    // register(new Block(Vec2(0,280),Vec2(10,0.3)));
+    register(new MakeDonMap(Vec2(64,64)));
+
+    // register(new Enemy3(Vec2(200, 0), hero.component!Transform));
 
     // vv background vv
-    bg = new ImageAsset("_.jpeg");
-    auto sprite = register(new SpriteRenderer(bg, true));
-    debug sprite.debugFrame = false;
+    register(new BackGround("_.jpeg"));
 
     // vv userInterface vv
     register(new UI);
@@ -47,22 +41,10 @@ class Patio: RouteObject {
     audio = register(new AudioSource(BGM));
     audio.play(-1);
     audio.volume(15);
+
   }
 
   override void loop() {
-    if(gm.heroStatus){
-      if(gm.heroStatus.life <= 0){
-        router.go(Routes.GameOver);
-      }
-    }
-  }
-
-  debug:
-
-  bool debugFrame = true;
-  override void debugLoop() {
-    if(!debugFrame) return;
-    if(im.keyOnce('k')) gm.heroStatus.life = 1;
-    if(im.keyOnce('=')) router.go(Routes.GameOver);
+    if(im.keyOnce(27)) nuke;
   }
 }

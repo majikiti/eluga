@@ -21,7 +21,7 @@ class DebugView: GameObject {
 
   override void loop() {
     if(ctx.fps < 30) lt.setColor(255, 64, 64);
-    else             lt.setColor(64, 255, 64);
+    else             lt.setColor(64, 64, 255);
 
     string lstr;
     lstr ~= [

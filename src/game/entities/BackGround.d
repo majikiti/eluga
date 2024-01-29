@@ -29,7 +29,7 @@ class BackGround : GameObject {
   }
 
   override void loop(){
-
+    
     foreach(i, p; bgSub){
       auto tform = p.component!Transform;
       auto camPos = getCamera.pos;

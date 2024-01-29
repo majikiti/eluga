@@ -8,13 +8,13 @@ DebugManager dm;
 
 struct DebugManager {
 
-  bool debugMode = true;
+  bool debugMode = false;
 
   // page 1
   bool speedupX = false; // 横方向の移動速度が2 -> 10
-  bool moonJump = true; // W,Sキーで上下に自由に移動できるようになる
+  bool moonJump = false; // W,Sキーで上下に自由に移動できるようになる
   bool rapidFire = false;
-  bool noGravity = true;
+  bool noGravity = false;
   bool teleport = false;
   // maxLife;
   // Life1;
