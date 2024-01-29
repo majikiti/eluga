@@ -30,7 +30,9 @@ class DataStore(T): Component if(is(T == struct)) {
   auto ref opDispatch(string field)() => mixin(`_buf.t.`~field);
 
   override void setup() {
-    auto tim = go.register(new NTimer);
+    NTimer tim;
+    if(go.has!NTimer) tim = go.component!NTimer;
+    else tim = go.register(new NTimer);
     tim.sched(&_sync, 1000);
   }
 
