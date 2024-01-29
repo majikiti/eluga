@@ -14,7 +14,7 @@ class GameOverScene: RouteObject {
   real theta;
 
   this() {
-    tl = register(new TextBox("死を賜った"));
+    tl = register(new TextBox("死を賜った", Vec2(0, 0), true));
     tl.component!Text.setColor(255, 0, 0);
 
     tl2 = register(new TextBox("Press Enter"));

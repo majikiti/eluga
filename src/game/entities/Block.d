@@ -21,4 +21,7 @@ class Block: GameObject {
     register(new BoxCollider(rend.localSize.absVec));
   }
 
+  override void collide(GameObject go) {
+    if(go.getTag("Missile")) register(new Dust);
+  }
 }

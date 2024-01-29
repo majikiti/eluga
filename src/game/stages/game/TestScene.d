@@ -31,7 +31,8 @@ class TestScene: RouteObject {
     // register(new Enemy3(Vec2(200, 0), hero.component!Transform));
 
     // vv background vv
-    register(new BackGround("_.jpeg"));
+    auto beijing = register(new BackGround("bg.png"));
+    beijing.component!Transform.pos = Vec2(0, -450); // align BG
 
     // vv userInterface vv
     register(new UI);
