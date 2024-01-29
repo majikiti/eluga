@@ -5,22 +5,29 @@ import game;
 import engine;
 
 class Bomb : GameObject {
+  enum Affi {
+    Enemy,
+    Hero,
+  }
+
   SpriteRenderer rend;
   Transform tform;
   RigidBody rigid;
   string imgdir() => "bomb.png";
   AudioSource se;
+  Affi af;
 
   bool isExplosion = false;
 
-  this() {
+  this(Affi af = Affi.Enemy) {
     auto bokan = new AudioAsset("dogaan.mp3");
     se = register(new AudioSource(bokan));
-    se.volume(20);
+    se.volume(60);
     addTag("Bomb");
     // 僕はHikakin 死亡
     tform = register(new Transform(tform.Org.Spawn));
     tform.scale = Vec2(0.2, 0.2);
+    this.af = af;
   }
 
   override void setup() {
@@ -37,13 +44,19 @@ class Bomb : GameObject {
   }
 
   override void collide(GameObject go) {
-    if(go.getTag("Missile")) explosion;
+    if(go.getTag("Missile") || af == Affi.Hero) explosion(go);
+    else if(go.getTag("Hero")) {
+      auto aa = new AudioAsset("gather.mp3");
+      se.set(aa);
+      se.volume(100);
+      se.play(0);
+      gm.heroStatus.haveObj ~= new Bomb(Affi.Hero);
+      bye;
+    }
   }
 
-  void explosion() {
+  void explosion(GameObject go) {
     if(!isExplosion) {
-      //se.play(1);
-      register(new Explosion);
       component!BoxCollider.isTrigger = true;
 
       // damage function
@@ -52,11 +65,21 @@ class Bomb : GameObject {
       auto ptf = gm.hero.component!Transform;
       Vec2 r = ptf.pos - tform.pos;
       real len = r.size;
-      Status* pstat = gm.heroStatus();
-      if(!pstat.star)pstat.life -= cast(int)dmgf(len);
+      Status* stat;
+      if(af == Affi.Enemy) {
+        stat = gm.heroStatus();
+      } else {
+        if(go.getTag("Hero")) return;
+        auto keys = go in gm.status;
+        if(keys !is null) stat = gm.status[go];
+        else return;
+      }
+      if(!stat.star) stat.life -= cast(int)dmgf(len);
       rigid.addForce(r * dmgf(len));
       dbg("damaged! :", dmgf(len));
 
+      se.play(1);
+      register(new Explosion);
       isExplosion = true;
     }
   } // 爆発は芸術なのかもしれませんね

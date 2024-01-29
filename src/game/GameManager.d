@@ -14,6 +14,8 @@ struct Status{
   bool isDamaged = false;
   bool willDead = false;
   bool dead = false;
+  
+  GameObject[] haveObj;
 }
 
 struct Persist {

@@ -34,7 +34,6 @@ class RigidBody: Component {
     layer["Hero"]["Enemy"] = true;
     layer["Enemy"]["Enemy"] = true;
     layer["Enemy"]["Bomb"] = true;
-    layer["Hero"]["Bomb"] = true;
     layer["Bomb"]["Bomb"] = true;
   }
 

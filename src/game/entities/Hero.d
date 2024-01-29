@@ -21,6 +21,7 @@ class Hero: GameObject {
 
   Timer rndtmr;
   Timer dashtmr;
+  Timer bombdtmr;
   bool isDash;
   Kalashnikov ak;
 
@@ -57,6 +58,7 @@ class Hero: GameObject {
 
     rndtmr = new Timer;
     dashtmr = new Timer;
+    bombdtmr = new Timer;
   }
 
   override void loop() {
@@ -88,7 +90,13 @@ class Hero: GameObject {
         dust.component!Transform.initPos = Vec2(0, rend.size.x);
         dashtmr.reset;
       }
-    }else{
+    } else if(im.key('t') && gm.heroStatus.haveObj !is null && gm.heroStatus.haveObj.length != 0 && bombdtmr.cur >= 2_000) {
+      auto bm = register(gm.heroStatus.haveObj[$-1]);
+      gm.heroStatus.haveObj.popBack;
+      bm.component!RigidBody.addForce(Vec2(300, 450) * dir);
+      bm.component!Transform.initPos = Vec2(80, 0) * dir;
+      bombdtmr.reset;
+    } else {
       rb.v.x = 0;
       rb.v.x = 0;
       isDash = false;
