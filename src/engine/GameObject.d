@@ -236,6 +236,8 @@ class GameObject: Loggable {
 
   auto windowSize() => ctx.windowSize;
 
+  auto getCamera() => ctx.camera;
+
   void nuke() {
     ctx.running = false;
   }

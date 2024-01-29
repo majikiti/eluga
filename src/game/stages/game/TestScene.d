@@ -8,7 +8,6 @@ class TestScene: RouteObject {
   Don!"Patio.don" don;
 
   Hero hero;
-  ImageAsset bg;
   AudioAsset BGM;
   AudioSource audio;
   Transform tform;
@@ -29,9 +28,7 @@ class TestScene: RouteObject {
     // register(new Enemy3(Vec2(200, 0), hero.component!Transform));
 
     // vv background vv
-    bg = new ImageAsset("_.jpeg");
-    auto sprite = register(new SpriteRenderer(bg, true));
-    debug sprite.debugFrame = false;
+    register(new BackGround("_.jpeg"));
 
     // vv userInterface vv
     register(new UI);

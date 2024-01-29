@@ -11,10 +11,8 @@ class ImageBox : GameObject {
 
   this(string dir) {
     ima = new ImageAsset(dir);
-  }
-
-  override void setup() {
     tform = register(new Transform(Transform.Org.Local));
     sr = register(new SpriteRenderer(ima));
   }
+  
 }

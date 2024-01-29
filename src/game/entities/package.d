@@ -1,5 +1,6 @@
 module game.entities;
 
+public import game.entities.BackGround;
 public import game.entities.Block;
 public import game.entities.Block2;
 public import game.entities.Enemy;

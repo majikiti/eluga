@@ -8,12 +8,13 @@ DebugManager dm;
 
 struct DebugManager {
 
+  bool debugMode = true;
+
   // page 1
-  bool debugMode = false;
   bool speedupX = false; // 横方向の移動速度が2 -> 10
   bool moonJump = false; // W,Sキーで上下に自由に移動できるようになる
   bool rapidFire = false;
-  bool noGravity = false;
+  bool noGravity = true;
   bool teleport = false;
   // maxLife;
   // Life1;
@@ -25,6 +26,7 @@ struct DebugManager {
   bool createEntity3 = false;
   bool createEntity4 = false;
   bool createEntity5 = false;
+  bool createBomb = false;
   // teleportOrigin
 }
 
@@ -92,6 +94,7 @@ class DebugTools : GameObject {
       if(dm.createEntity3)register(new Enemy3(im.cusorPos(true), gm.hero.component!Transform));
       if(dm.createEntity4)register(new Enemy4(im.cusorPos(true), gm.hero.component!Transform));
       if(dm.createEntity5)register(new Enemy5(im.cusorPos(true), gm.hero.component!Transform));
+      if(dm.createBomb   )register(new Bomb);
     }
   }
 
@@ -153,15 +156,16 @@ class DebugTools : GameObject {
       textUpdate;
     }
     if(im.keyOnce('6')){
-      gm.hero.component!Transform.pos = Vec2(0, 0);
-      gm.hero.component!RigidBody.v = Vec2(0, 0);
-      gm.hero.component!RigidBody.a = Vec2(0, 0);
+      dm.createBomb = !dm.createBomb;
+      textUpdate;
     }
     if(im.keyOnce('7')){
 
     }
     if(im.keyOnce('8')){
-
+      gm.hero.component!Transform.pos = Vec2(0, 0);
+      gm.hero.component!RigidBody.v = Vec2(0, 0);
+      gm.hero.component!RigidBody.a = Vec2(0, 0);
     }
   }
 
@@ -220,9 +224,9 @@ class DebugTools : GameObject {
         "[3]:createEntity3    " ~ "[" ~ (dm.createEntity3 ? "o" : "-") ~ "]",
         "[4]:createEntity4    " ~ "[" ~ (dm.createEntity4 ? "o" : "-") ~ "]",
         "[5]:createEntity5    " ~ "[" ~ (dm.createEntity5 ? "o" : "-") ~ "]",
-        "[6]:teleportOrigin   " ,
+        "[6]:createBomb       " ~ "[" ~ (dm.createBomb    ? "o" : "-") ~ "]",
         "[7]:                 " ,
-        "[8]:                 " ,
+        "[8]:teleportOrigin   " ,
       ].join('\n');
     }
     else if(page == 3){
