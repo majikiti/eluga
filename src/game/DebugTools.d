@@ -88,9 +88,9 @@ class DebugTools : GameObject {
     if(im.mouseOnce(2)){
       if(dm.createEntity1)register(new Enemy1(im.cusorPos(true)));
       if(dm.createEntity2)register(new Enemy2(im.cusorPos(true)));
-      if(dm.createEntity3)register(new Enemy3(im.cusorPos(true), gm.hero.component!Transform));
-      if(dm.createEntity4)register(new Enemy4(im.cusorPos(true), gm.hero.component!Transform));
-      if(dm.createEntity5)register(new Enemy5(im.cusorPos(true), gm.hero.component!Transform));
+      if(dm.createEntity3)register(new Enemy3(im.cusorPos(true)));
+      if(dm.createEntity4)register(new Enemy4(im.cusorPos(true)));
+      if(dm.createEntity5)register(new Enemy5(im.cusorPos(true)));
       if(dm.createBomb   )register(new Bomb);
     }
   }

@@ -11,7 +11,7 @@ class TimeLimitClock: GameObject {
   ulong t_remain() => T_LIMIT - min(T_LIMIT, uptime - t_start); // flooring 0 (unti overflow)
 
   override void setup() {
-    register(new Transform);
+    register(new Transform(Transform.Org.Local));
     component!Transform.pos = Vec2(400,0);
     auto timerfont = new TextAsset("PixelMplus-20130602/PixelMplus12-Regular.ttf",40);
     timStr = register(new Text(timerfont));

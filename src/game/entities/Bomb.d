@@ -53,7 +53,7 @@ class Bomb : GameObject {
       Vec2 r = ptf.pos - tform.pos;
       real len = r.size;
       Status* pstat = gm.heroStatus();
-      pstat.life -= cast(int)dmgf(len);
+      if(!pstat.star)pstat.life -= cast(int)dmgf(len);
       rigid.addForce(r * dmgf(len));
       dbg("damaged! :", dmgf(len));
 

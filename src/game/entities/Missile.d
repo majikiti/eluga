@@ -81,7 +81,7 @@ class Missile: GameObject {
   }
 
   override void collide(GameObject go){
-    if(go.getTag(tStr)) {
+    if(go.getTag(tStr) && !gm.getStatus(go).star) {
       gm.getStatus(go).life -= 1;
       if(target == Target.Hero) gm.heroStatus.star = true;
     }

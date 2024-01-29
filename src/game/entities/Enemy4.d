@@ -12,15 +12,15 @@ class Enemy4: Enemy {
   Timer flytmr;
   bool flying;
 
-  this(const Vec2 initPos = Vec2(0, 0),Transform tform){
+  this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
-    hero = tform;
     status = gm.getStatus(this);
     flying = false;
   }
 
   override void setup() {
     super.setup();
+    hero = gm.hero.component!Transform;
     lifin = register(new LifeIndicator(status));
     rigid = register(new RigidBody(2, 1, 10));
     flytmr = new Timer;

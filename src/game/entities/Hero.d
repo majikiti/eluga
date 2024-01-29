@@ -123,7 +123,7 @@ class Hero: GameObject {
   }
 
   override void debugLoop(){
-    if(!debugging || !dm.speedupX) v.x = 2;
+    if(!debugging || !dm.speedupX) v.x = 3;
 
     if(!debugging) return;
 
