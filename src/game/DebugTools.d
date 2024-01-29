@@ -26,6 +26,7 @@ struct DebugManager {
   bool createEntity4 = false;
   bool createEntity5 = false;
   bool createBomb = false;
+  bool createBoss = false;
   // teleportOrigin
 }
 
@@ -81,7 +82,7 @@ class DebugTools : GameObject {
     }
 
 
-    if(dm.createEntity1 || dm.createEntity2 || dm.createEntity3 || dm.createEntity4 || dm.createEntity5) createEntity;
+    if(dm.createEntity1 || dm.createEntity2 || dm.createEntity3 || dm.createEntity4 || dm.createEntity5 || dm.createBoss) createEntity;
     if(dm.teleport) teleport;
   }
 
@@ -93,6 +94,7 @@ class DebugTools : GameObject {
       if(dm.createEntity4)register(new Enemy4(im.cusorPos(true)));
       if(dm.createEntity5)register(new Enemy5(im.cusorPos(true)));
       if(dm.createBomb   )register(new Bomb);
+      if(dm.createBoss   )register(new Boss(im.cusorPos(true)));
     }
   }
 
@@ -158,7 +160,8 @@ class DebugTools : GameObject {
       textUpdate;
     }
     if(im.keyOnce('7')){
-
+      dm.createBoss = !dm.createBoss;
+      textUpdate;
     }
     if(im.keyOnce('8')){
       gm.hero.component!Transform.pos = Vec2(0, 0);
@@ -223,7 +226,7 @@ class DebugTools : GameObject {
         "[4]:createEntity4    " ~ "[" ~ (dm.createEntity4 ? "o" : "-") ~ "]",
         "[5]:createEntity5    " ~ "[" ~ (dm.createEntity5 ? "o" : "-") ~ "]",
         "[6]:createBomb       " ~ "[" ~ (dm.createBomb    ? "o" : "-") ~ "]",
-        "[7]:                 " ,
+        "[7]:createBoss       " ~ "[" ~ (dm.createBoss    ? "o" : "-") ~ "]",
         "[8]:teleportOrigin   " ,
       ].join('\n');
     }

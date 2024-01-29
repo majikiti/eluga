@@ -26,7 +26,6 @@ class Enemy5: Enemy {
 
   override void loop() {
     super.loop();
-    auto tform = component!Transform;
     if(atkTmr.cur > 2000){
       register(new Missile(Missile.Type.Normal, hero.pos-tform.pos, tform.pos + Vec2(0,10), Missile.Target.Hero));
       atkTmr.reset;

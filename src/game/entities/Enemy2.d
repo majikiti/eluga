@@ -19,8 +19,6 @@ class Enemy2: Enemy {
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);
     status = gm.getStatus(this);
-
-    addTag("Flying");
   }
 
   override void setup() {

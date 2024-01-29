@@ -9,6 +9,7 @@ public import game.entities.Enemy2;
 public import game.entities.Enemy3;
 public import game.entities.Enemy4;
 public import game.entities.Enemy5;
+public import game.entities.Boss;
 public import game.entities.Bomb;
 public import game.entities.Hero;
 public import game.entities.Kalashnikov;
