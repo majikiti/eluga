@@ -30,7 +30,7 @@ class _Router(T): GameObject {
       currentGO.bye;
       ctx.camera.fgo = null;
       ctx.camera.pos = Vec2(0, 0);
-      currentGO = register(routes[current]);
+      currentGO = routes[current] = register(routes[current].reincarnate); // unko
       currentGO.route;
     }
   }
@@ -42,7 +42,24 @@ class _Router(T): GameObject {
 }
 
 class _RouteObject(T): GameObject {
-  protected _Router!T router;
+  alias Router = _Router!T;
+  alias RouteObject = _RouteObject!T;
+
+  protected Router router;
+
+  RouteObject reincarnate() {
+    err("default reincarnate() called: ", this);
+    return this;
+  }
+
+  // to use: mixin(enableReincarnate);
+  enum enableReincarnate = q{
+    override RouteObject reincarnate() {
+      auto self = new typeof(this);
+      self.router = router;
+      return self;
+    }
+  };
 
   void route() {}
 }

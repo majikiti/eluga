@@ -3,6 +3,7 @@ module game.DebugTools;
 import engine;
 import game;
 import std;
+import sdl;
 
 DebugManager dm;
 

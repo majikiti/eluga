@@ -25,7 +25,12 @@ class GameObject: Loggable {
   ulong uptime() const => ctx.updated;
   auto im() const => ctx.im;
   auto everyone() => ctx.root.descendant;
+  auto camera() => ctx.camera;
+  auto windowSize() => ctx.windowSize;
   auto ref debugging() => ctx.debugging;
+
+  deprecated
+  auto getCamera() => camera;
 
   // todo: いい感じのRangeにするかもしれないし，しないかもしれない
   private GameObject[] descendant() => children ~ children.map!(e => e.descendant).join;
@@ -240,10 +245,6 @@ class GameObject: Loggable {
   bool getTag(string tag) => tags.get(tag,false);
 
   auto getTags() => tags.keys;
-
-  auto windowSize() => ctx.windowSize;
-
-  auto getCamera() => ctx.camera;
 
   void nuke() {
     ctx.running = false;

@@ -11,6 +11,7 @@ import utils;
 shared static this() {
   SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO);
   Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
+  Mix_AllocateChannels(32);
 }
 
 shared static ~this() {

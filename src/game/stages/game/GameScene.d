@@ -10,4 +10,6 @@ class GameScene: RouteObject {
       "1-1": () => new Patio(router),
     ][stage]());
   }
+
+  mixin(enableReincarnate);
 }

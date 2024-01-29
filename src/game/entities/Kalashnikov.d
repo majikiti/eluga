@@ -34,7 +34,7 @@ class Kalashnikov: GameObject {
     if(im.mouseOnce(0) && !(debugging && dm.rapidFire)){
       register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos, Missile.Target.Enemy));
       // vv bgm vv
-      audio.volume(10);
+      audio.volume(32);
       audio.play(1);
       //foreach(int i; 0..628) register(new Missile(Missile.Type.Divergence, Vec2(-cos(i * 0.01), sin(i * 0.01)), tform.pos, Missile.Target.Enemy));
     }

@@ -11,10 +11,10 @@ class Player {
     this.sound = sound;
   }
 
-  int play(int loop) => chan = Mix_PlayChannel(chan, sound.data, loop);
-  int volume(int vol) => Mix_Volume(chan, vol);
+  int play(int loop = 1) => chan = Mix_PlayChannel(chan, sound.data, loop);
+  int volume(int vol) => chan == -1 ? -1 : Mix_Volume(chan, vol);
   void pause() => Mix_Pause(chan);
   void resume() => Mix_Resume(chan);
-  bool playing() => Mix_Playing(chan) != 0;
-  bool paused() => Mix_Paused(chan) != 0;
+  bool playing() => chan == -1 ? false : Mix_Playing(chan) != 0;
+  bool paused() => chan == -1 ? false : Mix_Paused(chan) != 0;
 }
