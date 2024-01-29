@@ -9,11 +9,12 @@ class TitleScene: RouteObject {
   AudioSource audio;
   Transform tform;
   NTimer tmr; // gomi -> kami
-  Fade fd;
+  Curtain cu;
 
   this() {
     tmr = register(new NTimer);
     tmr.sched(&toAbs, 15_000);
+    cu = register(new Curtain([0, 0, 0], 5));
   }
 
   override void setup(){
@@ -28,15 +29,26 @@ class TitleScene: RouteObject {
     audio.volume(15);
     auto title = register(new TextBox("ホンジュラス革命", Vec2(150,100)));
     auto text = register(new TextBox("Pless Enter", Vec2(200,200), true));
-    fd = register(new Fade([255, 0, 0]));
     tmr.reset;
   }
 
   override void loop() {
-    if(im.keyOnce('\r')) router.go(Routes.Game);
+    if(im.keyOnce('\r')) toGame;
   }
 
-  override void route() {tmr.reset();}
+  void toAbs() {
+    cu.close(&rtabs);
+  }
 
-  void toAbs() => router.go(Routes.Abstract);
+  void toGame() {
+    cu.close(&rtgme);
+  }
+
+  void rtabs() => router.go(Routes.Abstract);
+  void rtgme() => router.go(Routes.Game);
+
+  override void route() {
+    cu.open;
+    tmr.reset;
+  }
 }

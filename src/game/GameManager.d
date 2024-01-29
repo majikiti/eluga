@@ -25,7 +25,7 @@ struct Persist {
 
 //ゲーム全体のステータスを管理
 struct GameManager {
-  enum T_LIMIT = 110_000;
+  enum T_LIMIT = 300_000;
 
   NTimer tmr;
   int point;

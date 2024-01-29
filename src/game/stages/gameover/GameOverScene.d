@@ -11,6 +11,7 @@ class GameOverScene: RouteObject {
   AudioSource audio;
   Focus fc;
   Fade fd;
+  Curtain cu;
   real theta;
 
   this() {
@@ -21,6 +22,7 @@ class GameOverScene: RouteObject {
     tl2.component!Text.setColor(255, 255, 255);
     tl2.tform.scale *= 0.75;
     fd = register(new Fade([127, 0, 0], 50));
+    cu = register(new Curtain);
   }
  
   override void setup() {
@@ -33,5 +35,9 @@ class GameOverScene: RouteObject {
   override void loop() {
     if(im.keyOnce('\r')) router.go(Routes.Title);
     if(!fd.isChanging) fd.swap;
+  }
+
+  override void route() {
+    cu.open;
   }
 }

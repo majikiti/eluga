@@ -13,6 +13,7 @@ class Patio: RouteObject {
   Transform tform;
 
   this(Router router) {
+    register(new CoolText("全員抹殺せよ"));
     layer = -100;
     this.router = router;
     // vv worldTrf vv

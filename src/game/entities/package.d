@@ -26,3 +26,4 @@ public import game.entities.TimeLimitClock;
 public import game.entities.UI;
 public import game.entities.TextBox;
 public import game.entities.ImageBox;
+public import game.entities.CoolText;

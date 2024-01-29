@@ -50,16 +50,24 @@ class Fade: GameObject {
     isChanging = true;
   }
 
+  void tpSet(ubyte tp) {
+    sr.setOpac(tp);
+  }
+
   override void loop() {
     if(tmr.cur >= fadetime){
       tmr.reset;
       if(!isChanging) goto afterfade; // 表示と変化先が等しい(変化済み)
       (changeTo == 0) ? sr.setOpac(sr.opac - 3) : sr.setOpac(sr.opac + 3);
       if(changeTo == sr.opac){
-        isChanging = false;
+        finish;
       }
     }
     //dbg(sr.colorArr);
     afterfade:
+  }
+
+  void finish() {
+    isChanging = false;
   }
 }

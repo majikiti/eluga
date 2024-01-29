@@ -1,8 +1,8 @@
 module game.entities.Boss;
 
+import std.algorithm;
 import engine;
 import game;
-import std.algorithm;
 
 class Boss: Enemy {
   LifeIndicator lifin;
