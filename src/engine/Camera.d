@@ -9,6 +9,7 @@ class Camera: Loggable {
   Vec2 size;
   Vec2 center; // 画面サイズ分のバイアス
   GameObject fgo; // FocusGameObject
+  bool follow = false;
 
   struct Limit {
     Vec2 max;
@@ -26,12 +27,13 @@ class Camera: Loggable {
     lim.min = limin;
   }
 
-  void focus(GameObject fgo) {
+  void focus(GameObject fgo, bool follow) {
     if(!fgo.has!Transform){
       warn("Camera: It has no-one of Transform", fgo);
       return;
     }
     this.fgo = fgo;
+    this.follow = follow;
     return;
   }
 
@@ -46,15 +48,16 @@ class Camera: Loggable {
       if(f.component!Focus.priority < prio && f.component!Focus.enable){
         gobj = f;
         prio = f.component!Focus.priority;
+        follow = f.component!Focus.follow;
       }
     }
-    if(gobj !is null) focus(gobj);
+    if(gobj !is null) focus(gobj, follow);
 
     // window size
     size = ctx.windowSize;
     center = ctx.windowSize / 2;
     if(fgo !is null) {
-      if(follow){
+      if(this.follow){
         auto dif = fgo.component!Transform.pos - center - pos;
         // dif.sizeの係数 : 追尾速度
         auto d = min(0.5, max(0.01, 0.0003*dif.size));
