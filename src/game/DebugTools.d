@@ -12,7 +12,7 @@ struct DebugManager {
 
   // page 1
   bool speedupX = false; // 横方向の移動速度が2 -> 10
-  bool moonJump = false; // W,Sキーで上下に自由に移動できるようになる
+  bool moonJump = true; // W,Sキーで上下に自由に移動できるようになる
   bool rapidFire = false;
   bool noGravity = true;
   bool teleport = false;

@@ -33,10 +33,10 @@ class BackGround : GameObject {
     foreach(i, p; bgSub){
       auto tform = p.component!Transform;
       auto camPos = getCamera.pos;
-      while(tform.worldPos.x > windowSize.x + camPos.x) tform.pos.x -= windowSize.x + p.size.x;
-      while(tform.worldPos.x + p.size.x < camPos.x) tform.pos.x += windowSize.x + p.size.x;
-      while(tform.worldPos.y > windowSize.y + camPos.y) tform.pos.y -= windowSize.y + p.size.y;
-      while(tform.worldPos.y + p.size.y < camPos.y) tform.pos.y += windowSize.y + p.size.y;
+      while(tform.worldPos.x > windowSize.x + camPos.x) tform.pos.x -= p.size.x * count.x;
+      while(tform.worldPos.x + p.size.x < camPos.x) tform.pos.x += p.size.x * count.x;
+      while(tform.worldPos.y > windowSize.y + camPos.y) tform.pos.y -= p.size.y * count.y;
+      while(tform.worldPos.y + p.size.y < camPos.y) tform.pos.y += p.size.y * count.y;
     }
   }
 }
