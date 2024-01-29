@@ -27,7 +27,7 @@ class Hero: GameObject {
   AudioAsset SHOT;
   AudioSource audio;
 
-  Vec2 v = Vec2(10, 2);
+  Vec2 v = Vec2(3, 2);
 
   override void setup() {
     tform = register(new Transform(Transform.Org.World));

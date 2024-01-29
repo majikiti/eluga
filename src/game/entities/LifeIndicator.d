@@ -21,6 +21,7 @@ class LifeIndicator: GameObject {
     }
 
     override void setup() {
+      layer = 10;
       tform = register(new Transform(Transform.Org.Local));
       tform.pos = initpos;
       liobj = register(new SpriteRenderer(size, vc));

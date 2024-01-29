@@ -14,6 +14,7 @@ class Patio: RouteObject {
 
   this(Router router) {
     layer = -100;
+    this.router = router;
     // vv worldTrf vv
     tform = register(new Transform(Transform.Org.World));
     tform.scale.x = 1.5;
@@ -46,5 +47,10 @@ class Patio: RouteObject {
 
   override void loop() {
     if(im.keyOnce(27)) nuke;
+    if(gm.heroStatus){
+      if(gm.heroStatus.life <= 0){
+        router.go(Routes.GameOver);
+      }
+    }
   }
 }

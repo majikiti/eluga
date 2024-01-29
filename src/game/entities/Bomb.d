@@ -32,7 +32,8 @@ class Bomb : GameObject {
   }
 
   override void loop() {
-    if(isExplosion) rend.setOpac(cast(int)rend.opac / 2);
+    if(isExplosion) rend.active = false;
+    if(isExplosion && !has!Explosion) destroy;
   }
 
   override void collide(GameObject go) {
@@ -43,6 +44,7 @@ class Bomb : GameObject {
     if(!isExplosion) {
       //se.play(1);
       register(new Explosion);
+      component!BoxCollider.isTrigger = true;
 
       // damage function
       real dmgf(real x) => (12 * max(0, exp(-1 * x / 300) - 0.1));
@@ -57,7 +59,5 @@ class Bomb : GameObject {
 
       isExplosion = true;
     }
-    if(has!Explosion) return;
-    destroy;
   } // 爆発は芸術なのかもしれませんね
 }
