@@ -38,14 +38,11 @@ class Enemy2: Enemy {
     if(jumptmr.cur > limittime) {
       bombDrop++;
       
-      if(bombDrop == 10) {
-        bombDrop = 0;
-        register(new Bomb);
-      }
+      if(bombDrop % 10 == 0 && bombDrop != 40) register(new Bomb);
 
       rigid.a = Vec2(0, 0);
+      rigid.addForce(Vec2(uniform(-20, 20, randomSrc), min(max(0, tform.pos.y * 0.5), -10)));
       rigid.v = Vec2(0, 0);
-      rigid.addForce(Vec2(uniform(-20, 20, randomSrc), min(max(0, tform.pos.y * 0.125), -10)));
       foreach(enmft; enmfts) enmft.jump;
 
       randomSrc = Random(cast(uint)jumptmr.cur);

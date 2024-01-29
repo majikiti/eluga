@@ -93,7 +93,7 @@ class ExpScatter : GameObject { // 壊れました
   }
 
   override void loop() {
-    dbg(rb.v);
+    //dbg(rb.v);
     sr.setOpac(sr.opac - 6);
     if(sr.opac == 0) destroy;
   }
