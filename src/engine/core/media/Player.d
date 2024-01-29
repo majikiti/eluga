@@ -12,7 +12,7 @@ class Player {
   }
 
   ~this(){
-    if(chan != -1) Mix_HaltChannel(chan);
+    if(chan != -1 && ctx.running) Mix_HaltChannel(chan);
     chan = -1;
   }
 
