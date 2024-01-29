@@ -21,6 +21,7 @@ struct Status{
 struct Persist {
  align(1):
   ubyte ver = 1; // 適当
+  int point = 0;
 }
 
 //ゲーム全体のステータスを管理

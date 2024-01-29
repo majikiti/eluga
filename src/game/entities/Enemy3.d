@@ -9,6 +9,7 @@ class Enemy3: Enemy {
   LifeIndicator lifin;
   Status* status;
   override string imgdir() => "enem1.png";
+  override int point() => 15;
   Transform hero;
 
   this(const Vec2 initPos = Vec2(0, 0)){

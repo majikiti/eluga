@@ -11,6 +11,7 @@ class Enemy: GameObject {
   int type;
   protected const Vec2 initPos;
   string imgdir() => "default.png";
+  int point() => 0;
   AudioAsset itai;
   AudioSource se;
 
@@ -57,6 +58,7 @@ class Enemy: GameObject {
   }
 
   void death() {
+    gm.point += point;
     if(!status.willDead) {
       component!SpriteRenderer.active = false;
       register(new Explosion);
