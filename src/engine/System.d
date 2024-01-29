@@ -47,7 +47,7 @@ class System: Loggable {
       ctx.updated = cur;
       ctx.elapsed = elapsed;
 
-      ctx.レンダー中のボックスコライダー持ちのオブジェクト = objectPickup(false,false);
+      //ctx.レンダー中のボックスコライダー持ちのオブジェクト = objectPickup(false,false);
       ctx.カメラ外のボックスコライダー持ちのオブジェクト = objectPickup(false, true); //追加
       loop;
     }

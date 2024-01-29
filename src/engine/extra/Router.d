@@ -28,13 +28,14 @@ class _Router(T): GameObject {
     if(change) {
       change = false;
       currentGO.bye;
+      ctx.camera.fgo = null;
+      ctx.camera.pos = Vec2(0, 0);
       currentGO = register(routes[current]);
       currentGO.route;
     }
   }
 
   void go(T route) {
-    ctx.camera.pos = Vec2(0, 0);
     current = route;
     change = true;
   }

@@ -40,6 +40,7 @@ class Camera: Loggable {
     auto gos = ctx.root.everyone.filter!(e => e.has!Focus).array;
     ushort prio = ushort.max;
     GameObject gobj = null;
+    bool follow = false;
     foreach(i, f; gos){
       if(f.component!Focus.priority == prio) warn("Duplicate Focus priority: ", gobj, ", ", f);
       if(f.component!Focus.priority < prio && f.component!Focus.enable){
@@ -53,10 +54,12 @@ class Camera: Loggable {
     size = ctx.windowSize;
     center = ctx.windowSize / 2;
     if(fgo !is null) {
-      auto dif = fgo.component!Transform.pos - center - pos;
-      // dif.sizeの係数 : 追尾速度
-      auto d = min(0.5, max(0.01, 0.0003*dif.size));
-      pos += dif * d;
+      if(follow){
+        auto dif = fgo.component!Transform.pos - center - pos;
+        // dif.sizeの係数 : 追尾速度
+        auto d = min(0.5, max(0.01, 0.0003*dif.size));
+        pos += dif * d;
+      } else pos = fgo.component!Transform.pos - center;
     }
 
     // 範囲外 カメラ もうやめて
