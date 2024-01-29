@@ -8,6 +8,7 @@ class Enemy2: Enemy {
   LifeIndicator lifin;
   Status* status;
   override string imgdir() => "flyingenem.png";
+  override int point() => 20;
 
   EnemFoot[2] enmfts;
 

@@ -145,6 +145,7 @@ class Hero: GameObject {
   }
 
   void death() {
+    gm.ds.point = gm.point;
     if(!status.willDead) {
       component!SpriteRenderer.active = false;
       register(new Explosion);

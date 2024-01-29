@@ -8,6 +8,7 @@ class Enemy5: Enemy {
   LifeIndicator lifin;
   Status* status;
   override string imgdir() => "enem1.png";
+  override int point() => 40;
   Transform hero;
   Timer atkTmr;
 

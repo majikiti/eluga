@@ -5,7 +5,7 @@ import game;
 import engine;
 
 class GameOverScene: RouteObject {
-  TextBox tl, tl2;
+  TextBox tl, tls, tl2;
   ImageBox image;
   AudioAsset BGM;
   AudioSource audio;
@@ -15,10 +15,14 @@ class GameOverScene: RouteObject {
   real theta;
 
   this() {
-    tl = register(new TextBox("死を賜った", windowSize/2-Vec2(100, 30)));
+    tl = register(new TextBox("死を賜った", windowSize/2-Vec2(100, 50)));
     tl.component!Text.setColor(255, 0, 0);
 
-    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 40), true));
+    tls = register(new TextBox(text("最終スコア: ", gm.ds.point), windowSize/2 - Vec2(80, 0)));
+    tls.tform.scale *= 0.5;
+    tls.component!Text.setColor(180, 180, 0);
+
+    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 70), true));
     tl2.component!Text.setColor(255, 255, 255);
     tl2.tform.scale *= 0.75;
     fd = register(new Fade([127, 0, 0], 50));
