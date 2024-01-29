@@ -13,22 +13,22 @@ class Component: Loggable {
   void bye() {}
   void resurrection() {}
 
-  debug {
-    void debugSetupPre() {}
-    void debugSetup() {}
-    void debugLoopPre() {}
-    void debugLoop() {}
-  }
+  void debugSetupPre() {}
+  void debugSetup() {}
+  void debugLoopPre() {}
+  void debugLoop() {}
 
   package void realSetup() {
-    debug {
+    if(ctx.debugging) {
       go.layer++;
       debugSetupPre;
       go.layer--;
     }
+
     try setup;
     catch(Exception e) err("Component exception in setup()\n", e);
-    debug {
+
+    if(ctx.debugging) {
       go.layer++;
       debugSetup;
       go.layer--;
@@ -37,14 +37,17 @@ class Component: Loggable {
 
   package void realLoop() {
     if(!active) return;
-    debug {
+
+    if(ctx.debugging) {
       go.layer++;
       debugLoopPre;
       go.layer--;
     }
+
     try loop;
     catch(Exception e) err("Component exception in loop()\n", e);
-    debug {
+
+    if(ctx.debugging) {
       go.layer++;
       debugLoop;
       go.layer--;

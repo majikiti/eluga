@@ -25,6 +25,7 @@ class GameObject: Loggable {
   ulong uptime() const => ctx.updated;
   auto im() const => ctx.im;
   auto everyone() => ctx.root.descendant;
+  auto ref debugging() => ctx.debugging;
 
   // todo: いい感じのRangeにするかもしれないし，しないかもしれない
   private GameObject[] descendant() => children ~ children.map!(e => e.descendant).join;
@@ -35,44 +36,50 @@ class GameObject: Loggable {
   void loop() {}
   void collide(GameObject go) {}
 
-  debug {
-    void debugSetupPre() {}
-    void debugSetup() {}
-    void debugLoopPre() {}
-    void debugLoop() {}
-  }
+  void debugSetupPre() {}
+  void debugSetup() {}
+  void debugLoopPre() {}
+  void debugLoop() {}
 
   package void realSetup() {
     SDL_SetRenderDrawBlendMode(ctx.r, SDL_BLENDMODE_BLEND);
-    debug {
+
+    if(ctx.debugging) {
       layer++;
       debugSetupPre;
       layer--;
     }
+
     try setup;
     catch(Exception e) err("GameObject exception in setup\n", e);
-    debug {
+
+    if(ctx.debugging) {
       layer++;
       debugSetup;
       layer--;
     }
+
     ready = true;
   }
 
   package void realLoop() {
     if(active) foreach(c; components) c.realLoop;
-    debug {
+
+    if(ctx.debugging) {
       layer++;
       debugLoopPre;
       layer--;
     }
+
     try loop;
     catch(Exception e) err("GameObject exception in loop\n", e);
-    debug {
+
+    if(ctx.debugging) {
       layer++;
       debugLoop;
       layer--;
     }
+
     foreach(e; children) e.realLoop;
   }
 

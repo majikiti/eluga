@@ -8,8 +8,6 @@ DebugManager dm;
 
 struct DebugManager {
 
-  bool debugMode = false;
-
   // page 1
   bool speedupX = false; // 横方向の移動速度が2 -> 10
   bool moonJump = false; // W,Sキーで上下に自由に移動できるようになる
@@ -54,14 +52,13 @@ class DebugTools : GameObject {
     
   }
 
-  debug:
+  override void loop() {
+    lt.active = debugging;
+  }
+
   override void debugLoop() {
     component!Transform.pos = Vec2(windowSize.x - 200, 8);
-    if(im.keyOnce('p')){
-      dm.debugMode = !dm.debugMode;
-    }
-    lt.active = dm.debugMode;
-    if(!dm.debugMode) return;
+    if(!debugging) return;
 
     if(im.key('k')){
       if(page == 1) page1Func;

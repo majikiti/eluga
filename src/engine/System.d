@@ -19,6 +19,9 @@ shared static ~this() {
 }
 
 class System: Loggable {
+  GameObject debugView;
+  bool debugViewState = false;
+
   this(GameObject root) {
     ctx.root = root;
     ctx.im = new InputManager;
@@ -31,8 +34,6 @@ class System: Loggable {
     ctx.camera = new Camera(ctx.windowSize / 2);
     ctx.camera.size = ctx.windowSize;
     ctx.root.realSetup;
-
-    debug ctx.root.register(new DebugView);
 
     loop; // 初回レンダリング
     while(ctx.running) {
@@ -54,6 +55,16 @@ class System: Loggable {
 
   void loop() {
     auto keyUpdated = false;
+
+    if(ctx.debugging != debugViewState) {
+      if(!ctx.debugging) debugView.bye;
+      if(ctx.debugging) {
+        warn("debug!");
+        if(debugView) ctx.root.register(debugView);
+        else debugView = ctx.root.register(new DebugView);
+      }
+      debugViewState = ctx.debugging;
+    }
 
     SDL_Event e;
     while(SDL_PollEvent(&e)) {
@@ -104,6 +115,8 @@ class System: Loggable {
     }
 
     if(!keyUpdated)ctx.im.once ^= ctx.im.once;
+
+    if(ctx.im.keyOnce('\\')) ctx.debugging = !ctx.debugging;
 
     // Collider
     auto gos = objectPickup(true, true); //変更

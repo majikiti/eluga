@@ -80,8 +80,8 @@ class AbstractScene: RouteObject {
     if(tf.worldPos.y <= -2900) router.go(Routes.Title);
   }
 
-  debug:
   bool debugFrame = false;
+
   override void debugLoop() {
     if(!debugFrame) return;
     dbg(tf.worldPos);

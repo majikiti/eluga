@@ -12,6 +12,7 @@ enum Routes {
 
 class Game: GameObject {
   Router router;
+  GameObject debugTools;
 
   override void setup() {
     gm.ds = register(new DataStore!Persist("main.dat"));
@@ -23,7 +24,7 @@ class Game: GameObject {
       Routes.Abstract: new AbstractScene(),
       Routes.Test: new TestScene(),
     ]));
-    register(new DebugTools(router));
+    debugTools = register(new DebugTools(router));
   }
 
   override void loop() {

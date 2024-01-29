@@ -31,7 +31,7 @@ class Kalashnikov: GameObject {
   override void loop() {
     vecm = (im.cusorPos - tform.renderPos).unit;
     vecm *= 100;
-    if(im.mouseOnce(0) && !(dm.debugMode && dm.rapidFire)){
+    if(im.mouseOnce(0) && !(debugging && dm.rapidFire)){
       register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos, Missile.Target.Enemy));
       // vv bgm vv
       audio.volume(10);
@@ -40,10 +40,9 @@ class Kalashnikov: GameObject {
     }
   }
 
-  debug:
   override void debugLoop() {
-    if(!dm.debugMode) return;
-    if(im.mouse(0) && (dm.debugMode && dm.rapidFire)){
+    if(!debugging) return;
+    if(im.mouse(0) && (debugging && dm.rapidFire)){
       register(new Missile(Missile.Type.CCCP, vecm, tform.worldPos, Missile.Target.Enemy));
       // vv bgm vv
       audio.volume(10);

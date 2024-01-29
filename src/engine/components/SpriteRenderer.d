@@ -123,7 +123,6 @@ class SpriteRenderer: Component {
     return;
   }
 
- debug:
   bool debugFrame = true;
 
   override void debugLoop() {

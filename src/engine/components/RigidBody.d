@@ -146,7 +146,6 @@ class RigidBody: Component {
     update();
   }
 
- debug:
   bool debugFrame = false;
 
   override void debugLoop() {

@@ -13,6 +13,7 @@ Context ctx;
 
 struct Context {
   bool running = true;
+  bool debugging = true;
 
   // [ms]
   ulong dur = cast(ulong)(1000 / initFps);

@@ -122,11 +122,10 @@ class Hero: GameObject {
     }
   }
 
-  debug:
   override void debugLoop(){
-    if(!dm.debugMode || !dm.speedupX) v.x = 2;
+    if(!debugging || !dm.speedupX) v.x = 2;
 
-    if(!dm.debugMode) return;
+    if(!debugging) return;
 
     if(dm.speedupX) v.x = 10;
     auto tform = component!Transform;

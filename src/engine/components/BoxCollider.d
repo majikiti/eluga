@@ -14,7 +14,6 @@ class BoxCollider: Component, Collider {
 
   Vec2 worldScale() => Vec2(size.x * go.component!Transform.scale.x, size.y * go.component!Transform.scale.y);
 
- debug:
   bool debugFrame = true;
 
   override void debugLoop() {
