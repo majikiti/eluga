@@ -1,8 +1,16 @@
 name "eluga"
 dependency "bindbc-sdl" version="~>1.4.3"
+targetType "executable"
 targetPath "build"
 subConfiguration "bindbc-sdl" "static"
 dflags "-link-defaultlib-shared=false" platform="ldc"
-libs "SDL2" "SDL2_image" "SDL2_mixer" "SDL2_ttf"
 versions "SDL_2_28" "SDL_Image_2_6" "SDL_Mixer_2_6" "SDL_TTF_2_20"
 stringImportPaths "src/game/assets"
+
+configuration "sdl-shared" {
+  libs "SDL2" "SDL2_image" "SDL2_mixer" "SDL2_ttf"
+}
+
+configuration "sdl-static" {
+  lflags "-Bstatic" "-lSDL2" "-lSDL2_image" "-lSDL2_mixer" "-lSDL2_ttf"
+}
