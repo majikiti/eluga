@@ -8,11 +8,12 @@ class TitleScene: RouteObject {
   AudioAsset BGM;
   AudioSource audio;
   Transform tform;
-  Timer hoge; // gomi
+  NTimer tmr; // gomi -> kami
   Fade fd;
 
   this() {
-    hoge = new Timer;
+    tmr = register(new NTimer);
+    tmr.sched(&toAbs, 15_000);
   }
 
   override void setup(){
@@ -33,4 +34,6 @@ class TitleScene: RouteObject {
   override void loop() {
     if(im.keyOnce('\r')) router.go(Routes.Game);
   }
+
+  void toAbs() => router.go(Routes.Abstract);
 }
