@@ -61,14 +61,14 @@ class Hero: GameObject {
 
   override void loop() {
     scope(exit) fromGround = false;
-    auto tform = component!Transform;
+    
     if(status.life <= 0 || tform.pos.y >= gm.worldEnd.y){
       death;
       return;
     }
     
     if(tform.pos.x < gm.worldBegin.x) tform.pos.x = gm.worldBegin.x;
-    if(tform.pos.x > gm.worldEnd.x) tform.pos.x = gm.worldEnd.x;
+    if(tform.pos.x + rend.size.x > gm.worldEnd.x) tform.pos.x = gm.worldEnd.x - rend.size.x;
 
     auto rb = component!RigidBody;
     if(im.key('d')||im.key('a')){

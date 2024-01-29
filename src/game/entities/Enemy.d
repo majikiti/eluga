@@ -16,6 +16,7 @@ class Enemy: GameObject {
 
   this(const Vec2 initPos = Vec2(0, 0)) {
     status = gm.makeStatus(this, 10);
+    gm.enemyNum++;
     itai = new AudioAsset("explosion.ogg");
     se = register(new AudioSource(itai));
     se.volume(50);
@@ -66,6 +67,7 @@ class Enemy: GameObject {
     rb.a = rb.v = Vec2(0, 0);
     status.willDead = true;
     if(has!Explosion) return;
+    gm.enemyNum--;
     destroy;
   } // 死と向き合う関数
 }

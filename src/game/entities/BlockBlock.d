@@ -5,7 +5,7 @@ import game;
 import sdl_mixer;
 
 class BlockBlock : Block {
-  override string dir() => "block.png";
+  override string dir() => "ground.png";
   
   this(Vec2 pos, Vec2 scale){
     super(pos, scale);

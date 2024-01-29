@@ -38,6 +38,14 @@ class Enemy1: Enemy {
       //auto asrc = new AudioSource(aas);
       //asrc.play;
     }
+
+    if(go.getTag("Hero") && !gm.heroStatus.star){
+      if(gm.heroStatus){
+        gm.heroStatus.star = true;
+        gm.heroStatus.life -= 1;
+      }
+    }
+    
     if(go.getTag("Ground") && rb.v.y > -1) rb.v.x = 0;
   }
 }

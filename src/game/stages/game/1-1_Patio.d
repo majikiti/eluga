@@ -22,10 +22,10 @@ class Patio: RouteObject {
 
   override void setup() {
     getCamera().lim.min.x = 0;
-    getCamera().lim.max.x = 13185;
+    getCamera().lim.max.x = 12500;
     getCamera().lim.max.y = 200;
     gm.worldBegin.x = 0;
-    gm.worldEnd = Vec2(13185, 500) + windowSize/2;
+    gm.worldEnd = Vec2(12500, 200) + windowSize;
 
     register(new MakeDonMap(Vec2(64,64)));
 
@@ -51,5 +51,6 @@ class Patio: RouteObject {
         router.go(Routes.GameOver);
       }
     }
+    if(gm.enemyNum <= 0) router.go(Routes.GameClear);
   }
 }

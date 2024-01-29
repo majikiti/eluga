@@ -247,6 +247,8 @@ class DebugTools : GameObject {
       "",
       "[9]:prePage            ",
       "[0]:nextPage           ",
+      "",
+      "EnemyNum:" ~ gm.enemyNum.to!string,
     ].join('\n');
 
     lt.text = lstr;

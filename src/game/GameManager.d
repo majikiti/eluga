@@ -26,6 +26,7 @@ struct GameManager {
   Status*[GameObject] status;
   GameObject hero;
   DataStore!Persist ds;
+  int enemyNum;
   Vec2 worldEnd = Vec2(real.infinity, real.infinity), worldBegin = Vec2(-real.infinity, -real.infinity);
 
   auto ref makeStatus(GameObject go, int maxlife = 10, int damage = 1){

@@ -58,6 +58,9 @@ class MakeDonMap : GameObject {
       case 12:
         register(new Enemy5(pos));
         break;
+      case 13:
+        register(new Boss(pos));
+        break;
       default:
         break;
     }
