@@ -59,7 +59,7 @@ class Enemy: GameObject {
     if(!status.willDead) {
       register(new Explosion);
       se.volume(50);
-      se.play(1);
+      se.play(0);
       dbg("aaa1");
     }
     status.willDead = true;

@@ -9,12 +9,12 @@ class Sound {
   Mix_Chunk* data;
 
   this(string path) {
-    auto chunk = path in chunks;
-    if(chunk) {
-      data = cast(Mix_Chunk*)chunk;
-      return;
-    }
+    // auto chunk = path in chunks;
+    // if(chunk) {
+    //   data = cast(Mix_Chunk*)chunk;
+    //   return;
+    // }
     data = Mix_LoadWAV(path.toStringz);
-    chunks[path] = cast(shared Mix_Chunk*)data;
+    // chunks[path] = cast(shared Mix_Chunk*)data;
   }
 }

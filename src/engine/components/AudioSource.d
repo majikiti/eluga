@@ -28,4 +28,8 @@ class AudioSource: Component {
   void volume(int vol) { player.volume(vol); }
   void pause() => player.pause;
   void resume() => player.resume;
+
+  override void loop(){
+    player.chunkUpdate;
+  }
 }

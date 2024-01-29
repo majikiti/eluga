@@ -5,6 +5,8 @@ import game;
 import engine;
 
 class AbstractScene: RouteObject {
+  mixin(enableReincarnate);
+  
   TextBox tl0, ttl, tl1, tl2, tl3, tl4;
   ImageBox ib0, ib1, ib2;
   Transform tf;
@@ -61,8 +63,9 @@ class AbstractScene: RouteObject {
     tl4.tform.pos = Vec2(20, 2820);
 
     tmr = new Timer;
+
   }
- 
+
   override void setup() {
     BGM = new AudioAsset("The_distant_TERRA.mp3");
     audio = register(new AudioSource(BGM));
