@@ -190,7 +190,7 @@ class DebugTools : GameObject {
       router.go(Routes.Test);
     }
     if(im.keyOnce('7')){
-
+      router.go(Routes.GameClear);
     }
     if(im.keyOnce('8')){
 
@@ -238,7 +238,7 @@ class DebugTools : GameObject {
         "[4]:GameOver         " ,
         "[5]:Abstract         " ,
         "[6]:Test             " ,
-        "[7]:                 " ,
+        "[7]:GameClear        " ,
         "[8]:                 " ,
       ].join('\n');
     }

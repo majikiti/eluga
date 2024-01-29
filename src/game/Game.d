@@ -7,7 +7,7 @@ alias Router = _Router!int;
 alias RouteObject = _RouteObject!int;
 
 enum Routes {
-  Title, Game, Editor, GameOver, Abstract, Test,
+  Title, Game, Editor, GameOver, Abstract, Test, GameClear,
 }
 
 class Game: GameObject {
@@ -23,6 +23,7 @@ class Game: GameObject {
       Routes.GameOver: new GameOverScene(),
       Routes.Abstract: new AbstractScene(),
       Routes.Test: new TestScene(),
+      Routes.GameClear: new GameClearScene(),
     ]));
     debugTools = register(new DebugTools(router));
   }

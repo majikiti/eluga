@@ -26,7 +26,7 @@ class TitleScene: RouteObject {
     audio.play(-1);
     audio.volume(15);
     auto title = register(new TextBox("ホンジュラス革命", Vec2(150,100)));
-    auto text = register(new TextBox("Pless Enter", Vec2(200,250)));
+    auto text = register(new TextBox("Pless Enter", Vec2(200,200), true));
     fd = register(new Fade([255, 0, 0]));
   }
 

@@ -17,11 +17,12 @@ class Fade: GameObject {
   private ubyte changeTo = 0;
 
   this(ubyte[3] color = [0, 0, 0], uint fadetime = 1, ubyte tp = 0) {
+    layer = -80;
     ubyte[4] cbuf = color ~ tp;
     win = new WindowParam;
     tmr = new Timer;
     tform = register(new Transform(tform.Org.World));
-    sr = register(new SpriteRenderer(win.size, cbuf));
+    sr = register(new SpriteRenderer(windowSize, cbuf));
     this.color = color;
     this.fadetime = fadetime;
     sr.setOpac(tp);

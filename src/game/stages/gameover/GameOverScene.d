@@ -14,10 +14,10 @@ class GameOverScene: RouteObject {
   real theta;
 
   this() {
-    tl = register(new TextBox("死を賜った", windowSize/2-Vec2(100, 50)));
+    tl = register(new TextBox("死を賜った", windowSize/2-Vec2(100, 30)));
     tl.component!Text.setColor(255, 0, 0);
 
-    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 50)));
+    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 40), true));
     tl2.component!Text.setColor(255, 255, 255);
     tl2.tform.scale *= 0.75;
     fd = register(new Fade([127, 0, 0], 50));

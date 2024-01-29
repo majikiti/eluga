@@ -10,13 +10,18 @@ class TextBox : GameObject {
   Text tx;
   string content;
 
-  bool isFocus;
+  Vec2 initPos;
+  real pmax = 20, theta = 0;
 
-  this(string content, Vec2 initPos = Vec2(0, 0), bool isFocus = false) {
+  bool isFocus;
+  bool flugzeug; // ふ〜よふよ
+
+  this(string content, Vec2 initPos = Vec2(0, 0), bool flugzeug = false) {
     this.content = content;
     tform = register(new Transform(Transform.Org.Local));
     tform.pos = initPos;
-    this.isFocus = isFocus;
+    this.flugzeug = flugzeug;
+    this.initPos = initPos;
   }
 
   override void setup() {
@@ -24,5 +29,12 @@ class TextBox : GameObject {
     txa = new TextAsset("PixelMplus-20130602/PixelMplus12-Regular.ttf", 40);
     tx = register(new Text(txa));
     tx.text = content;
+  }
+
+  override void loop() {
+    if(flugzeug) {
+      tform.pos.y = initPos.y + pmax * sin(theta);
+      theta += 0.017;
+    }
   }
 }
