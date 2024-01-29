@@ -7,7 +7,7 @@ import engine;
 class Camera: Loggable {
   Vec2 pos; // カメラ絶対位置
   Vec2 size;
-  Vec2 centre; // 画面サイズ分のバイアス
+  Vec2 center; // 画面サイズ分のバイアス
   GameObject fgo; // FocusGameObject
 
   struct Limit {
@@ -17,11 +17,11 @@ class Camera: Loggable {
   Limit lim;
 
   // この汚さどうにかしてくださいおねがいしますなんでもしますから
-  this(Vec2 centre = Vec2(0, 0),
+  this(Vec2 center = Vec2(0, 0),
     Vec2 limax = Vec2(real.infinity, real.infinity),
     Vec2 limin = Vec2(-real.infinity, -real.infinity),
   ) {
-    this.centre = centre;
+    this.center = center;
     lim.max = limax;
     lim.min = limin;
   }
@@ -51,8 +51,13 @@ class Camera: Loggable {
 
     // window size
     size = ctx.windowSize;
-    centre = ctx.windowSize / 2;
-    if(fgo !is null) pos = fgo.component!Transform.pos - centre;
+    center = ctx.windowSize / 2;
+    if(fgo !is null) {
+      auto dif = fgo.component!Transform.pos - center - pos;
+      // dif.sizeの係数 : 追尾速度
+      auto d = min(0.5, max(0.01, 0.0003*dif.size));
+      pos += dif * d;
+    }
 
     // 範囲外 カメラ もうやめて
     pos.x = max(min(pos.x, lim.max.x), lim.min.x);

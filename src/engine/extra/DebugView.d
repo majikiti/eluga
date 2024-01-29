@@ -28,7 +28,7 @@ class DebugView: GameObject {
       "DEBUG MODE\n",
       ctx.fps.to!string ~ " fps",
       everyone.length.to!string ~ " objects",
-      "Camera " ~ (ctx.camera.pos + ctx.camera.centre).toString,
+      "Camera " ~ (ctx.camera.pos + ctx.camera.center).toString,
       "Audio " ~ iota(Mix_AllocateChannels(-1)).map!Mix_Playing.to!string,
       "\n",
     ].join('\n');

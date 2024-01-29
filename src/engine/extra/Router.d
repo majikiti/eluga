@@ -34,7 +34,7 @@ class _Router(T): GameObject {
   }
 
   void go(T route) {
-    ctx.camera.centre = Vec2(0, 0);
+    ctx.camera.center = Vec2(0, 0);
     current = route;
     change = true;
   }
