@@ -15,6 +15,7 @@ class NTimer: Component {
   auto reset() => started = SDL_GetTicks64;
   auto cur() => SDL_GetTicks64 - started;
   auto sched(F f, ulong itrvl) => counter[f] = tuple(itrvl, 0);
+  auto unsched(F f) => counter.remove(f);
 
   // interrupter
   override void loop() {

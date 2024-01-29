@@ -23,6 +23,12 @@ struct Persist {
 
 //ゲーム全体のステータスを管理
 struct GameManager {
+  enum T_LIMIT = 110_000;
+
+  NTimer tmr;
+  int point;
+  int lefttime() => cast(int)(T_LIMIT - tmr.cur);
+
   Status*[GameObject] status;
   GameObject hero;
   DataStore!Persist ds;

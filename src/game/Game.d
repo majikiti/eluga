@@ -14,6 +14,11 @@ class Game: GameObject {
   Router router;
   GameObject debugTools;
 
+  this() {
+    // Time Watchdog
+    gm.tmr = register(new NTimer);
+  }
+
   override void setup() {
     gm.ds = register(new DataStore!Persist("main.dat"));
     router = register(new Router(Routes.Abstract, [
