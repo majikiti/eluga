@@ -45,7 +45,7 @@ class Enemy: GameObject {
     
     if(tform.pos.x < gm.worldBegin.x) tform.pos.x = gm.worldBegin.x;
     if(tform.pos.x + rend.size.x > gm.worldEnd.x) tform.pos.x = gm.worldEnd.x - rend.size.x;
-    if(tform.pos.y < gm.worldBegin.y) tform.pos.y = gm.worldBegin.x;
+    if(tform.pos.y < gm.worldBegin.y) tform.pos.y = gm.worldBegin.y;
     auto rend = component!SpriteRenderer;
     active = tform.hidein(rend.size, 40);
   }
