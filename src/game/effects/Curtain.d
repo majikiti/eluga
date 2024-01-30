@@ -29,8 +29,8 @@ class Curtain: Fade {
     hide;
   }
 
-  override void finish() {
-    super.finish;
-    if(f !is null) f();
+  override void finish(bool finishedIn) {
+    super.finish(finishedIn);
+    if(f !is null && finishedIn) f();
   }
 }
