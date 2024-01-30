@@ -43,10 +43,13 @@ class Hero: GameObject {
 
   Vec2 v = Vec2(3, 2);
 
+  bool forStar = true;
+
   void changeSkin(ImageAsset img) {
     component!SpriteRenderer.bye;
-    auto rdr = upsert(new SpriteRenderer(img));
-    upsert(new BoxCollider(rdr.size));
+    rend = upsert(new SpriteRenderer(img));
+    rend.active = forStar;
+    upsert(new BoxCollider(rend.size));
   }
 
   override void setup() {
@@ -66,7 +69,7 @@ class Hero: GameObject {
     register(new BoxCollider(rend.size));
     register(new Focus(3));
     ak = register(new Kalashnikov);
-    status = gm.makeStatus(this);
+    status = gm.makeStatus(this, 20);
     register(new LifeIndicator(status));
     addTag("Hero");
 
@@ -152,11 +155,12 @@ class Hero: GameObject {
     if(im.keyOnce('\r')){
       register(new Missile(Missile.Type.Normal, dir, tform.pos + Vec2(0,20), Missile.Target.Enemy));
       audio.volume(10);
-      audio.play(1);
+      audio.play(0);
     }
 
     if(gm.heroStatus.star && sterTime > timer){
-      rend.active = !rend.active;
+      forStar = !forStar;
+      rend.active = forStar;
       timer += dur;
     }
     else timer = 0, gm.heroStatus.star = false, rend.active = true;

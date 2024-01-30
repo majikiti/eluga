@@ -18,6 +18,7 @@ class Boss: Enemy {
     super(initPos);
     status = gm.getStatus(this);
     flying = false;
+    heal = 8;
   }
 
   override void setup() {
@@ -72,6 +73,7 @@ class Boss: Enemy {
     }
     if(!status.star && go.getTag("Missile")) {
       register(new Damage);
+      status.life -= 1;
       status.star = true;
     }
   }

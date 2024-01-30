@@ -15,6 +15,8 @@ class Enemy: GameObject {
   AudioAsset itai;
   AudioSource se;
 
+  int heal = 0;
+
   this(const Vec2 initPos = Vec2(0, 0)) {
     status = gm.makeStatus(this, 10);
     gm.enemyNum++;
@@ -70,6 +72,8 @@ class Enemy: GameObject {
     status.willDead = true;
     if(has!Explosion) return;
     gm.enemyNum--;
+    gm.heroStatus.life += heal;
+    if(gm.heroStatus.life > gm.heroStatus.maxlife) gm.heroStatus.life = gm.heroStatus.maxlife;
     destroy;
   } // 死と向き合う関数
 }
