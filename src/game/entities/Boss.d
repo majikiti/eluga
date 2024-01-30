@@ -12,7 +12,7 @@ class Boss: Enemy {
   Timer flytmr;
   Timer atkTmr;
   bool flying;
-  real starTime = 200, timer = 0;
+  real starTime = 66, timer = 0;
 
   this(const Vec2 initPos = Vec2(0, 0)){
     super(initPos);

@@ -7,7 +7,7 @@ import engine;
 class GameClearScene: RouteObject {
   mixin(enableReincarnate);
   
-  TextBox tl, tl2, tls;
+  TextBox tl, tl2, tls, tlm;
   ImageBox image;
   AudioAsset BGM;
   AudioSource audio;
@@ -17,14 +17,21 @@ class GameClearScene: RouteObject {
   Curtain cu;
 
   this() {
+    auto point = gm.point;
+    if(gm.ds.maxscore < gm.point) gm.ds.maxscore = gm.point;
+    gm.point = 0;
+
     tl = register(new TextBox("君はホンジュラスを救った", windowSize/2-Vec2(100, 50)));
     tl.component!Text.setColor(255, 200, 0);
 
-    tls = register(new TextBox(text("最終スコア: ", gm.ds.point), windowSize/2 - Vec2(80, -30)));
+    tls = register(new TextBox(text("最終スコア: ", point), windowSize/2 - Vec2(80, -30)));
     tls.tform.scale *= 0.7;
-    tls.component!Text.setColor(180, 180, 0);
+    tls.component!Text.setColor(200, 120, 0);
+    tlm = register(new TextBox(text("最高スコア: ", gm.ds.maxscore), windowSize/2 - Vec2(80, 0)));
+    tlm.tform.scale *= 0.7;
+    tlm.component!Text.setColor(180, 180, 0);
 
-    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 130), true));
+    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 160), true));
     tl2.component!Text.setColor(255, 255, 255);
     tl2.tform.scale *= 0.75;
     fd = register(new Fade([0x00, 0xbd, 0xe5], 50));

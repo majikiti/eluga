@@ -53,6 +53,8 @@ class Hero: GameObject {
   }
 
   override void setup() {
+    gm.point = 0;
+    
     tform = register(new Transform(Transform.Org.World));
     tform.pos = Vec2(0, 100);
     register(new RigidBody(1)).a = Vec2(0, 0);
@@ -190,8 +192,8 @@ class Hero: GameObject {
 
   void death() {
     state = State.Die;
-    gm.ds.point = gm.point;
     if(!status.willDead) {
+      gm.ds.point = gm.point;
       component!SpriteRenderer.active = false;
       register(new Explosion);
       se.volume(50);
