@@ -126,7 +126,7 @@ class Hero: GameObject {
     } else if(im.key('t') && gm.heroStatus.haveObj !is null && gm.heroStatus.haveObj.length != 0 && bombdtmr.cur >= 2_000) {
       auto bm = register(gm.heroStatus.haveObj[$-1]);
       gm.heroStatus.haveObj.popBack;
-      bm.component!RigidBody.addForce(Vec2(300, 450) * dir);
+      bm.component!RigidBody.addForce(Vec2(700, 1000) * dir);
       bm.component!Transform.initPos = Vec2(80, 0) * dir;
       bombdtmr.reset;
     } else {
