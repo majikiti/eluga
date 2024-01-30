@@ -23,9 +23,10 @@ class Patio: RouteObject {
 
   override void setup() {
     getCamera().lim.min.x = 0;
+    getCamera().lim.min.y = -100;
     getCamera().lim.max.x = 12500;
     getCamera().lim.max.y = 200;
-    gm.worldBegin.x = 0;
+    gm.worldBegin = Vec2(0, -100);
     gm.worldEnd = Vec2(12500, 200) + windowSize;
 
     register(new MakeDonMap(Vec2(64,64)));
