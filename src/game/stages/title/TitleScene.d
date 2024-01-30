@@ -27,8 +27,9 @@ class TitleScene: RouteObject {
     audio = register(new AudioSource(BGM));
     audio.play(-1);
     audio.volume(15);
-    auto title = register(new TextBox("ホンジュラス革命", Vec2(150,100)));
+    auto title = register(new TextBox("ホンジュラス革命", Vec2(100,100)));
     auto text = register(new TextBox("Pless Enter", Vec2(200,200), true));
+    title.component!Transform.scale *= 1.5;
     tmr.reset;
   }
 
