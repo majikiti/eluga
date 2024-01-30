@@ -7,7 +7,7 @@ import engine;
 class GameClearScene: RouteObject {
   mixin(enableReincarnate);
   
-  TextBox tl, tl2;
+  TextBox tl, tl2, tls;
   ImageBox image;
   AudioAsset BGM;
   AudioSource audio;
@@ -20,7 +20,11 @@ class GameClearScene: RouteObject {
     tl = register(new TextBox("君はホンジュラスを救った", windowSize/2-Vec2(100, 50)));
     tl.component!Text.setColor(255, 200, 0);
 
-    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 30), true));
+    tls = register(new TextBox(text("最終スコア: ", gm.ds.point), windowSize/2 - Vec2(80, -30)));
+    tls.tform.scale *= 0.7;
+    tls.component!Text.setColor(180, 180, 0);
+
+    tl2 = register(new TextBox("Press Enter", windowSize/2+Vec2(-80, 130), true));
     tl2.component!Text.setColor(255, 255, 255);
     tl2.tform.scale *= 0.75;
     fd = register(new Fade([0x00, 0xbd, 0xe5], 50));
@@ -78,7 +82,7 @@ class OmedetoPoint: GameObject {
   override void loop() {
     tf.pos = (windowSize / 2) + Vec2(cos(theta + phase), sin(8 * theta + phase)) * (windowSize / 4);
     theta += dtheta;
-    dbg(tf.pos);
+    // dbg(tf.pos);
   }
 
   void sarmon_summon() {

@@ -27,7 +27,8 @@ class DataStore(T): Component if(is(T == struct)) {
     _sync;
   }
 
-  auto ref opDispatch(string field)() => mixin(`_buf.t.`~field);
+  auto opDispatch(string field)() => mixin(`_buf.t.`~field);
+  auto opDispatch(string field, T)(T v) => mixin(`_buf.t.`~field) = v;
 
   override void setup() {
     NTimer tim;
@@ -37,7 +38,6 @@ class DataStore(T): Component if(is(T == struct)) {
   }
 
   void _sync() {
-    if(_buf.t == _old) return;
     std.file.write(_path, _buf.a);
     _old = _buf.t;
   }
