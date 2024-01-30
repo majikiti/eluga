@@ -193,7 +193,7 @@ class DebugTools : GameObject {
       router.go(Routes.GameClear);
     }
     if(im.keyOnce('8')){
-
+      router.go(Routes.Eroll);
     }
   }
 

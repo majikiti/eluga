@@ -5,12 +5,16 @@ import game;
 import engine;
 
 class GameClearScene: RouteObject {
+  mixin(enableReincarnate);
+  
   TextBox tl, tl2;
   ImageBox image;
   AudioAsset BGM;
   AudioSource audio;
   Focus fc;
   Fade fd;
+  NTimer tmr;
+  Curtain cu;
 
   this() {
     tl = register(new TextBox("君はホンジュラスを救った", windowSize/2-Vec2(100, 50)));
@@ -22,6 +26,10 @@ class GameClearScene: RouteObject {
     fd = register(new Fade([0x00, 0xbd, 0xe5], 50));
 
     auto py = register(new Donji(Vec2(50, windowSize.y / 8)));
+
+    tmr = register(new NTimer);
+    tmr.sched(&toEroll, 10_000);
+    cu = register(new Curtain);
   }
  
   override void setup() {
@@ -34,8 +42,13 @@ class GameClearScene: RouteObject {
   }
 
   override void loop() {
-    if(im.keyOnce('\r')) router.go(Routes.Title);
+    if(im.keyOnce('\r')) toEroll;
     if(!fd.isChanging) fd.swap;
+  }
+
+  void toEroll() {
+    void cgan() => router.go(Routes.Eroll);
+    cu.close(&cgan);
   }
 }
 
