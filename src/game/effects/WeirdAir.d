@@ -9,7 +9,7 @@ class WeirdAir : Effect {
   real angle;
   Timer tmr;
 
-  this(real dratio = 0.999, real scale = 0.15) {
+  this(real dratio = 0.99, real scale = 0.15) {
     super(dratio, scale);
     //layer = -40;
     tmr = new Timer;

@@ -10,6 +10,7 @@ class BlockHatena : Block {
   
   this(Vec2 pos, Vec2 scale){
     super(pos, scale);
+    addTag("Hatena");
   }
 
   override void setup() {

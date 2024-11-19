@@ -19,6 +19,9 @@ class Hero: GameObject {
   int jumpRemain = DefaultJumpRemain;
   bool fromGround = false;
 
+  // はてなブロック
+  bool hatTrig = false;
+
   // いまなにしてる？
   enum State { Standing, Walking, Jumping, Die }
   auto state = State.Jumping;
@@ -187,6 +190,13 @@ class Hero: GameObject {
         state = State.Standing;
         changeSkin(standSkin);
       }
+    }
+    // はてなブロックの処理(hatTrigを見てサーモンをサモン等する)
+    if(go.getTag("Hatena") && rb.v.y > -1 && !hatTrig) {
+      hatTrig = true;
+      warn("OIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOIOI");
+    } else if(!go.getTag("Hatena")) {
+      hatTrig = false;
     }
   }
 

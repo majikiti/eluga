@@ -37,6 +37,7 @@ class Enemy2: Enemy {
     if(jumptmr.cur > limittime) {
       bombDrop++;
       
+      // 爆弾多すぎて重スギル…… Bombの数見て抑えるなど必要な気がする
       if(bombDrop % 10 == 0 && bombDrop != 40) register(new Bomb);
 
       rigid.a = Vec2(0, 0);
