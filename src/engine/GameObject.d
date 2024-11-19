@@ -202,6 +202,15 @@ class GameObject: Loggable {
     return c;
   }
 
+  C upsert(C: Component)(C c) {
+    c.go = this;
+    auto old = findComponent!C;
+    if(old.e) components[old.i] = c;
+    else components ~= c;
+    c.realSetup;
+    return c;
+  }
+
   deprecated
   alias destroy = bye;
 

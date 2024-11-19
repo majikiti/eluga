@@ -27,15 +27,17 @@ class DataStore(T): Component if(is(T == struct)) {
     _sync;
   }
 
-  auto ref opDispatch(string field)() => mixin(`_buf.t.`~field);
+  auto opDispatch(string field)() => mixin(`_buf.t.`~field);
+  auto opDispatch(string field, T)(T v) => mixin(`_buf.t.`~field) = v;
 
   override void setup() {
-    auto tim = go.register(new NTimer);
+    NTimer tim;
+    if(go.has!NTimer) tim = go.component!NTimer;
+    else tim = go.register(new NTimer);
     tim.sched(&_sync, 1000);
   }
 
   void _sync() {
-    if(_buf.t == _old) return;
     std.file.write(_path, _buf.a);
     _old = _buf.t;
   }

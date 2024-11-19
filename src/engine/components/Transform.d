@@ -34,6 +34,7 @@ class Transform: Component {
   auto worldPos() {
     switch(org) {
       case Org.Spawn:
+      case Org.Real:
       case Org.World: return pos;
       case Org.Local: {
         auto ptform = getPtform;

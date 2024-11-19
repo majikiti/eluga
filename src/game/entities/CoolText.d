@@ -10,8 +10,9 @@ class CoolText : GameObject {
   CoolTextBack bg;
 
   this(string content) {
-    tf = register(new Transform);
+    tf = register(new Transform(tf.Org.Real));
     tb = register(new TextBox(content));
+    tb.layer++;
     tb.component!Transform.pos = Vec2(windowSize.x - 100, 0);
     bg = register(new CoolTextBack);
     tf.pos = Vec2(-2 * windowSize.x, windowSize.y / 2);

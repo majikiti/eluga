@@ -60,14 +60,14 @@ class Fade: GameObject {
       if(!isChanging) goto afterfade; // 表示と変化先が等しい(変化済み)
       (changeTo == 0) ? sr.setOpac(sr.opac - 3) : sr.setOpac(sr.opac + 3);
       if(changeTo == sr.opac){
-        finish;
+        finish(cast(bool)changeTo);
       }
     }
     //dbg(sr.colorArr);
     afterfade:
   }
 
-  void finish() {
+  void finish(bool finishedIn) {
     isChanging = false;
   }
 }

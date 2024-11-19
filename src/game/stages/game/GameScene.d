@@ -4,17 +4,15 @@ import engine;
 import game;
 
 class GameScene: RouteObject {
-  this() {
-    gm.tmr.reset;
-    gm.tmr.sched(&timeOver, gm.T_LIMIT);
-    gm.tmr.sched(&timeWarn, gm.T_LIMIT - 100_000);
-  }
-
   override void setup() {
     auto stage = "1-1";
     register([
       "1-1": () => new Patio(router),
     ][stage]());
+
+    gm.tmr.reset;
+    gm.tmr.sched(&timeOver, gm.T_LIMIT);
+    gm.tmr.sched(&timeWarn, gm.T_LIMIT - 100_000);
   }
 
   void timeOver() {

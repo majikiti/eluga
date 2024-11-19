@@ -76,7 +76,7 @@ class Bomb : GameObject {
       }
       if(!stat.star) stat.life -= cast(int)dmgf(len);
       rigid.addForce(r * dmgf(len));
-      dbg("damaged! :", dmgf(len));
+      // dbg("damaged! :", dmgf(len));
 
       se.play(1);
       register(new Explosion);
